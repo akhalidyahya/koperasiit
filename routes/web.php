@@ -68,4 +68,9 @@ Route::prefix('admin')->group(function(){
   Route::post('member/{id}/update', 'MemberController@update')->name('member.update');
   Route::get('api/member','MemberController@apimember');
 
+  Route::get('iuran/aprove/{kode}', 'IuranController@aprove')->name('iuranAprove');
+  Route::get('iuran/disaprove/{kode}', 'IuranController@disaprove')->name('iuranDisaprove');
 });
+
+Route::get('api/transaksiiuran', 'TransaksiController@apitransaksiiuran')->name('transaksiiuran');
+Route::get('admin/iuran/transaksiIuran', 'TransaksiController@index');
