@@ -180,7 +180,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item {{ ($sidebar == 'iuran') ? 'active open' : ''}} ">
+                        <li class="nav-item {{ ($sidebar == 'transaksiIuran') ? 'active open' : ''}} ">
                             <a href="{{url('admin/iuran')}}" class="nav-link">
                                 <i class="icon-calculator"></i>
                                 <span class="title">Iuran</span>

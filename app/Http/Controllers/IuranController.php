@@ -141,7 +141,7 @@ class IuranController extends Controller
       // $iuran = Iuran::find($id);
 
       DB::table('iurans')->where('kode', $kode)->update([
-          'status' => 2
+          'status' => 3
       ]);
       return redirect()->back();
     }
