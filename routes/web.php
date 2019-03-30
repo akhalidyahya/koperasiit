@@ -31,6 +31,7 @@ Route::resource('iuran','IuranController',['names'=>[
 ]]);
 
 Route::prefix('peminjaman')->group(function(){
+
   Route::get('api/pengajuan/{id}','PeminjamanController@apipeminjaman');
   Route::get('pengajuan/detail/{id}','PeminjamanController@detail')->name('peminjaman');
   Route::patch('pengajuan/cancel/{id}','PeminjamanController@cancel');
@@ -46,14 +47,25 @@ Route::prefix('peminjaman')->group(function(){
     'index' => 'peminjaman',
     'create' => 'peminjaman'
   ]]);
+
 });
 
 Route::prefix('admin')->group(function(){
+
   Route::resource('dashboard','AdminDashboardController',['names'=>[
     'index' => 'dashboard'
   ]]);
-  Route::resource('member','MemberController',['names'=>[
-    'index' => 'member',
-    'create' => 'member'
-  ]]);
+
+  // Route::resource('member','MemberController',['names'=>[
+  //   'index' => 'member',
+  //   'create' => 'member'
+  // ]]);
+
+  Route::get('member', 'MemberController@index');
+  Route::get('member/create', 'MemberController@create');
+  Route::get('member/{id}/edit', 'MemberController@edit');
+  Route::get('member/{id}/delete', 'MemberController@destroy');
+  Route::post('member/{id}/update', 'MemberController@update')->name('member.update');
+  Route::get('api/member','MemberController@apimember');
+
 });

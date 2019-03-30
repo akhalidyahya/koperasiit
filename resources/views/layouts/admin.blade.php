@@ -155,11 +155,30 @@
                                 <span class="selected"></span>
                             </a>
                         </li>
-                        <li class="nav-item {{ ($sidebar == 'member') ? 'active open' : ''}} ">
+                        <!-- <li class="nav-item {{ ($sidebar == 'member') ? 'active open' : ''}} ">
                             <a href="{{url('admin/member')}}" class="nav-link">
                                 <i class="icon-user"></i>
                                 <span class="title">Member</span>
                             </a>
+                        </li> -->
+                        <li class="nav-item {{ (\Request::route()->getName() == 'member') ? 'active open' : ''}}">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-briefcase"></i>
+                                <span class="title">Member</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item {{ ($sidebar == 'createMember') ? 'active open' : ''}} ">
+                                    <a href="{{url('admin/member/create')}}" class="nav-link ">
+                                        <span class="title">Buat Member Baru</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item {{ ($sidebar == 'indexMember') ? 'active open' : ''}} ">
+                                    <a href="{{url('admin/member')}}" class="nav-link ">
+                                        <span class="title">Daftar Member</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item {{ ($sidebar == 'iuran') ? 'active open' : ''}} ">
                             <a href="{{url('admin/iuran')}}" class="nav-link">

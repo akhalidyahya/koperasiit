@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\User;
 use App\Iuran;
+use Yajra\DataTables\DataTables;
+use DB;
 
 class MemberController extends Controller
 {
@@ -16,7 +18,9 @@ class MemberController extends Controller
      */
     public function index()
     {
-        //
+      return view('pages/member/index',[
+        'sidebar'=>'indexMember'
+      ]);
     }
 
     /**
@@ -26,7 +30,9 @@ class MemberController extends Controller
      */
     public function create()
     {
-        //
+      return view('pages/member/create',[
+        'sidebar'=>'createMember'
+      ]);
     }
 
     /**
@@ -36,8 +42,8 @@ class MemberController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $auth = 'admin';
+    {      
+        $auth = 'admin';        
         $data = [
           'name' => $request['nama'],
           'email' => $request['email'],
@@ -57,6 +63,7 @@ class MemberController extends Controller
         User::create($data);
 
         $added_user = User::orderBy('id','desc')->first();
+
         $data_iuran_pokok = [
           'kode' => 'iuran_pokok_'.$added_user->id,
           'jenis' => 'pokok',
@@ -65,6 +72,7 @@ class MemberController extends Controller
           'status' => 0,
           'user_id' => $added_user->id
         ];
+
         Iuran::create($data_iuran_pokok);
         for ($i=1; $i <= 12 ; $i++) {
           $data_iuran_bulanan = [
@@ -80,6 +88,8 @@ class MemberController extends Controller
 
         $request->session()->flush();
         $request->session()->flash('success', 'Your register was success!');
+
+        // Nanti tinggal di if else kalo admin redirect ke table view, kalo register user reirect login
         return redirect('/login');
     }
 
@@ -101,8 +111,13 @@ class MemberController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {   
+      
+        $user = User::find($id);        
+        return view('pages/member/edit',[
+          'sidebar'=>'createMember',
+          'user' => $user
+        ]);
     }
 
     /**
@@ -112,9 +127,24 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $r, $id)
     {
-        //
+      DB::table('users')->where('id', $id)->update([
+        'name' => $r->nama,
+        'email' => $r->email,
+        'password' => $r->password,
+        'ttl' => $r->ttl,
+        'jk' => $r->jk,
+        'identitas' => $r->identitas,
+        'alamat' => $r->alamat,
+        'hp' => $r->hp,
+        'pekerjaan' => $r->pekerjaan,
+        'pendapatan' => $r->pendapatan,
+        'nama_lembaga' => $r->nama_lembaga,
+        'pegawaian' => $r->pegawaian,
+        'no_lembaga' => $r->no_lembaga,        
+      ]);
+      return redirect()->route('member.index');
     }
 
     /**
@@ -124,8 +154,24 @@ class MemberController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    {   
+        $user = User::find($id);
+        $user->deleted = 1;
+        $user->save();
+        
+        // $user->forceDelete();
+        // DB::table('users')->where('id', $id)->delete();
+        // DB::table('iurans')->where('user_id', $id)->delete();
+          // return 1;
+        // $user = User::find($id);
+        // $user->delete();
+        
+        
+
+        // $request->session()->flush();
+        // $request->session()->flash('success', 'Your data was deleted!');
+        return redirect()->back();
+        
     }
 
     public function profile(){
@@ -137,5 +183,17 @@ class MemberController extends Controller
       return view('pages/profile/detail',[
         'sidebar'=>''
       ]);
+    }
+
+    public function apiMember()
+    {
+      
+      $user = User::where('deleted',0);
+
+      return DataTables::of($user)
+        ->addColumn('action',function($user) {
+          return '<a href=" member/ '.$user->id.'/edit" class="btn btn-default btn-xs"> Edit </a>'.
+           '<a href=" member/ '.$user->id.'/delete" class="btn btn-danger btn-xs" > Delete </a>';
+        })->escapeColumns([])->make(true);
     }
 }

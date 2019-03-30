@@ -14,6 +14,7 @@ class PeminjamanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
       return view('pages/pengajuan/index',[
@@ -41,7 +42,7 @@ class PeminjamanController extends Controller
      */
     public function store(Request $request)
     {
-        $id = 3;
+        $id = 1;
         $admin = 250000;
         $margin = .1;
         $random = substr(str_shuffle('1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'),0,10);

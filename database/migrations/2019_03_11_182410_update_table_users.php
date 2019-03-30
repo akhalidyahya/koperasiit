@@ -26,6 +26,7 @@ class UpdateTableUsers extends Migration
           $table->string('pegawaian',25);
           $table->string('no_lembaga',25);
           $table->string('role',1)->default(0);
+          $table->text('no_anggota')->nullable();
         });
     }
 

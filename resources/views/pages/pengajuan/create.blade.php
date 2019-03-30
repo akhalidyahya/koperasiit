@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="portlet-body">
-          <form class="form-horizontal" method="post" enctype="multipart/form-data" action="{{route('peminjaman.store')}}">
+          <form class="form-horizontal" method="post" enctype="multipart/form-data" action="{{route('pengajuan.store')}}">
             {{csrf_field()}} {{method_field('POST')}}
             <input type="hidden" name="id" value="" id="id">
             <div class="form-body">
