@@ -61,11 +61,16 @@ Route::prefix('admin')->group(function(){
   //   'create' => 'member'
   // ]]);
 
-  Route::get('member', 'MemberController@index');
-  Route::get('member/create', 'MemberController@create');
+  Route::get('member', 'MemberController@index')->name('member');
+  Route::get('member/create', 'MemberController@create')->name('member');
   Route::get('member/{id}/edit', 'MemberController@edit');
   Route::get('member/{id}/delete', 'MemberController@destroy');
   Route::post('member/{id}/update', 'MemberController@update')->name('member.update');
   Route::get('api/member','MemberController@apimember');
 
+  Route::get('iuran/aprove/{kode}', 'IuranController@aprove')->name('iuranAprove');
+  Route::get('iuran/disaprove/{kode}', 'IuranController@disaprove')->name('iuranDisaprove');
+  Route::get('iuran/transaksiIuran', 'TransaksiController@index');
 });
+
+Route::get('api/transaksiiuran', 'TransaksiController@apitransaksiiuran')->name('transaksiiuran');

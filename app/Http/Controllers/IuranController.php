@@ -113,4 +113,36 @@ class IuranController extends Controller
     {
         //
     }
+
+    public function aprove($kode){
+      // $transaksi = Transaksi::find($kode);
+      //
+      // dd($transaksi);
+
+      DB::table('transaksis')->where('kode', $kode)->update([
+          'aproval' => 1
+      ]);
+      //
+      //
+      // $iuran = Iuran::find($id);
+
+      DB::table('iurans')->where('kode', $kode)->update([
+          'status' => 1
+      ]);
+      return redirect()->back();
+    }
+
+    public function disaprove($kode){
+      DB::table('transaksis')->where('kode', $kode)->update([
+          'aproval' => 2
+      ]);
+      //
+      //
+      // $iuran = Iuran::find($id);
+
+      DB::table('iurans')->where('kode', $kode)->update([
+          'status' => 3
+      ]);
+      return redirect()->back();
+    }
 }
