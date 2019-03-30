@@ -40,7 +40,7 @@
         <!-- BEGIN LOGO -->
         <div class="logo">
             <a href="{{route('login')}}">
-                <img src="{{asset('assets/pages/img/logo-big.jpg')}}" width="200px" style="border-radius:100%;" alt="" /> </a>
+                <img src="{{asset('assets/pages/img/logo-big-white.png')}}" width="200px" style="border-radius:100%;" alt="" /> </a>
         </div>
         <!-- END LOGO -->
         <!-- BEGIN LOGIN -->
@@ -109,7 +109,7 @@
             <!-- BEGIN REGISTRATION FORM -->
             <form class="register-form" action="{{route('member.store')}}" method="post">
               {{csrf_field()}} {{method_field('POST')}}
-                <h3 class="font-green">Form Isian Calon Anggota Koperasi Berkah Usaha Terbadu</h3>
+                <h3 class="font-green">Form Isian Calon Anggota Koperasi Berkah Usaha Terpadu</h3>
                 <hr>
                 <h4 class=""> A. Data Individu </h4>
                 <div class="form-group">
