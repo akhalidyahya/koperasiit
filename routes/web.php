@@ -70,7 +70,10 @@ Route::prefix('admin')->group(function(){
 
   Route::get('iuran/aprove/{kode}', 'IuranController@aprove')->name('iuranAprove');
   Route::get('iuran/disaprove/{kode}', 'IuranController@disaprove')->name('iuranDisaprove');
-  Route::get('iuran/transaksiIuran', 'TransaksiController@index');
+  Route::get('iuran/transaksiIuran', 'TransaksiController@indexIuran');
+  Route::get('peminjaman/transaksiPeminjaman', 'TransaksiController@indexPeminjaman');
+  Route::get('iuran/iuranBulanan', 'IuranController@iuranBulananAdmin');
+  Route::get('iuran/iuranPokok', 'IuranController@iuranPokokAdmin');
 });
 
 Route::get('api/transaksiiuran', 'TransaksiController@apitransaksiiuran')->name('transaksiiuran');

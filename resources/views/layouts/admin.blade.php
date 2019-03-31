@@ -180,11 +180,30 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item {{ ($sidebar == 'transaksiIuran') ? 'active open' : ''}} ">
+                        {{-- <li class="nav-item {{ ($sidebar == 'transaksiIuran') ? 'active open' : ''}} ">
                             <a href="{{url('admin/iuran')}}" class="nav-link">
                                 <i class="icon-calculator"></i>
                                 <span class="title">Iuran</span>
                             </a>
+                        </li> --}}
+                        <li class="nav-item {{ (\Request::route()->getName() == 'peminjaman') ? 'active open' : ''}}">
+                                <a href="javascript:;" class="nav-link nav-toggle">
+                                    <i class="icon-briefcase"></i>
+                                    <span class="title">Transaksi</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li class="nav-item {{ ($sidebar == 'transaksiIuran') ? 'active open' : ''}} ">
+                                        <a href="{{url('admin/iuran/transaksiIuran')}}" class="nav-link ">
+                                            <span class="title">Iuran</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item {{ ($sidebar == 'transaksiPeminjaman') ? 'active open' : ''}} ">
+                                        <a href="{{url('admin/peminjaman/transaksiPeminjaman')}}" class="nav-link ">
+                                            <span class="title">Peminjaman</span>
+                                        </a>
+                                    </li>
+                                </ul>
                         </li>
                         <li class="nav-item {{ (\Request::route()->getName() == 'peminjaman') ? 'active open' : ''}}">
                             <a href="javascript:;" class="nav-link nav-toggle">
@@ -193,10 +212,10 @@
                                 <span class="arrow"></span>
                             </a>
                             <ul class="sub-menu">
-                                <li class="nav-item {{ ($sidebar == 'pengajuan') ? 'active open' : ''}} ">
-                                    <a href="{{url('admin/peminjaman/pengajuan')}}" class="nav-link ">
-                                        <span class="title">Pengajuan</span>
-                                    </a>
+                                <li class="nav-item {{ ($sidebar == 'pengajuanPeminjaman') ? 'active open' : ''}} ">
+                                    <a href="{{url('admin/peminjaman/pengajuanPeminjaman')}}" class="nav-link ">
+                                         <span class="title">Pengajuan</span>
+                                     </a>
                                 </li>
                                 <li class="nav-item {{ ($sidebar == 'angsuran') ? 'active open' : ''}} ">
                                     <a href="{{url('admin/peminjaman/angsuran')}}" class="nav-link ">
@@ -205,6 +224,25 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item {{ (\Request::route()->getName() == 'peminjaman') ? 'active open' : ''}}">
+                                <a href="javascript:;" class="nav-link nav-toggle">
+                                    <i class="icon-briefcase"></i>
+                                    <span class="title">Iuran</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                        <li class="nav-item {{ ($sidebar == 'iuranBulanan') ? 'active open' : ''}} ">
+                                                <a href="{{url('admin/iuran/iuranBulanan')}}" class="nav-link">
+                                                    <span class="title">Iuran bulanan</span>
+                                                </a>
+                                            </li>
+                                    <li class="nav-item {{ ($sidebar == 'iuranPokok') ? 'active open' : ''}} ">
+                                        <a href="{{url('admin/iuran/iuranPokok')}}" class="nav-link ">
+                                            <span class="title">Iuran pokok</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                     </ul>
                     <!-- END SIDEBAR MENU -->
                 </div>

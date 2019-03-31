@@ -26,6 +26,53 @@ class IuranController extends Controller
       ]);
     }
 
+    //Iuran bulanan
+    public function iuranBulananAdmin(){
+        //daftar nama tiap user
+        $daftarNama = DB::table('users')
+                    ->orderBy('users.id')
+                    ->get();
+
+        //daftar seluruh tagihan
+        $tagihanPerBulan = DB::table('iurans')
+                    ->where('iurans.jenis', 'bulanan')
+                    ->orderBy('iurans.user_id', 'asc')
+                    ->orderBy('iurans.id', 'asc')
+                    ->orderBy('iurans.bulan', 'asc')
+                    ->get();
+
+        return view('admin/iuran/iuranBulanan',[
+            'sidebar'=>'iuranBulanan',
+            'nama'=> $daftarNama,
+            'bulanan'=>$tagihanPerBulan
+        ]);
+    }
+
+    //Iuran pokok
+    public function iuranPokokAdmin(){
+        //table yang belum bayar
+        $belumBayar = DB::table('iurans')
+                    ->join('users', 'iurans.user_id', '=', 'users.id')
+                    ->where('iurans.jenis', 'pokok')
+                    ->where('iurans.status', 0)
+                    ->orderBy('iurans.user_id', 'asc')
+                    ->get();
+
+        //table yang sudah bayar
+        $sudahBayar = DB::table('iurans')
+                    ->join('users', 'iurans.user_id', '=', 'users.id')
+                    ->where('iurans.jenis', 'pokok')
+                    ->where('iurans.status', 1)
+                    ->orderBy('iurans.user_id', 'asc')
+                    ->get();
+
+        return view('admin/iuran/iuranPokok', [
+            'sidebar'=>'iuranPokok',
+            'belumBayar'=> $belumBayar,
+            'sudahBayar'=> $sudahBayar
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
