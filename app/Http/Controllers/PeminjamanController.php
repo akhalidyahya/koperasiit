@@ -72,7 +72,7 @@ class PeminjamanController extends Controller
 
         Peminjaman::create($data);
 
-        return redirect('peminjaman');
+        return redirect('peminjaman/pengajuan');
     }
 
     /**
