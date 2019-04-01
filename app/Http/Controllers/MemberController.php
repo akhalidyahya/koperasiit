@@ -147,6 +147,43 @@ class MemberController extends Controller
       return redirect()->route('member.index');
     }
 
+
+    public function updateProfile(Request $r)
+    {
+      // return 1;
+      $id = 1;      
+
+      if($r->hasfile('gambar')){
+
+       DB::table('users')->where('id',$id)->update([
+          'gambar' => $r->gambar->getClientOriginalName()
+        ]);
+      }
+      else{
+
+        DB::table('users')->where('id', $id)->update([
+          'name' => $r->nama,
+          'email' => $r->email,
+          'password' => $r->password,
+          'ttl' => $r->ttl,
+          'jk' => $r->jk,
+          'identitas' => $r->identitas,
+          'alamat' => $r->alamat,
+          'hp' => $r->hp,
+          'pekerjaan' => $r->pekerjaan,
+          'pendapatan' => $r->pendapatan,
+          'nama_lembaga' => $r->nama_lembaga,
+          'pegawaian' => $r->pegawaian,
+          'no_lembaga' => $r->no_lembaga,        
+        ]);
+      }
+
+      return redirect('profile/detail');
+
+      return 1;
+
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -180,8 +217,13 @@ class MemberController extends Controller
       ]);
     }
     public function detail(){
+
+      $id = 1;
+      $user = User::find($id);
+
       return view('pages/profile/detail',[
-        'sidebar'=>''
+        'sidebar'=>'',
+        'user' => $user
       ]);
     }
 
@@ -196,4 +238,16 @@ class MemberController extends Controller
            '<a href=" member/ '.$user->id.'/delete" class="btn btn-danger btn-xs" > Delete </a>';
         })->escapeColumns([])->make(true);
     }
+
+    // public function account(){
+    //   $id = 1;
+
+    //   $user = User::find($id);
+
+    //   return view('pages.profile.detail',[
+    //     'user'=> $user
+    //   ]);
+
+    //   }
+
 }

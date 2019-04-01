@@ -24,6 +24,8 @@ Route::get('logout', 'Auth\LoginController@logout', function () {
 
 Route::get('profile','MemberController@profile');
 Route::get('profile/detail','MemberController@detail');
+Route::get('profile/account', 'MemberController@account');
+Route::post('profile/account/update', 'MemberController@updateProfile')->name('update.profile');
 Route::resource('member','MemberController');
 
 Route::resource('iuran','IuranController',['names'=>[
