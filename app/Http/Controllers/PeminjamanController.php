@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Peminjaman;
 use App\Angsuran;
+use Illuminate\Support\Facades\DB;
+use App\Transaksi;
 
 class PeminjamanController extends Controller
 {
@@ -14,13 +16,15 @@ class PeminjamanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     public function index()
     {
       return view('pages/pengajuan/index',[
         'sidebar'=>'pengajuan'
       ]);
     }
+
+    //ini buat admin
 
     /**
      * Show the form for creating a new resource.
@@ -68,7 +72,7 @@ class PeminjamanController extends Controller
 
         Peminjaman::create($data);
 
-        return redirect('peminjaman');
+        return redirect('peminjaman/pengajuan');
     }
 
     /**

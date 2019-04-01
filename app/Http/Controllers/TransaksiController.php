@@ -16,10 +16,17 @@ class TransaksiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexIuran()
     {
         return view('admin/iuran/transaksiIuran', [
           'sidebar'=>'transaksiIuran'
+        ]);
+    }
+
+    public function indexPeminjaman()
+    {
+        return view('admin/peminjaman/transaksiPeminjaman', [
+          'sidebar'=>'transaksiPeminjaman'
         ]);
     }
 
@@ -97,7 +104,7 @@ class TransaksiController extends Controller
       return DataTables::of($transaksiIuran)
         ->addColumn('aprove',function($transaksiIuran) {
           return '<a href="aprove/'.$transaksiIuran->kode.'" class="btn btn-primary btn-xs"> Aprove </a>';
-          
+
         })->addColumn('disaprove',function($transaksiIuran) {
           return '<a href="disaprove/'.$transaksiIuran->kode.'" class="btn btn-danger btn-xs"> Disaprove </a>';
         })->escapeColumns([])->make(true);

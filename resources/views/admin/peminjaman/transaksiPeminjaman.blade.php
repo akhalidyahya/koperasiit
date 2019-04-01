@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.admin')
 @section('content')
 <!-- BEGIN PAGE HEAD-->
 <!-- BEGIN PAGE CSS -->
@@ -35,41 +35,11 @@
       <i class="fa fa-circle"></i>
   </li>
   <li>
-      <span class="active">Pengajuan</span>
+      <span class="active">Angsuran</span>
   </li>
 </ul>
 <!-- END PAGE BREADCRUMB -->
 <!-- BEGIN PAGE BASE CONTENT -->
-<div class="row widget-row">
-    <div class="col-md-3">
-        <!-- BEGIN WIDGET THUMB -->
-        <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered">
-            <h4 class="widget-thumb-heading">Margin Rate</h4>
-            <div class="widget-thumb-wrap">
-                <i class="widget-thumb-icon bg-blue-chambray icon-graph"></i>
-                <div class="widget-thumb-body">
-                    <span class="widget-thumb-subtitle">percent</span>
-                    <span class="widget-thumb-body-stat" data-counter="counterup" data-value="10">0</span>
-                </div>
-            </div>
-        </div>
-        <!-- END WIDGET THUMB -->
-    </div>
-    <div class="col-md-3">
-        <!-- BEGIN WIDGET THUMB -->
-        <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered">
-            <h4 class="widget-thumb-heading">Admin Charge</h4>
-            <div class="widget-thumb-wrap">
-                <i class="widget-thumb-icon bg-blue-chambray icon-book-open"></i>
-                <div class="widget-thumb-body">
-                    <span class="widget-thumb-subtitle">Rp</span>
-                    <span class="widget-thumb-body-stat" data-counter="counterup" data-value="250,000">0</span>
-                </div>
-            </div>
-        </div>
-        <!-- END WIDGET THUMB -->
-    </div>
-</div>
 <div class="row">
   <div class="col-md-12">
 
@@ -79,22 +49,19 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Pengajuan Peminjaman</span><span style="margin-left:15px;"></span>
-            </div>
-            <div class="actions">
-              <a class="btn btn-primary btn-flat" href="{{url('peminjaman/pengajuan/create')}}"><i class="fa fa-upload"></i> Ajukan Peminjaman</a>
+                <span class="caption-subject font-red sbold uppercase">Daftar Peminjaman</span><span style="margin-left:15px;"></span>
             </div>
         </div>
         <div class="portlet-body">
             <table class="table table-striped table-bordered table-hover table-checkable order-column" id="myTable">
                 <thead>
                     <tr>
+                      <th>Kode</th>
                       <th>Tanggal</th>
+                      <th>Bulan</th>
                       <th>Nominal</th>
-                      <th>Angsuran</th>
-                      <th>Keperluan</th>
-                      <th>Status</th>
-                      <th>Detail</th>
+                      <th>Aprove</th>
+                      <th>Disaprove</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -213,22 +180,21 @@ function pinjam(){
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
 });
-var id = 1;
+var id = 3;
 var t = $('#myTable').DataTable({
   'processing'  : true,
   'serverSide'  : true,
-  'ajax'        : "{{ url('peminjaman/api/pengajuan') }}"+"/"+id,
+  'ajax'        : "{{ url('api/transaksiiuran') }}",
   'dataType'    : 'json',
   'paging'      : true,
   'lengthChange': true,
   'columns'     : [
-
-    {data:'tanggal', name: 'tanggal'},
+    {data:'kode', name: 'kode'},
+    {data:'created_at', name: 'created_at'},
+    {data:'bulan', name: 'bulan'},
     {data:'jumlah', name: 'jumlah'},
-    {data:'angsuran', name: 'angsuran'},
-    {data:'keperluan', name: 'keperluan'},
-    {data:'status', name: 'status'},
-    {data:'detail', name: 'detail', orderable: false, searchable: false},
+    {data:'aprove', name: 'aprove'},
+    {data:'disaprove', name: 'disaprove'},
   ],
   'info'        : true,
   'autoWidth'   : false
