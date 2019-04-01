@@ -182,4 +182,5 @@ class PeminjamanController extends Controller
           }
         })->escapeColumns([])->make(true);
     }
+
 }

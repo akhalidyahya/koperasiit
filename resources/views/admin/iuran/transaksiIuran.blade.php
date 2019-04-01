@@ -49,7 +49,7 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Daftar Peminjaman</span><span style="margin-left:15px;"></span>
+                <span class="caption-subject font-red sbold uppercase">Transaksi Iuran Bulanan</span><span style="margin-left:15px;"></span>
             </div>
         </div>
         <div class="portlet-body">
@@ -71,104 +71,7 @@
     <!-- END EXAMPLE TABLE PORTLET-->
   </div>
 </div>
-<!-- modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="basic" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Modal Title</h4>
-            </div>
-            <div class="modal-body">
-              <form class="" method="post" enctype="multipart/form-data">
-                {{csrf_field()}} {{method_field('POST')}}
-                <input type="hidden" name="id" value="" id="id">
-                <div class="form-body">
-                  <div class="form-group form-md-line-input has-success form-md-floating-label">
-                      <div class="input-icon">
-                          <input id="jumlah" type="text" class="form-control" name="jumlah">
-                          <label for="form_control_1">Jumlah Pinjaman</label>
-                          <i class="fa fa-money"></i>
-                      </div>
-                  </div>
-                  <div class="form-group form-md-line-input has-success form-md-floating-label">
-                      <div class="input-icon">
-                          <select class="form-control" id="angsuran" name="angsuran">
-                            <option value=""></option>
-                            <option value="12">12 kali</option>
-                            <option value="12">24 kali</option>
-                          </select>
-                          <label for="form_control_1">Angsuran</label>
-                          <i class="fa fa-clock-o"></i>
-                      </div>
-                  </div>
-                  <div class="form-group form-md-line-input has-success form-md-floating-label">
-                      <div class="input-icon">
-                          <input id="dp" type="text" class="form-control" name="dp">
-                          <label for="form_control_1">DP</label>
-                          <i class="fa fa-money"></i>
-                      </div>
-                  </div>
-                  <div class="form-group form-md-line-input has-success form-md-floating-label">
-                      <div class="input-icon">
-                          <input id="keperluan" type="text" class="form-control" name="keperluan">
-                          <label for="form_control_1">Keperluan</label>
-                          <i class="fa fa-briefcase"></i>
-                      </div>
-                  </div>
-                  <div class="form-group form-md-line-input has-success form-md-floating-label">
-                    <label for="form_control_1">Foto/File SK</label>
-                      <div class="input-icon">
-                          <input id="sk" type="file" class="form-control" name="sk">
-                          <i class="fa fa-photo"></i>
-                      </div>
-                  </div>
-                  <div class="form-group form-md-line-input has-success form-md-floating-label">
-                    <label for="form_control_1">Foto/File KTP</label>
-                      <div class="input-icon">
-                          <input id="ktp" type="file" class="form-control" name="ktp">
-                          <i class="fa fa-photo"></i>
-                      </div>
-                  </div>
-                  <div class="form-group form-md-line-input has-success form-md-floating-label">
-                    <label for="form_control_1">Foto/File KK</label>
-                      <div class="input-icon">
-                          <input id="kk" type="file" class="form-control" name="kk">
-                          <i class="fa fa-photo"></i>
-                      </div>
-                  </div>
-                  <div class="form-group form-md-line-input has-success form-md-floating-label">
-                    <label for="form_control_1">Foto/File Slip gaji</label>
-                      <div class="input-icon">
-                          <input id="slip" type="file" class="form-control" name="slip">
-                          <i class="fa fa-photo"></i>
-                      </div>
-                  </div>
-                  <div class="form-group form-md-line-input has-success form-md-floating-label">
-                    <label for="form_control_1">Foto/File jaminan/surat berharga</label>
-                      <div class="input-icon">
-                          <input id="jaminan" type="file" class="form-control" name="jaminan">
-                          <i class="fa fa-photo"></i>
-                      </div>
-                  </div>
-                    <div class="form-actions noborder text-center">
-                        <button id="submit" type="submit" class="btn blue">Submit</button>
-                        <!-- <button type="button" class="btn default">Cancel</button> -->
-                    </div>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                <!-- <button type="button" class="btn green">Save changes</button> -->
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-<!-- END PAGE BASE CONTENT -->
+
 <script type="text/javascript">
 function pinjam(){
   save_method = 'add';

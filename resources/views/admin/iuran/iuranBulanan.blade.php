@@ -17,7 +17,7 @@
 <div class="page-head">
     <!-- BEGIN PAGE TITLE -->
     <div class="page-title">
-        <h1>Member Koperasi Dashboard | Iuran
+        <h1>Member Koperasi Dashboard | Iuran 
             <small>statistics, charts and reports</small>
         </h1>
     </div>

@@ -16,14 +16,18 @@ class IuranController extends Controller
      */
     public function index()
     {
-      $id = 3;
-      $iuran_bulanan = DB::table('iurans')->where('user_id',$id)->where('jenis','bulanan')->orderBy('id')->get();
+      $id = 1;
+      $iuran_bulanan = DB::table('iurans')->where('user_id',$id)->where('jenis','bulanan')->orderBy('id')->get();      
       $bulan = DB::table('iurans')->where('user_id',$id)->where('jenis','bulanan')->where('status','<>',1)->where('status','<>',2)->orderBy('id')->get();
+      $pokok = DB::table('iurans')->where('user_id',$id)->where('jenis', 'pokok')->first();
+    //   dd($bulan);
       return view('pages/iuran',[
         'sidebar'=>'iuran',
         'iuran' => $iuran_bulanan,
-        'bulan' => $bulan
+        'bulan' => $bulan,
+        'pokok' => $pokok
       ]);
+
     }
 
     //Iuran bulanan
@@ -71,6 +75,7 @@ class IuranController extends Controller
             'belumBayar'=> $belumBayar,
             'sudahBayar'=> $sudahBayar
         ]);
+
     }
 
     /**
@@ -91,7 +96,9 @@ class IuranController extends Controller
      */
     public function store(Request $request)
     {
-        $id = 3;
+        if($request->hasfile('bulan')){
+
+        $id = 1;
         $bulan = $request['bulan'];
         $data = [
           'status' => 2,
@@ -112,9 +119,41 @@ class IuranController extends Controller
           'aproval' => 0,
           'user_id' => $id
         ];
+
         Transaksi::create($data_transaksi);
         return redirect('iuran');
+
+        }else{
+        
+        $id = 1;
+
+        $data = [
+          'status' => 2,
+          'keterangan' => $request->keterangan,
+          'jumlah' => $request->nominal,
+          'foto' => $request->bukti->getClientOriginalName()
+        ];
+        DB::table('iurans')->where('user_id', $id)->where('bulan',0)->update($data);
+
+        $data_transaksi = [
+          'kode' => 'iuran_pokok_'.$id,
+          'jumlah' => $request->nominal,
+          'bulan' => 0,
+          'tahun' => Date('Y'),
+          'keterangan' => $request->keterangan,
+          'jenis' => 'iuran',
+          'foto' => $request->bukti->getClientOriginalName(),
+          'aproval' => 0,
+          'user_id' => $id
+        ];
+        Transaksi::create($data_transaksi);
+        return redirect('iuran');
+        }
+        
     }
+    
+
+    
 
     /**
      * Display the specified resource.
@@ -179,6 +218,7 @@ class IuranController extends Controller
       return redirect()->back();
     }
 
+
     public function disaprove($kode){
       DB::table('transaksis')->where('kode', $kode)->update([
           'aproval' => 2
@@ -192,4 +232,6 @@ class IuranController extends Controller
       ]);
       return redirect()->back();
     }
+
+    
 }

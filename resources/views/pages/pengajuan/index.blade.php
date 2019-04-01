@@ -105,7 +105,7 @@
   </div>
 </div>
 <!-- modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="basic" aria-hidden="true">
+<!-- <div class="modal fade" id="myModal" tabindex="-1" role="basic" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -186,20 +186,20 @@
                   </div>
                     <div class="form-actions noborder text-center">
                         <button id="submit" type="submit" class="btn blue">Submit</button>
-                        <!-- <button type="button" class="btn default">Cancel</button> -->
+                        <button type="button" class="btn default">Cancel</button>
                     </div>
                 </div>
               </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                <!-- <button type="button" class="btn green">Save changes</button> -->
+                <button type="button" class="btn green">Save changes</button>
             </div>
         </div>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
-</div>
+</div> -->
 <!-- /.modal -->
 <!-- END PAGE BASE CONTENT -->
 <script type="text/javascript">

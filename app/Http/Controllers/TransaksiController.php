@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Transaksi;
 use App\Iuran;
+use App\Peminjaman;
 use DB;
 
 class TransaksiController extends Controller
@@ -21,6 +22,22 @@ class TransaksiController extends Controller
         return view('admin/iuran/transaksiIuran', [
           'sidebar'=>'transaksiIuran'
         ]);
+    }
+
+    public function indexIuranPokok()
+    {
+        return view('admin/iuran/transaksiiuranpokok', [
+          'sidebar'=>'transaksiIuranPokok'
+        ]);
+        
+    }
+
+    public function indexdaftarpeminjaman()
+    {   
+        return view('admin/peminjaman/pengajuan', [
+          'sidebar'=>'daftarpeminjaman'
+        ]);
+
     }
 
     public function indexPeminjaman()
@@ -99,7 +116,7 @@ class TransaksiController extends Controller
     public function apitransaksiiuran()
     {
       // $id = 3;
-      $transaksiIuran = Transaksi::where('jenis', 'iuran')->where('aproval',0)->orderBy('id','desc');
+      $transaksiIuran = Transaksi::where('jenis', 'iuran')->where('aproval',0)->where('bulan', '!=', 0)->orderBy('id','desc')->get();
 
       return DataTables::of($transaksiIuran)
         ->addColumn('aprove',function($transaksiIuran) {
@@ -110,5 +127,50 @@ class TransaksiController extends Controller
         })->escapeColumns([])->make(true);
     }
 
+    public function apitransaksiiuranpokok()
+    {
+      // $id = 3;
+      $transaksiIuran = Transaksi::where('jenis', 'iuran')->where('aproval',0)->where('bulan', 0)->orderBy('id','desc')->get();
+
+      return DataTables::of($transaksiIuran)
+        ->addColumn('aprove',function($transaksiIuran) {
+          return '<a href="aprove/'.$transaksiIuran->kode.'" class="btn btn-primary btn-xs"> Aprove </a>';
+
+        })->addColumn('disaprove',function($transaksiIuran) {
+          return '<a href="disaprove/'.$transaksiIuran->kode.'" class="btn btn-danger btn-xs"> Disaprove </a>';
+        })->escapeColumns([])->make(true);
+    }
+
+    
+    public function apipeminjamanadmin(){
+
+        $peminjaman = Peminjaman::where('status', 0)->orderby('created_at')->get();
+  
+        return DataTables::of($peminjaman)
+        ->addColumn('aprove',function($peminjaman) {
+            return '<a href="aprove/'.$peminjaman->kode.'" class="btn btn-primary btn-xs"> Aprove </a>';
+  
+          })->addColumn('disaprove',function($peminjaman) {
+            return '<a href="disaprove/'.$peminjaman->kode.'" class="btn btn-danger btn-xs"> Disaprove </a>';
+          })->escapeColumns([])->make(true);
+      }
+
+      public function aprove($kode){                    
+        DB::table('peminjamen')->where('kode', $kode)->update([
+            'status'=> 1
+        ]);
+
+        return redirect()->back();
+
+      }
+
+      public function disaprove($kode){
+                
+        DB::table('peminjamen')->where('kode', $kode)->update([
+            'status'=> 2
+        ]);
+
+        return redirect()->back();
+      }
 
 }

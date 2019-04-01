@@ -195,12 +195,24 @@
                                 <ul class="sub-menu">
                                     <li class="nav-item {{ ($sidebar == 'transaksiIuran') ? 'active open' : ''}} ">
                                         <a href="{{url('admin/iuran/transaksiIuran')}}" class="nav-link ">
-                                            <span class="title">Iuran</span>
+                                            <span class="title">Iuran Bulanan</span>
                                         </a>
                                     </li>
+
+                                    <li class="nav-item {{ ($sidebar == 'indexIuranPokok') ? 'active open' : ''}} ">
+                                        <a href="{{url('admin/iuran/transaksiIuranPokok')}}" class="nav-link ">
+                                            <span class="title">Iuran Pokok</span>
+                                        </a>
+                                    </li>
+
                                     <li class="nav-item {{ ($sidebar == 'transaksiPeminjaman') ? 'active open' : ''}} ">
-                                        <a href="{{url('admin/peminjaman/transaksiPeminjaman')}}" class="nav-link ">
-                                            <span class="title">Peminjaman</span>
+                                        <a href="#" class="nav-link ">
+                                            <span class="title">Angsuran</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item {{ ($sidebar == 'daftarpeminjaman') ? 'active open' : ''}} ">
+                                        <a href="{{url('admin/transaksi/daftarpeminjaman')}}" class="nav-link ">
+                                            <span class="title">DP</span>
                                         </a>
                                     </li>
                                 </ul>

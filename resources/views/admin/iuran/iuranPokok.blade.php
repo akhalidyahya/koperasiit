@@ -126,13 +126,13 @@
       </div>
       <!-- END PAGE BASE CONTENT -->
 <script type="text/javascript">
-// function bayar(){
-//   save_method = 'add';
-//   $('input[name=_method]').val('POST');
-//   $('#myModal').modal('show');
-//   $('#myModal form')[0].reset();
-//   $('.modal-title').text('Upload Bukti Transfer');
-// }
+function bayar(){
+  save_method = 'add';
+  $('input[name=_method]').val('POST');
+  $('#myModal').modal('show');
+  $('#myModal form')[0].reset();
+  $('.modal-title').text('Upload Bukti Transfer');
+}
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
 });

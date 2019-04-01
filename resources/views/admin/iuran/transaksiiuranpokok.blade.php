@@ -49,7 +49,7 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Transaksi Iuran Bulanan</span><span style="margin-left:15px;"></span>
+                <span class="caption-subject font-red sbold uppercase">Transaksi Iuran Pokok</span><span style="margin-left:15px;"></span>
             </div>
         </div>
         <div class="portlet-body">
@@ -57,11 +57,8 @@
                 <thead>
                     <tr>
                       <th>Kode</th>
-                      <th>Jumlah</th>
-                      <th>Angsuran</th>                      
-                      <th>DP</th>
-                      <th>Keperluan</th>
-                      <th>tanggal</th>
+                      <th>Tanggal</th>                      
+                      <th>Nominal</th>
                       <th>Aprove</th>
                       <th>Disaprove</th>
                     </tr>
@@ -89,19 +86,16 @@ var id = 3;
 var t = $('#myTable').DataTable({
   'processing'  : true,
   'serverSide'  : true,
-  'ajax'        : "{{ url('api/peminjamanadmin') }}",
+  'ajax'        : "{{ url('api/transaksiiuranpokok') }}",
   'dataType'    : 'json',
   'paging'      : true,
   'lengthChange': true,
   'columns'     : [
-    {data:'kode', name: 'kode'},    
+    {data:'kode', name: 'kode'},
+    {data:'created_at', name: 'created_at'},    
     {data:'jumlah', name: 'jumlah'},
-    {data:'angsuran', name: 'angsuran'},
-    {data:'dp', name: 'dp'},
-    {data:'keperluan', name: 'keperluan'},
-    {data:'created_at', name: 'created_at'},
     {data:'aprove', name: 'aprove'},
-    {data:'disaprove', name: 'disaprove'},    
+    {data:'disaprove', name: 'disaprove'},
   ],
   'info'        : true,
   'autoWidth'   : false
