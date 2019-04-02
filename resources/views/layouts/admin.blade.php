@@ -230,7 +230,7 @@
                                      </a>
                                 </li>
                                 <li class="nav-item {{ ($sidebar == 'angsuran') ? 'active open' : ''}} ">
-                                    <a href="{{url('admin/peminjaman/angsuran')}}" class="nav-link ">
+                                    <a href="{{url('admin/peminjaman/angsuranPeminjaman')}}" class="nav-link ">
                                         <span class="title">Angsuran</span>
                                     </a>
                                 </li>

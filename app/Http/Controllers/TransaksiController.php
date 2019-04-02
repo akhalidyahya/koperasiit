@@ -139,29 +139,32 @@ class TransaksiController extends Controller
     }
 
 
-    public function apitransaksidp(){
-        $peminjaman = Peminjaman::where('status', 0)->orderby('created_at')->get();
 
-        return DataTables::of($peminjaman)
-        ->addColumn('aprove',function($peminjaman) {
-            return '<a href="aprove/'.$peminjaman->kode.'" class="btn btn-primary btn-xs"> Aprove </a>';
-          })->addColumn('disaprove',function($peminjaman) {
-            return '<a href="disaprove/'.$peminjaman->kode.'" class="btn btn-danger btn-xs"> Disaprove </a>';
-          })->escapeColumns([])->make(true);
-      }
+    // public function apipengajuanadmin(){
 
-      public function aprove($kode){
+    //     $peminjaman = Peminjaman::where('status', 0)->orderby('created_at')->get();
+
+    //     return DataTables::of($peminjaman)
+    //     ->addColumn('aprove',function($peminjaman) {
+    //         return '<a href="aprove/'.$peminjaman->kode.'" class="btn btn-primary btn-xs"> Aprove </a>';
+    //       })->addColumn('disaprove',function($peminjaman) {
+    //         return '<a href="disaprove/'.$peminjaman->kode.'" class="btn btn-danger btn-xs"> Disaprove </a>';
+    //       })->escapeColumns([])->make(true);
+    // }
+
+    public function aprove($kode){
         DB::table('peminjamen')->where('kode', $kode)->update([
             'status'=> 1
         ]);
         return redirect()->back();
-      }
+    }
 
-      public function disaprove($kode){
+    public function disaprove($kode){
 
         DB::table('peminjamen')->where('kode', $kode)->update([
             'status'=> 2
         ]);
         return redirect()->back();
-      }
+    }
+
 }
