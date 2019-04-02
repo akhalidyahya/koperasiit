@@ -26,7 +26,7 @@ Route::get('profile','MemberController@profile');
 Route::get('profile/detail','MemberController@detail');
 Route::get('profile/account', 'MemberController@account');
 Route::post('profile/account/update', 'MemberController@updateProfile')->name('update.profile');
-Route::resource('member','MemberController');
+// Route::resource('member','MemberController');
 
 Route::get('iuran/pokok','IuranController@pokokIndex')->name('iuran');
 Route::resource('iuran','IuranController',['names'=>[
@@ -94,3 +94,4 @@ Route::prefix('admin')->group(function(){
 Route::get('api/transaksiiuran', 'TransaksiController@apitransaksiiuran')->name('transaksiiuran');
 Route::get('api/transaksiiuranpokok', 'TransaksiController@apitransaksiiuranpokok')->name('transaksiiuranpokok');
 Route::get('api/pengajuanadmin', 'PeminjamanController@apipengajuanadmin')->name('apipeminjamanadmin');
+Route::get('api/transaksidp', 'TransaksiController@transaksidp')->name('apitransaksidp');

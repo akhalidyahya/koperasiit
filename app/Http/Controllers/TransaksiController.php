@@ -139,16 +139,16 @@ class TransaksiController extends Controller
     }
 
 
-    // public function apipengajuanadmin(){
-    //     $peminjaman = Peminjaman::where('status', 0)->orderby('created_at')->get();
+    public function apitransaksidp(){
+        $peminjaman = Peminjaman::where('status', 0)->orderby('created_at')->get();
 
-    //     return DataTables::of($peminjaman)
-    //     ->addColumn('aprove',function($peminjaman) {
-    //         return '<a href="aprove/'.$peminjaman->kode.'" class="btn btn-primary btn-xs"> Aprove </a>';
-    //       })->addColumn('disaprove',function($peminjaman) {
-    //         return '<a href="disaprove/'.$peminjaman->kode.'" class="btn btn-danger btn-xs"> Disaprove </a>';
-    //       })->escapeColumns([])->make(true);
-    //   }
+        return DataTables::of($peminjaman)
+        ->addColumn('aprove',function($peminjaman) {
+            return '<a href="aprove/'.$peminjaman->kode.'" class="btn btn-primary btn-xs"> Aprove </a>';
+          })->addColumn('disaprove',function($peminjaman) {
+            return '<a href="disaprove/'.$peminjaman->kode.'" class="btn btn-danger btn-xs"> Disaprove </a>';
+          })->escapeColumns([])->make(true);
+      }
 
       public function aprove($kode){
         DB::table('peminjamen')->where('kode', $kode)->update([
