@@ -82,10 +82,11 @@ Route::prefix('admin')->group(function(){
   Route::get('transaksi/disaprove/{kode}', 'TransaksiController@disaprove');
 
   Route::get('peminjaman/pengajuanPeminjaman', 'PeminjamanController@pengajuanAdmin');
-  Route::get('peminjaman/angsuranPeminjaman', 'PeminjamanController@angsuranAdmin');
   Route::get('peminjaman/aprove/{id}', 'PeminjamanController@aprove')->name('peminjamanAprove');
   Route::get('peminjaman/disaprove/{id}', 'PeminjamanController@disaprove')->name('peminjamanDisaprove');
   Route::get('peminjaman/detailPengajuan/{id}', 'PeminjamanController@detailPengajuanAdmin');
+
+  Route::get('peminjaman/angsuranPeminjaman', 'PeminjamanController@angsuranAdmin');
 
   Route::get('pengaturan','PengaturanController@index');
   Route::post('pengaturan/update','PengaturanController@update')->name('pengaturan.update');
@@ -94,6 +95,7 @@ Route::prefix('admin')->group(function(){
 Route::get('api/transaksiiuran', 'TransaksiController@apitransaksiiuran')->name('transaksiiuran');
 Route::get('api/transaksiiuranpokok', 'TransaksiController@apitransaksiiuranpokok')->name('transaksiiuranpokok');
 Route::get('api/pengajuanadmin', 'PeminjamanController@apipengajuanadmin')->name('apipeminjamanadmin');
+Route::get('api/angsuranadmin', 'PeminjamanController@apiangsuranadmin')->name('apiadminadmin');
 
 // Route::get('api/transaksidp', 'TransaksiController@transaksidp')->name('apitransaksidp');
 

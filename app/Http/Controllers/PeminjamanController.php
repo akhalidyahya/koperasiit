@@ -218,9 +218,28 @@ class PeminjamanController extends Controller
       $pengajuan = Peminjaman::find($id);
 
       return view ('admin/peminjaman/detailPengajuan', [
-        'sidebar' => 'angsuran',
+        'sidebar' => 'pengajuan',
         'pengajuan' => $pengajuan
       ]);
+    }
+
+    public function apiangsuranadmin($id)
+    {
+      // $id = 3;
+    //   $peminjaman = Peminjaman::where('status',1)->orderBy('id','desc');
+    $peminjaman = DB::table('peminjamans')
+    ->join('users', 'peminjamans.user_id', 'users.id')
+    ->where('peminjamans.status', '=', 1)
+    ->orderBy('peminjamans.id')
+    ->orderBy('peminjamans.desc')
+    ->get();
+
+      return DataTables::of($peminjaman)
+        ->addColumn('detail',function($peminjaman) {
+          return '<a href="admin/angsuran/detail/'.$peminjaman->kode.'" class="btn btn-default btn-xs"> Detail </a>';
+        })->addColumn('tanggal',function($peminjaman) {
+          return $peminjaman->created_at->toDateString();
+        })->escapeColumns([])->make(true);
     }
 
 }

@@ -56,6 +56,7 @@
             <table class="table table-striped table-bordered table-hover table-checkable order-column" id="myTable">
                 <thead>
                     <tr>
+                      <th>Nama</th>
                       <th>Kode</th>
                       <th>Tanggal</th>
                       <th>Nominal</th>
@@ -184,11 +185,12 @@ var id = 1;
 var t = $('#myTable').DataTable({
   'processing'  : true,
   'serverSide'  : true,
-  'ajax'        : "{{ url('peminjaman/api/angsuran') }}"+"/"+id,
+  'ajax'        : "{{ url('api/angsuranadmin') }}",
   'dataType'    : 'json',
   'paging'      : true,
   'lengthChange': true,
   'columns'     : [
+    {data:'name', name: 'name'},
     {data:'kode', name: 'kode'},
     {data:'tanggal', name: 'tanggal'},
     {data:'jumlah', name: 'jumlah'},
