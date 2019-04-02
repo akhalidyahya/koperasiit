@@ -62,7 +62,8 @@ class PeminjamanController extends Controller
     public function store(Request $request)
     {
         $pengaturan = Option::orderBy('id')->get();
-        $id = 3;
+        // $id = 3;
+        $id = 1;
         $admin = $pengaturan[1]->value;
         $margin = (float)$pengaturan[0]->value;
         $random = substr(str_shuffle('1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'),0,10);
@@ -153,30 +154,45 @@ class PeminjamanController extends Controller
       $peminjaman->update();
     }
 
-    public function aprove($id){
-      $peminjaman = Peminjaman::find($id);
-      $peminjaman->status = 1;
-      $peminjaman->update();
+    public function aprove($kode){
+    //   $peminjaman = Peminjaman::find($kode);
+    //   $peminjaman->status = 1;
+    //   $peminjaman->update();
 
-      $temp_pokok = $peminjaman->pokok;
-      for ($i=1; $i <= $peminjaman->angsuran ; $i++) {
-        $pokok = number_format($temp_pokok);
+    DB::table('peminjamen')
+    ->where('kode', '=', $kode)
+    ->update([
+        'status' => 1
+        ]);
+
+    $peminjaman = DB::table('peminjamen')
+    ->where('kode', '=', $kode)
+    ->get();
+
+    // return $peminjaman;
+
+      $temp_pokok = $peminjaman[0]->pokok;
+      $pokok = number_format($temp_pokok);
+      for ($i=1; $i <= $peminjaman[0]->angsuran ; $i++) {
         $data=[
           'bulan' => $i,
           'pokok' => $pokok,
-          'angsuran' => number_format($peminjaman->angsuran_bulanan),
-          'saldo' => number_format($temp_pokok - $peminjaman->angsuran_bulanan),
+          'angsuran' => number_format($peminjaman[0]->angsuran_bulanan),
+          'saldo' => number_format($temp_pokok - $peminjaman[0]->angsuran_bulanan),
           'status' => 0,
-          'peminjaman_id' => $id
+          'peminjaman_id' => $peminjaman[0]->id
         ];
-        $temp_pokok-=$peminjaman->angsuran_bulanan;
+        $temp_pokok-=$peminjaman[0]->angsuran_bulanan;
         Angsuran::create($data);
       }
+
+      return redirect('admin/peminjaman/pengajuanPeminjaman');
     }
 
     public function apipeminjaman($id)
     {
-      // $id = 3;
+      // $id = 3
+      $id = 1;
       $peminjaman = Peminjaman::where('user_id',$id)->orderBy('id','desc');
 
       return DataTables::of($peminjaman)
@@ -210,24 +226,28 @@ class PeminjamanController extends Controller
 
       return DataTables::of($peminjaman)
       ->addColumn('detail',function($peminjaman) {
-        return '<a href="admin/pengajuan/detailPengajuan/'.$peminjaman->id.'" class="btn btn-default btn-xs"> Detail </a>';
+        return '<a href="detailPengajuan/'.$peminjaman->kode.'" class="btn btn-default btn-xs"> Detail </a>';
       })->escapeColumns([])->make(true);
     }
 
-    public function detailPengajuanAdmin($id){
-      $pengajuan = Peminjaman::find($id);
+    public function detailPengajuanAdmin($kode){
+    //   $pengajuan = Peminjaman::find($id);
+    $pengajuan = DB::table('peminjamen')
+    ->where('kode', '=', $kode)
+    ->get();
 
       return view ('admin/peminjaman/detailPengajuan', [
         'sidebar' => 'pengajuan',
         'pengajuan' => $pengajuan
       ]);
+    // return $pengajuan[0]->status;
     }
 
     public function apiangsuranadmin($id)
     {
       // $id = 3;
     //   $peminjaman = Peminjaman::where('status',1)->orderBy('id','desc');
-    $peminjaman = DB::table('peminjamans')
+    $peminjaman = DB::table('peminjamen')
     ->join('users', 'peminjamans.user_id', 'users.id')
     ->where('peminjamans.status', '=', 1)
     ->orderBy('peminjamans.id')

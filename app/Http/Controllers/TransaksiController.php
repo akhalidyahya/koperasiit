@@ -156,7 +156,10 @@ class TransaksiController extends Controller
         DB::table('peminjamen')->where('kode', $kode)->update([
             'status'=> 1
         ]);
-        return redirect()->back();
+
+        $t = DB::table('peminjamen')->where('kode', $kode)->get();
+        // return redirect('admin/peminjaman/pengajuanPeminjaman');
+        return $t[0]->status;
     }
 
     public function disaprove($kode){
@@ -164,7 +167,7 @@ class TransaksiController extends Controller
         DB::table('peminjamen')->where('kode', $kode)->update([
             'status'=> 2
         ]);
-        return redirect()->back();
+        return redirect('admin/peminjaman/pengajuanPeminjaman');
     }
 
 }

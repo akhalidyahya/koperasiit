@@ -80,9 +80,9 @@ Route::prefix('admin')->group(function(){
   Route::get('transaksi/disaprove/{kode}', 'TransaksiController@disaprove');
 
   Route::get('peminjaman/pengajuanPeminjaman', 'PeminjamanController@pengajuanAdmin');
-  Route::get('peminjaman/aprove/{id}', 'PeminjamanController@aprove')->name('peminjamanAprove');
-  Route::get('peminjaman/disaprove/{id}', 'PeminjamanController@disaprove')->name('peminjamanDisaprove');
-  Route::get('peminjaman/detailPengajuan/{id}', 'PeminjamanController@detailPengajuanAdmin');
+  Route::get('peminjaman/aprove/{kode}', 'PeminjamanController@aprove')->name('peminjamanAprove');
+  Route::get('peminjaman/disaprove/{kode}', 'PeminjamanController@disaprove')->name('peminjamanDisaprove');
+  Route::get('peminjaman/detailPengajuan/{kode}', 'PeminjamanController@detailPengajuanAdmin');
 
   Route::get('peminjaman/angsuranPeminjaman', 'PeminjamanController@angsuranAdmin');
 

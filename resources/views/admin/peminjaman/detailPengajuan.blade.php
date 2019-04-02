@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.admin')
 @section('content')
 <!-- BEGIN PAGE HEAD-->
 <!-- BEGIN PAGE CSS -->
@@ -46,38 +46,39 @@
 <!-- BEGIN PAGE BASE CONTENT -->
 <div class="row">
   <div class="col-md-12">
-    <button <?php if($peminjaman->status == 3 || $peminjaman->status == 1) echo 'disabled'; ?> onclick="batalkan({{$peminjaman->id}})" class="btn btn-danger btn-flat"><i class="fa fa-times"></i> Batalkan Pengajuan</button>
+  <a href="{{url('admin/peminjaman/aprove/'.$pengajuan[0]->kode)}}" class="btn btn-primary btn-flat">Aprove</a>
+  <a href="{{url('admin/peminjaman/disaprove/'.$pengajuan[0]->kode)}}" class="btn btn-danger btn-flat">Disaprove</a>
     <p></p>
     <!-- BEGIN EXAMPLE TABLE PORTLET-->
     <div class="portlet light portlet-fit portlet-datatable bordered">
       <div class="portlet-body">
         <table>
           <tr>
-            <td>Keperluan</td> <td> : </td> <td>{{$peminjaman->keperluan}}</td>
+            <td>Keperluan</td> <td> : </td> <td>{{$pengajuan[0]->keperluan}}</td>
           </tr>
           <tr>
-            <td>Harga OTR</td> <td> : </td> <td>Rp.{{number_format($peminjaman->jumlah)}}</td>
+            <td>Harga OTR</td> <td> : </td> <td>Rp.{{number_format($pengajuan[0]->jumlah)}}</td>
           </tr>
           <tr>
-            <td>Margin {{$peminjaman->margin * 100}}%</td> <td> : </td> <td>Rp.{{number_format($peminjaman->after_margin)}}</td>
+            <td>Margin {{$pengajuan[0]->margin * 100}}%</td> <td> : </td> <td>Rp.{{number_format($pengajuan[0]->after_margin)}}</td>
           </tr>
           <tr>
-            <td>Biaya Admin</td> <td> : </td> <td>Rp.{{number_format($peminjaman->biaya_admin)}}</td>
+            <td>Biaya Admin</td> <td> : </td> <td>Rp.{{number_format($pengajuan[0]->biaya_admin)}}</td>
           </tr>
           <tr>
-            <td></td> <td> : </td> <td><b>Rp.{{number_format($peminjaman->jumlah + $peminjaman->after_margin + $peminjaman->biaya_admin)}}</b></td>
+            <td></td> <td> : </td> <td><b>Rp.{{number_format($pengajuan[0]->jumlah + $pengajuan[0]->after_margin + $pengajuan[0]->biaya_admin)}}</b></td>
           </tr>
           <tr>
-            <td>Jumlah DP</td> <td> : </td> <td>Rp.{{number_format($peminjaman->dp)}}</td>
+            <td>Jumlah DP</td> <td> : </td> <td>Rp.{{number_format($pengajuan[0]->dp)}}</td>
           </tr>
           <tr>
-            <td><b>Total Pokok</b> </td> <td> : </td> <td><b>Rp.{{number_format($peminjaman->pokok)}}</b></td>
+            <td><b>Total Pokok</b> </td> <td> : </td> <td><b>Rp.{{number_format($pengajuan[0]->pokok)}}</b></td>
           </tr>
           <tr>
-            <td>Periode Angsuran</td> <td> : </td> <td>{{number_format($peminjaman->angsuran)}}</td>
+            <td>Periode Angsuran</td> <td> : </td> <td>{{number_format($pengajuan[0]->angsuran)}}</td>
           </tr>
           <tr>
-            <td><b>Angsuran per Bulan</b> </td> <td> : </td> <td><b>Rp.{{number_format($peminjaman->angsuran_bulanan)}}</b></td>
+            <td><b>Angsuran per Bulan</b> </td> <td> : </td> <td><b>Rp.{{number_format($pengajuan[0]->angsuran_bulanan)}}</b></td>
           </tr>
         </table>
       </div>
@@ -100,13 +101,13 @@
                 </thead>
                 <tbody>
                   <?php
-                  $temp_pokok = $peminjaman->pokok;
-                  for ($i=1; $i <= $peminjaman->angsuran; $i++) { ?>
+                  $temp_pokok = $pengajuan[0]->pokok;
+                  for ($i=1; $i <= $pengajuan[0]->angsuran; $i++) { ?>
                     <tr>
                       <td><?php echo $i; ?></td>
                       <td><?php echo number_format($temp_pokok); ?></td>
-                      <td><?php echo number_format($peminjaman->angsuran_bulanan); ?></td>
-                      <td><?php $temp_pokok-=$peminjaman->angsuran_bulanan; echo number_format($temp_pokok);  ?></td>
+                      <td><?php echo number_format($pengajuan[0]->angsuran_bulanan); ?></td>
+                      <td><?php $temp_pokok-=$pengajuan[0]->angsuran_bulanan; echo number_format($temp_pokok);  ?></td>
                       <!-- <td></td> -->
                     </tr>
                   <?php }
@@ -120,8 +121,8 @@
 </div>
 <form id="myForm" class=""  method="post">
 {{csrf_field()}} {{method_field('POST')}}
-<input type="hidden" name="id" id="id" value="{{$peminjaman->id}}">
-<input type="hidden" name="status" id="status" value="{{$peminjaman->status}}">
+<input type="hidden" name="id" id="id" value="{{$pengajuan[0]->id}}">
+<input type="hidden" name="status" id="status" value="{{$pengajuan[0]->status}}">
 </form>
 <!-- END PAGE BASE CONTENT -->
 <script type="text/javascript">

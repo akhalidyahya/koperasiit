@@ -106,7 +106,7 @@ class AngsuranController extends Controller
 
     public function apiangsuran($id)
     {
-      // $id = 3;
+      $id = 1;
       $peminjaman = Peminjaman::where('user_id',$id)->where('status',1)->orderBy('id','desc');
 
       return DataTables::of($peminjaman)
