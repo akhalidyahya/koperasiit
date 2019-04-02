@@ -26,6 +26,18 @@ class PeminjamanController extends Controller
       ]);
     }
 
+    public function pengajuanAdmin(){
+      return view('admin/peminjaman/pengajuan',[
+        'sidebar' => 'pengajuan',
+      ]);
+    }
+
+    public function angsuranAdmin(){
+      return view('admin/peminjaman/angsuran',[
+        'sidebar' => 'angsuran'
+      ]);
+    }
+
     //ini buat admin
 
     /**
@@ -50,7 +62,7 @@ class PeminjamanController extends Controller
     public function store(Request $request)
     {
         $pengaturan = Option::orderBy('id')->get();
-        $id = 3;
+        $id = 1;
         $admin = $pengaturan[1]->value;
         $margin = $pengaturan[0]->value;
         $random = substr(str_shuffle('1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'),0,10);
@@ -185,6 +197,30 @@ class PeminjamanController extends Controller
             return 'something went wrong';
           }
         })->escapeColumns([])->make(true);
+    }
+
+    public function apipengajuanadmin(){
+      // $peminjaman = Peminjaman::join('users', 'users.id = peminjamen.id')->where('peminjamen.status', 0)->orderby('peminjamen.created_at')->get();
+      $peminjaman = DB::table('peminjamen')
+      ->join('users', 'users.id', '=', 'peminjamen.user_id')
+      ->where('peminjamen.status', '=', 0)
+      ->orderBy('peminjamen.created_at')
+      ->select('*')
+      ->get();
+
+      return DataTables::of($peminjaman)
+      ->addColumn('detail',function($peminjaman) {
+        return '<a href="admin/pengajuan/detailPengajuan/'.$peminjaman->id.'" class="btn btn-default btn-xs"> Detail </a>';
+      })->escapeColumns([])->make(true);
+    }
+
+    public function detailPengajuanAdmin($id){
+      $pengajuan = Peminjaman::find($id);
+
+      return view ('admin/peminjaman/detailPengajuan', [
+        'sidebar' => 'angsuran',
+        'pengajuan' => $pengajuan
+      ]);
     }
 
 }

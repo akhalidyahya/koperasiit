@@ -35,11 +35,41 @@
       <i class="fa fa-circle"></i>
   </li>
   <li>
-      <span class="active">Angsuran</span>
+      <span class="active">Pengajuan</span>
   </li>
 </ul>
 <!-- END PAGE BREADCRUMB -->
 <!-- BEGIN PAGE BASE CONTENT -->
+<div class="row widget-row">
+    <div class="col-md-3">
+        <!-- BEGIN WIDGET THUMB -->
+        <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered">
+            <h4 class="widget-thumb-heading">Margin Rate</h4>
+            <div class="widget-thumb-wrap">
+                <i class="widget-thumb-icon bg-blue-chambray icon-graph"></i>
+                <div class="widget-thumb-body">
+                    <span class="widget-thumb-subtitle">percent</span>
+                    <span class="widget-thumb-body-stat" data-counter="counterup" data-value="10">0</span>
+                </div>
+            </div>
+        </div>
+        <!-- END WIDGET THUMB -->
+    </div>
+    <div class="col-md-3">
+        <!-- BEGIN WIDGET THUMB -->
+        <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered">
+            <h4 class="widget-thumb-heading">Admin Charge</h4>
+            <div class="widget-thumb-wrap">
+                <i class="widget-thumb-icon bg-blue-chambray icon-book-open"></i>
+                <div class="widget-thumb-body">
+                    <span class="widget-thumb-subtitle">Rp</span>
+                    <span class="widget-thumb-body-stat" data-counter="counterup" data-value="250,000">0</span>
+                </div>
+            </div>
+        </div>
+        <!-- END WIDGET THUMB -->
+    </div>
+</div>
 <div class="row">
   <div class="col-md-12">
 
@@ -49,21 +79,23 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Transaksi Iuran Bulanan</span><span style="margin-left:15px;"></span>
+                <span class="caption-subject font-red sbold uppercase">Pengajuan Peminjaman</span><span style="margin-left:15px;"></span>
             </div>
+            <!-- <div class="actions">
+              <a class="btn btn-primary btn-flat" href="{{url('peminjaman/pengajuan/create')}}"><i class="fa fa-upload"></i> Ajukan Peminjaman</a>
+            </div> -->
         </div>
         <div class="portlet-body">
             <table class="table table-striped table-bordered table-hover table-checkable order-column" id="myTable">
                 <thead>
                     <tr>
-                      <th>Kode</th>
-                      <th>Jumlah</th>
-                      <th>Angsuran</th>                      
-                      <th>DP</th>
+                      <th>Nama</th>
+                      <th>Tanggal</th>
+                      <th>Nominal</th>
+                      <th>Angsuran</th>
                       <th>Keperluan</th>
-                      <th>tanggal</th>
-                      <th>Aprove</th>
-                      <th>Disaprove</th>
+                      <th>Status</th>
+                      <th>Detail</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -73,38 +105,140 @@
     <!-- END EXAMPLE TABLE PORTLET-->
   </div>
 </div>
-
+<!-- modal -->
+<!-- <div class="modal fade" id="myModal" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Modal Title</h4>
+            </div>
+            <div class="modal-body">
+              <form class="" method="post" enctype="multipart/form-data">
+                {{csrf_field()}} {{method_field('POST')}}
+                <input type="hidden" name="id" value="" id="id">
+                <div class="form-body">
+                  <div class="form-group form-md-line-input has-success form-md-floating-label">
+                      <div class="input-icon">
+                          <input id="jumlah" type="text" class="form-control" name="jumlah">
+                          <label for="form_control_1">Jumlah Pinjaman</label>
+                          <i class="fa fa-money"></i>
+                      </div>
+                  </div>
+                  <div class="form-group form-md-line-input has-success form-md-floating-label">
+                      <div class="input-icon">
+                          <select class="form-control" id="angsuran" name="angsuran">
+                            <option value=""></option>
+                            <option value="12">12 kali</option>
+                            <option value="12">24 kali</option>
+                          </select>
+                          <label for="form_control_1">Angsuran</label>
+                          <i class="fa fa-clock-o"></i>
+                      </div>
+                  </div>
+                  <div class="form-group form-md-line-input has-success form-md-floating-label">
+                      <div class="input-icon">
+                          <input id="dp" type="text" class="form-control" name="dp">
+                          <label for="form_control_1">DP</label>
+                          <i class="fa fa-money"></i>
+                      </div>
+                  </div>
+                  <div class="form-group form-md-line-input has-success form-md-floating-label">
+                      <div class="input-icon">
+                          <input id="keperluan" type="text" class="form-control" name="keperluan">
+                          <label for="form_control_1">Keperluan</label>
+                          <i class="fa fa-briefcase"></i>
+                      </div>
+                  </div>
+                  <div class="form-group form-md-line-input has-success form-md-floating-label">
+                    <label for="form_control_1">Foto/File SK</label>
+                      <div class="input-icon">
+                          <input id="sk" type="file" class="form-control" name="sk">
+                          <i class="fa fa-photo"></i>
+                      </div>
+                  </div>
+                  <div class="form-group form-md-line-input has-success form-md-floating-label">
+                    <label for="form_control_1">Foto/File KTP</label>
+                      <div class="input-icon">
+                          <input id="ktp" type="file" class="form-control" name="ktp">
+                          <i class="fa fa-photo"></i>
+                      </div>
+                  </div>
+                  <div class="form-group form-md-line-input has-success form-md-floating-label">
+                    <label for="form_control_1">Foto/File KK</label>
+                      <div class="input-icon">
+                          <input id="kk" type="file" class="form-control" name="kk">
+                          <i class="fa fa-photo"></i>
+                      </div>
+                  </div>
+                  <div class="form-group form-md-line-input has-success form-md-floating-label">
+                    <label for="form_control_1">Foto/File Slip gaji</label>
+                      <div class="input-icon">
+                          <input id="slip" type="file" class="form-control" name="slip">
+                          <i class="fa fa-photo"></i>
+                      </div>
+                  </div>
+                  <div class="form-group form-md-line-input has-success form-md-floating-label">
+                    <label for="form_control_1">Foto/File jaminan/surat berharga</label>
+                      <div class="input-icon">
+                          <input id="jaminan" type="file" class="form-control" name="jaminan">
+                          <i class="fa fa-photo"></i>
+                      </div>
+                  </div>
+                    <div class="form-actions noborder text-center">
+                        <button id="submit" type="submit" class="btn blue">Submit</button>
+                        <button type="button" class="btn default">Cancel</button>
+                    </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                <button type="button" class="btn green">Save changes</button>
+            </div>
+        </div>-->
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div> -->
+<!-- /.modal -->
+<!-- END PAGE BASE CONTENT -->
 <script type="text/javascript">
-function pinjam(){
-  save_method = 'add';
-  $('input[name=_method]').val('POST');
-  $('#myModal').modal('show');
-  $('#myModal form')[0].reset();
-  $('.modal-title').text('Ajukan Peminjaman');
-}
+// function pinjam(){
+//   save_method = 'add';
+//   $('input[name=_method]').val('POST');
+//   $('#myModal').modal('show');
+//   $('#myModal form')[0].reset();
+//   $('.modal-title').text('Ajukan Peminjaman');
+// }
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
 });
-var id = 3;
-var t = $('#myTable').DataTable({
+// var id = 1;
+$('#myTable').DataTable(
+ {
   'processing'  : true,
   'serverSide'  : true,
-  'ajax'        : "{{ url('api/peminjamanadmin') }}",
+  'ajax'        : "{{ url('api/pengajuanadmin') }}",
   'dataType'    : 'json',
   'paging'      : true,
   'lengthChange': true,
   'columns'     : [
-    {data:'kode', name: 'kode'},    
+    {data:'name', name: 'name'},
+    {data:'created_at', name: 'created_at'},
     {data:'jumlah', name: 'jumlah'},
     {data:'angsuran', name: 'angsuran'},
-    {data:'dp', name: 'dp'},
     {data:'keperluan', name: 'keperluan'},
-    {data:'created_at', name: 'created_at'},
-    {data:'aprove', name: 'aprove'},
-    {data:'disaprove', name: 'disaprove'},    
+    {data:'status', name: 'status'},
+    // {data:'aprove', name: 'aprove'},
+    // {data:'disaprove', name: 'disaprove'},
+    {data:'detail', name: 'detail', orderable: false, searchable: false},
   ],
   'info'        : true,
   'autoWidth'   : false
-});
+}
+);
 </script>
+
+
 @endsection

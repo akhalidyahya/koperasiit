@@ -224,7 +224,7 @@
                                 <span class="arrow"></span>
                             </a>
                             <ul class="sub-menu">
-                                <li class="nav-item {{ ($sidebar == 'pengajuanPeminjaman') ? 'active open' : ''}} ">
+                                <li class="nav-item {{ ($sidebar == 'pengajuan') ? 'active open' : ''}} ">
                                     <a href="{{url('admin/peminjaman/pengajuanPeminjaman')}}" class="nav-link ">
                                          <span class="title">Pengajuan</span>
                                      </a>
