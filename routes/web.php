@@ -27,7 +27,7 @@ Route::get('profile/detail','MemberController@detail');
 Route::get('profile/account', 'MemberController@account');
 Route::post('profile/account/update', 'MemberController@updateProfile')->name('update.profile');
 // Route::resource('member','MemberController');
-
+Route::post('iuran/pokok/save','IuranController@storepokok')->name('iuranpokok');
 Route::get('iuran/pokok','IuranController@pokokIndex')->name('iuran');
 Route::resource('iuran','IuranController',['names'=>[
   'index' => 'iuran'
@@ -36,7 +36,6 @@ Route::resource('iuran','IuranController',['names'=>[
 Route::post('iuran/bayar-iuran-pokok', 'IuranController@storeIuranPokok')->name('bayar.iuran.pokok');
 
 Route::prefix('peminjaman')->group(function(){
-
   Route::get('api/pengajuan/{id}','PeminjamanController@apipeminjaman');
   Route::get('pengajuan/detail/{kode}','PeminjamanController@detail')->name('peminjaman');
   Route::patch('pengajuan/cancel/{id}','PeminjamanController@cancel');
@@ -57,7 +56,6 @@ Route::prefix('peminjaman')->group(function(){
 });
 
 Route::prefix('admin')->group(function(){
-
   Route::resource('dashboard','AdminDashboardController',['names'=>[
     'index' => 'dashboard'
   ]]);
@@ -71,12 +69,12 @@ Route::prefix('admin')->group(function(){
 
   Route::get('iuran/aprove/{kode}', 'IuranController@aprove')->name('iuranAprove');
   Route::get('iuran/disaprove/{kode}', 'IuranController@disaprove')->name('iuranDisaprove');
-  Route::get('iuran/transaksiIuran', 'TransaksiController@indexIuran');
-  Route::get('iuran/transaksiIuranPokok', 'TransaksiController@indexIuranPokok');
-  Route::get('peminjaman/transaksiPeminjaman', 'TransaksiController@indexPeminjaman');
+  Route::get('transaksi/iuranbulanan', 'TransaksiController@indexIuran')->name('transaksi');
+  Route::get('transaksi/iuranpokok', 'TransaksiController@indexIuranPokok')->name('transaksi');
+  Route::get('peminjaman/transaksiPeminjaman', 'TransaksiController@indexPeminjaman'); //coba di evalluate
   Route::get('iuran/iuranBulanan', 'IuranController@iuranBulananAdmin');
   Route::get('iuran/iuranPokok', 'IuranController@iuranPokokAdmin');
-  Route::get('transaksi/daftarpeminjaman', 'TransaksiController@indexdaftarpeminjaman');
+  Route::get('transaksi/daftarpeminjaman', 'TransaksiController@indexdaftarpeminjaman'); //coba dievaluate
 
   Route::get('transaksi/aprove/{kode}', 'TransaksiController@aprove');
   Route::get('transaksi/disaprove/{kode}', 'TransaksiController@disaprove');
@@ -96,6 +94,3 @@ Route::get('api/transaksiiuranpokok', 'TransaksiController@apitransaksiiuranpoko
 Route::get('api/pengajuanadmin', 'PeminjamanController@apipengajuanadmin')->name('apipeminjamanadmin');
 
 // Route::get('api/transaksidp', 'TransaksiController@transaksidp')->name('apitransaksidp');
-
-
-

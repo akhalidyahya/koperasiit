@@ -138,7 +138,7 @@
               </div>
               <div class="form-group">
                 <div class="col-md-2">
-                  Margin 10%
+                  Margin {{$pengaturan[0]->value*100}} %
                 </div>
                 <div class="col-md-10">
                   <span id="margin"></span>
@@ -235,9 +235,9 @@ $(document).ready(function(){
     $('#total_pokok').text(numberWithCommas(total_pokok));
     $('#angsuran_per_bulan').text(numberWithCommas(angsuran_per_bulan));
 
-    $('#after_margin').val(numberWithCommas(after_margin));
-    $('#pokok').val(numberWithCommas(total_pokok));
-    $('#angsuran_bulanan').val(numberWithCommas(angsuran_per_bulan));
+    $('#after_margin').val(after_margin);
+    $('#pokok').val(total_pokok);
+    $('#angsuran_bulanan').val(angsuran_per_bulan);
   });
 });
 

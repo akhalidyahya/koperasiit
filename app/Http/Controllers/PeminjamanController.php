@@ -62,9 +62,9 @@ class PeminjamanController extends Controller
     public function store(Request $request)
     {
         $pengaturan = Option::orderBy('id')->get();
-        $id = 1;
+        $id = 3;
         $admin = $pengaturan[1]->value;
-        $margin = $pengaturan[0]->value;
+        $margin = (float)$pengaturan[0]->value;
         $random = substr(str_shuffle('1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'),0,10);
         $data = [
           'kode' => $random,
@@ -136,9 +136,9 @@ class PeminjamanController extends Controller
         //
     }
 
-    public function detail($id)
+    public function detail($kode)
     {
-      $peminjaman = Peminjaman::find($id);
+      $peminjaman = Peminjaman::where('kode',$kode)->first();
 
       return view('pages/pengajuan/detail',[
         'sidebar'=>'pengajuan',
@@ -181,7 +181,7 @@ class PeminjamanController extends Controller
 
       return DataTables::of($peminjaman)
         ->addColumn('detail',function($peminjaman) {
-          return '<a href="pengajuan/detail/'.$peminjaman->id.'" class="btn btn-default btn-xs"> Detail </a>';
+          return '<a href="pengajuan/detail/'.$peminjaman->kode.'" class="btn btn-default btn-xs"> Detail </a>';
         })->addColumn('tanggal',function($peminjaman) {
           return $peminjaman->created_at->toDateString();
         })->addColumn('status',function($peminjaman) {

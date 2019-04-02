@@ -28,28 +28,7 @@
 <!-- END PAGE BREADCRUMB -->
 <!-- BEGIN PAGE BASE CONTENT -->
 <div class="row">
-  <div class="col-md-12">
-    <div class="portlet light portlet-fit portlet-datatable bordered">
-      <div class="portlet-title">
-        <div class="caption">
-            <i class=" icon-layers font-green-jungle"></i>
-            <span class="caption-subject font-green-jungle sbold uppercase">Anda Sudah Membayar Iuran Pokok</span>
-            <span class="fa fa-check-circle-o font-green-jungle"></span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-12">
-    <div class="portlet light portlet-fit portlet-datatable bordered">
-      <div class="portlet-title">
-        <div class="caption">
-            <i class=" icon-layers"></i>
-            <span class="caption-subject sbold uppercase">Pembayaran Iuran Pokok sedang di verivikasi</span>
-            <span class="fa fa-refresh"></span>
-        </div>
-      </div>
-    </div>
-  </div>
+  @if($pokok->status == 0)
   <div class="col-md-12">
     <div class="portlet light portlet-fit portlet-datatable bordered">
       <div class="portlet-title">
@@ -64,6 +43,46 @@
       </div>
     </div>
   </div>
+  @elseif($pokok->status == 1)
+  <div class="col-md-12">
+    <div class="portlet light portlet-fit portlet-datatable bordered">
+      <div class="portlet-title">
+        <div class="caption">
+            <i class=" icon-layers font-green-jungle"></i>
+            <span class="caption-subject font-green-jungle sbold uppercase">Anda Sudah Membayar Iuran Pokok</span>
+            <span class="fa fa-check-circle-o font-green-jungle"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  @elseif($pokok->status == 2)
+  <div class="col-md-12">
+    <div class="portlet light portlet-fit portlet-datatable bordered">
+      <div class="portlet-title">
+        <div class="caption">
+            <i class=" icon-layers"></i>
+            <span class="caption-subject sbold uppercase">Pembayaran Iuran Pokok sedang di verivikasi</span>
+            <span class="fa fa-refresh"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  @elseif($pokok->status == 3)
+  <div class="col-md-12">
+    <div class="portlet light portlet-fit portlet-datatable bordered">
+      <div class="portlet-title">
+        <div class="caption">
+            <i class=" icon-layers font-red"></i>
+            <span class="caption-subject font-red sbold uppercase">Pembayaran Ditolak, silahkan lakukan Pembayaran kembali</span>
+            <span class="fa fa-times-circle-o font-red"></span>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <button onclick="bayar()" class="btn btn-primary btn-flat"><i class="fa fa-upload"></i> Bayar Sekarang</button>
+      </div>
+    </div>
+  </div>
+  @endif
 </div>
 <!-- modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="basic" aria-hidden="true">
@@ -74,23 +93,14 @@
                 <h4 class="modal-title">Modal Title</h4>
             </div>
             <div class="modal-body">
-              <form role="form" class="" method="post" enctype="multipart/form-data" action="{{route('iuran')}}">
+              <form role="form" class="" method="post" enctype="multipart/form-data" action="{{route('iuranpokok')}}">
                 {{csrf_field()}} {{method_field('POST')}}
                 <input type="hidden" name="id" value="" id="id">
                 <div class="form-body">
                   <div class="form-group form-md-line-input has-success form-md-floating-label">
                       <div class="input-icon">
-                          <select class="form-control" id="bulan" name="bulan">
-                            <option value=""></option>
-
-                          </select>
-                          <label for="form_control_1">Bulan</label>
-                          <i class="fa fa-calendar"></i>
-                      </div>
-                  </div>
-                  <div class="form-group form-md-line-input has-success form-md-floating-label">
-                      <div class="input-icon">
-                          <input id="nominal" type="text" class="form-control" name="nominal">
+                          <input type="text" class="form-control" value="{{$pengaturan[2]->value}}" disabled>
+                          <input id="nominal" type="hidden" class="form-control" name="nominal" value="{{$pengaturan[2]->value}}">
                           <label for="form_control_1">Nominal</label>
                           <i class="fa fa-money"></i>
                       </div>

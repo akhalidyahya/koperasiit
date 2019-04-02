@@ -61,7 +61,7 @@
                       <th>Nominal</th>
                       <th>Angsuran</th>
                       <th>Keperluan</th>
-                      <th>Detail</th>
+                      <th>Angsuran</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -180,7 +180,7 @@ function pinjam(){
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
 });
-var id = 1;
+var id = 3;
 var t = $('#myTable').DataTable({
   'processing'  : true,
   'serverSide'  : true,
