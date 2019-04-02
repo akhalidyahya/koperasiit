@@ -49,7 +49,7 @@
                 <i class="widget-thumb-icon bg-blue-chambray icon-graph"></i>
                 <div class="widget-thumb-body">
                     <span class="widget-thumb-subtitle">percent</span>
-                    <span class="widget-thumb-body-stat" data-counter="counterup" data-value="10">0</span>
+                    <span class="widget-thumb-body-stat" data-counter="counterup" data-value="{{$pengaturan[0]->value * 100}}">0</span>
                 </div>
             </div>
         </div>
@@ -213,7 +213,7 @@ function pinjam(){
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
 });
-var id = 1;
+var id = 3;
 var t = $('#myTable').DataTable({
   'processing'  : true,
   'serverSide'  : true,

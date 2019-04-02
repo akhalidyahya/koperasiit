@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Iuran;
 use App\Transaksi;
+use App\Option;
 
 class IuranController extends Controller
 {
@@ -33,9 +34,16 @@ class IuranController extends Controller
     public function pokokIndex(){
       $id = 3;
       $iuran_pokok = DB::table('iurans')->where('user_id',$id)->where('jenis','pokok')->orderBy('id')->get();
+      $bulan = DB::table('iurans')->where('user_id',$id)->where('jenis','bulanan')->where('status','<>',1)->where('status','<>',2)->orderBy('id')->get();
+      $pokok = DB::table('iurans')->where('user_id',$id)->where('jenis', 'pokok')->first();
+      $option = Option::orderBy('id')->get();
+
       return view('pages/iuranpokok',[
         'sidebar'=>'pokok',
-        'iuranpokok' => $iuran_pokok
+        'iuranpokok' => $iuran_pokok,
+        'bulan' => $bulan,
+        'pokok' => $pokok,
+        'pengaturan' => $option
       ]);
     }
 
@@ -105,9 +113,7 @@ class IuranController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->hasfile('bulan')){
-
-        $id = 1;
+        $id = 3;
         $bulan = $request['bulan'];
         $data = [
           'status' => 2,
@@ -128,36 +134,32 @@ class IuranController extends Controller
           'aproval' => 0,
           'user_id' => $id
         ];
-
         Transaksi::create($data_transaksi);
         return redirect('iuran');
+    }
 
-        }else{
-
-        $id = 3;
-
-        $data = [
-          'status' => 2,
-          'keterangan' => $request->keterangan,
-          'jumlah' => $request->nominal,
-          'foto' => $request->bukti->getClientOriginalName()
-        ];
-        DB::table('iurans')->where('user_id', $id)->where('bulan',0)->update($data);
-
-        $data_transaksi = [
-          'kode' => 'iuran_pokok_'.$id,
-          'jumlah' => $request->nominal,
-          'bulan' => 0,
-          'tahun' => Date('Y'),
-          'keterangan' => $request->keterangan,
-          'jenis' => 'iuran',
-          'foto' => $request->bukti->getClientOriginalName(),
-          'aproval' => 0,
-          'user_id' => $id
-        ];
-        Transaksi::create($data_transaksi);
-        return redirect('iuran');
-        }
+    public function storepokok(Request $request){
+      $id = 3;
+      $data = [
+        'status' => 2,
+        'keterangan' => $request->keterangan,
+        'jumlah' => $request->nominal,
+        'foto' => $request->bukti->getClientOriginalName()
+      ];
+      DB::table('iurans')->where('user_id', $id)->where('bulan',0)->update($data);
+      $data_transaksi = [
+        'kode' => 'iuran_pokok_'.$id,
+        'jumlah' => $request->nominal,
+        'bulan' => 0,
+        'tahun' => Date('Y'),
+        'keterangan' => $request->keterangan,
+        'jenis' => 'iuran',
+        'foto' => $request->bukti->getClientOriginalName(),
+        'aproval' => 0,
+        'user_id' => $id
+      ];
+      Transaksi::create($data_transaksi);
+      return redirect('iuran/pokok');
     }
     /**
      * Display the specified resource.

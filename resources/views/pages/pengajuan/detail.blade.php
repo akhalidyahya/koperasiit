@@ -162,7 +162,7 @@ function batalkan(id){
 //       contentType: false,
 //       processData: false,
 //       success: function($data){
-//         window.location.replace("{{url('peminjaman/pengajuan')}}");
+//         window.location.replace("{{url('admin/peminjaman/pengajuanPeminjaman')}}");
 //       },
 //       error: function(){
 //         alert('something went wrong');

@@ -17,7 +17,7 @@
 <div class="page-head">
     <!-- BEGIN PAGE TITLE -->
     <div class="page-title">
-        <h1>Member Koperasi Dashboard | Peminjaman
+        <h1>Admin Koperasi | Transaksi Iuran Pokok
             <small>statistics, charts and reports</small>
         </h1>
     </div>
@@ -57,7 +57,7 @@
                 <thead>
                     <tr>
                       <th>Kode</th>
-                      <th>Tanggal</th>                      
+                      <th>Tanggal</th>
                       <th>Nominal</th>
                       <th>Aprove</th>
                       <th>Disaprove</th>
@@ -92,7 +92,7 @@ var t = $('#myTable').DataTable({
   'lengthChange': true,
   'columns'     : [
     {data:'kode', name: 'kode'},
-    {data:'created_at', name: 'created_at'},    
+    {data:'created_at', name: 'created_at'},
     {data:'jumlah', name: 'jumlah'},
     {data:'aprove', name: 'aprove'},
     {data:'disaprove', name: 'disaprove'},

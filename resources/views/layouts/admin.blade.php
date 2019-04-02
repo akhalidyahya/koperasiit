@@ -194,13 +194,13 @@
                           </a>
                           <ul class="sub-menu">
                             <li class="nav-item {{ ($sidebar == 'transaksiIuran') ? 'active open' : ''}} ">
-                              <a href="{{url('admin/iuran/transaksiIuran')}}" class="nav-link ">
+                              <a href="{{url('admin/transaksi/iuranbulanan')}}" class="nav-link ">
                                 <span class="title">Iuran Bulanan</span>
                               </a>
                             </li>
 
-                            <li class="nav-item {{ ($sidebar == 'indexIuranPokok') ? 'active open' : ''}} ">
-                              <a href="{{url('admin/iuran/transaksiIuranPokok')}}" class="nav-link ">
+                            <li class="nav-item {{ ($sidebar == 'transaksiIuranPokok') ? 'active open' : ''}} ">
+                              <a href="{{url('admin/transaksi/iuranpokok')}}" class="nav-link ">
                                 <span class="title">Iuran Pokok</span>
                               </a>
                             </li>
