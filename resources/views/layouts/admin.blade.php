@@ -205,13 +205,13 @@
                               </a>
                             </li>
 
-                            <li class="nav-item {{ ($sidebar == 'transaksiPeminjaman') ? 'active open' : ''}} ">
-                              <a href="#" class="nav-link ">
+                            <li class="nav-item {{ ($sidebar == 'transaksiangsuran') ? 'active open' : ''}} ">
+                              <a href="{{url('admin/transaksi/angsuran')}}" class="nav-link ">
                                 <span class="title">Angsuran</span>
                               </a>
                             </li>
-                            <li class="nav-item {{ ($sidebar == 'daftarpeminjaman') ? 'active open' : ''}} ">
-                              <a href="{{url('admin/transaksi/daftarpeminjaman')}}" class="nav-link ">
+                            <li class="nav-item {{ ($sidebar == 'transaksidp') ? 'active open' : ''}} ">
+                              <a href="{{url('admin/transaksi/dp')}}" class="nav-link ">
                                 <span class="title">DP</span>
                               </a>
                             </li>

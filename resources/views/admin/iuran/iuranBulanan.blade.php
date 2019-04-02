@@ -17,7 +17,7 @@
 <div class="page-head">
     <!-- BEGIN PAGE TITLE -->
     <div class="page-title">
-        <h1>Member Koperasi Dashboard | Iuran 
+        <h1>Member Koperasi Dashboard | Iuran
             <small>statistics, charts and reports</small>
         </h1>
     </div>
@@ -72,7 +72,7 @@
                     {{-- b adalah seluruh data iuran bulanan --}}
                   @foreach($nama as $n)
                   <tr>
-                    <td>{{$n->name}}</td>
+                    <td><a href="{{url('admin/member').'/'.$n->id}}/edit">{{$n->name}}</a></td>
                     @foreach($bulanan as $b)
                     @if($b->user_id == $n->id)
                     <td>

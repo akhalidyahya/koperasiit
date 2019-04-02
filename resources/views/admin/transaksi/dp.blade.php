@@ -17,7 +17,7 @@
 <div class="page-head">
     <!-- BEGIN PAGE TITLE -->
     <div class="page-title">
-        <h1>Admin Koperasi | Transaksi Iuran
+        <h1>Admin Koperasi | Transaksi DP
             <small>statistics, charts and reports</small>
         </h1>
     </div>
@@ -35,7 +35,7 @@
       <i class="fa fa-circle"></i>
   </li>
   <li>
-      <span class="active">Iuran</span>
+      <span class="active">DP</span>
   </li>
 </ul>
 <!-- END PAGE BREADCRUMB -->
@@ -49,17 +49,16 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Transaksi Iuran Bulanan</span><span style="margin-left:15px;"></span>
+                <span class="caption-subject font-red sbold uppercase">Transaksi DP peminjaman</span><span style="margin-left:15px;"></span>
             </div>
         </div>
         <div class="portlet-body">
             <table class="table table-striped table-bordered table-hover table-checkable order-column" id="myTable">
                 <thead>
                     <tr>
-                      <th>Nama</th>
+                      <th>nama</th>
                       <th>Kode</th>
-                      <th>Waktu</th>
-                      <th>Bulan</th>
+                      <th>Tanggal</th>
                       <th>Nominal</th>
                       <th>Aprove</th>
                       <th>Disaprove</th>
@@ -88,7 +87,7 @@ var id = 3;
 var t = $('#myTable').DataTable({
   'processing'  : true,
   'serverSide'  : true,
-  'ajax'        : "{{ url('api/transaksiiuran') }}",
+  'ajax'        : "{{ url('api/transaksidp') }}",
   'dataType'    : 'json',
   'paging'      : true,
   'lengthChange': true,
@@ -96,7 +95,6 @@ var t = $('#myTable').DataTable({
     {data:'name', name: 'name'},
     {data:'kode', name: 'kode'},
     {data:'created_at', name: 'created_at'},
-    {data:'bulan', name: 'bulan'},
     {data:'jumlah', name: 'jumlah'},
     {data:'aprove', name: 'aprove'},
     {data:'disaprove', name: 'disaprove'},

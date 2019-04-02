@@ -31,11 +31,11 @@
       <i class="fa fa-circle"></i>
   </li>
   <li>
-      <a href="javascript:;">Peminjaman</a>
+      <a href="javascript:;">Transaksi</a>
       <i class="fa fa-circle"></i>
   </li>
   <li>
-      <span class="active">Angsuran</span>
+      <span class="active">Iuran Pokok</span>
   </li>
 </ul>
 <!-- END PAGE BREADCRUMB -->
@@ -56,6 +56,7 @@
             <table class="table table-striped table-bordered table-hover table-checkable order-column" id="myTable">
                 <thead>
                     <tr>
+                      <th>nama</th>
                       <th>Kode</th>
                       <th>Tanggal</th>
                       <th>Nominal</th>
@@ -91,6 +92,7 @@ var t = $('#myTable').DataTable({
   'paging'      : true,
   'lengthChange': true,
   'columns'     : [
+    {data:'name', name: 'name'},
     {data:'kode', name: 'kode'},
     {data:'created_at', name: 'created_at'},
     {data:'jumlah', name: 'jumlah'},

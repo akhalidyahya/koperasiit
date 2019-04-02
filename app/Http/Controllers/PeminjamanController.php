@@ -62,8 +62,8 @@ class PeminjamanController extends Controller
     public function store(Request $request)
     {
         $pengaturan = Option::orderBy('id')->get();
-        // $id = 3;
-        $id = 1;
+        $id = 3;
+        // $id = 1;
         $admin = $pengaturan[1]->value;
         $margin = (float)$pengaturan[0]->value;
         $random = substr(str_shuffle('1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'),0,10);
@@ -192,7 +192,7 @@ class PeminjamanController extends Controller
     public function apipeminjaman($id)
     {
       // $id = 3
-      $id = 1;
+      // $id = 1;
       $peminjaman = Peminjaman::where('user_id',$id)->orderBy('id','desc');
 
       return DataTables::of($peminjaman)

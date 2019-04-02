@@ -11,7 +11,7 @@
 <div class="page-head">
     <!-- BEGIN PAGE TITLE -->
     <div class="page-title">
-        <h1>New User Profile | Account
+        <h1>Edit User Profile | Account
             <small>user account page</small>
         </h1>
     </div>
@@ -25,7 +25,11 @@
         <i class="fa fa-circle"></i>
     </li>
     <li>
-        <span class="active">User</span>
+        <span class="">User</span>
+        <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">Setting</span>
     </li>
 </ul>
 <!-- END PAGE BREADCRUMB -->
@@ -56,11 +60,14 @@
 
                 <div class="profile-usermenu">
                     <ul class="nav">
-                        
+                      <li class="">
+                          <a href="{{url('profile')}}">
+                              <i class="icon-home"></i> Overview </a>
+                      </li>
                         <li class="active">
                             <a href="">
                                 <i class="icon-settings"></i> Account Settings </a>
-                        </li>                        
+                        </li>
                     </ul>
                 </div>
 
@@ -68,7 +75,7 @@
             </div>
             <!-- END PORTLET MAIN -->
             <!-- PORTLET MAIN -->
-            
+
             <!-- END PORTLET MAIN -->
         </div>
         <!-- END BEGIN PROFILE SIDEBAR -->
@@ -91,7 +98,7 @@
                                 </li>
                                 <li>
                                     <a href="#tab_1_3" data-toggle="tab">Change Password</a>
-                                </li>                                
+                                </li>
                             </ul>
                         </div>
                         <div class="portlet-body">
@@ -116,7 +123,7 @@
                                             <div class="form-group">
                                                 <label class="control-label">Jenis Kelamin</label><br>
                                                 <label class="radio-inline"><input type="radio" value="lk" name="jk" {{ ($user->jk=="lk")? "checked" : "" }} />Laki-laki</label>
-                                                <label class="radio-inline"><input type="radio" value="pr" name="jk" {{ ($user->jk=="pr")? "checked" : "" }}/>Perempuan</label>                                                
+                                                <label class="radio-inline"><input type="radio" value="pr" name="jk" {{ ($user->jk=="pr")? "checked" : "" }}/>Perempuan</label>
                                             </div>
                                         <div class="form-group">
                                             <label class="control-label">Identitas</label>
@@ -147,11 +154,11 @@
                                             <label class="control-label">No Lembaga</label>
                                             <input type="text" placeholder="http://www.mywebsite.com" name="no_lembaga" class="form-control" value="{{$user->no_lembaga}}"/> </div>
 
-                                        <div class="margiv-top-10">                                            
+                                        <div class="margiv-top-10">
                                             <button type="submit" class="btn green">Save Changes</button>
                                             <button type="button" class="btn green">Cancel</button>
                                         </div>
-                                        
+
 
                                     </form>
                                 </div>
@@ -210,7 +217,7 @@
                                     </form>
                                 </div>
                                 <!-- END CHANGE PASSWORD TAB -->
-                                
+
                             </div>
                         </div>
                     </div>
@@ -225,9 +232,9 @@
 <script>
 
 $( document ).ready(function() {
-	
+
 	$('input').blur(function() {
-if ($('#pass1').attr('value') == $('#pass2').attr('value')) {    
+if ($('#pass1').attr('value') == $('#pass2').attr('value')) {
 return true;
 } else { return false; }
 });

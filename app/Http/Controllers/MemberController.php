@@ -42,8 +42,8 @@ class MemberController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {      
-        $auth = 'admin';        
+    {
+        $auth = 'admin';
         $data = [
           'name' => $request['nama'],
           'email' => $request['email'],
@@ -111,9 +111,9 @@ class MemberController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   
-      
-        $user = User::find($id);        
+    {
+
+        $user = User::find($id);
         return view('pages/member/edit',[
           'sidebar'=>'createMember',
           'user' => $user
@@ -142,7 +142,7 @@ class MemberController extends Controller
         'pendapatan' => $r->pendapatan,
         'nama_lembaga' => $r->nama_lembaga,
         'pegawaian' => $r->pegawaian,
-        'no_lembaga' => $r->no_lembaga,        
+        'no_lembaga' => $r->no_lembaga,
       ]);
       return redirect()->route('member.index');
     }
@@ -151,7 +151,7 @@ class MemberController extends Controller
     public function updateProfile(Request $r)
     {
       // return 1;
-      $id = 1;      
+      $id = 1;
 
       if($r->hasfile('gambar')){
 
@@ -174,7 +174,7 @@ class MemberController extends Controller
           'pendapatan' => $r->pendapatan,
           'nama_lembaga' => $r->nama_lembaga,
           'pegawaian' => $r->pegawaian,
-          'no_lembaga' => $r->no_lembaga,        
+          'no_lembaga' => $r->no_lembaga,
         ]);
       }
 
@@ -191,24 +191,24 @@ class MemberController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {   
+    {
         $user = User::find($id);
         $user->deleted = 1;
         $user->save();
-        
+
         // $user->forceDelete();
         // DB::table('users')->where('id', $id)->delete();
         // DB::table('iurans')->where('user_id', $id)->delete();
           // return 1;
         // $user = User::find($id);
         // $user->delete();
-        
-        
+
+
 
         // $request->session()->flush();
         // $request->session()->flash('success', 'Your data was deleted!');
         return redirect()->back();
-        
+
     }
 
     public function profile(){
@@ -218,7 +218,7 @@ class MemberController extends Controller
     }
     public function detail(){
 
-      $id = 1;
+      $id = 3;
       $user = User::find($id);
 
       return view('pages/profile/detail',[
@@ -229,13 +229,13 @@ class MemberController extends Controller
 
     public function apiMember()
     {
-      
+
       $user = User::where('deleted',0);
 
       return DataTables::of($user)
         ->addColumn('action',function($user) {
-          return '<a href=" member/ '.$user->id.'/edit" class="btn btn-default btn-xs"> Edit </a>'.
-           '<a href=" member/ '.$user->id.'/delete" class="btn btn-danger btn-xs" > Delete </a>';
+          return '<a href=" member/'.$user->id.'/edit" class="btn btn-default btn-xs"> Edit </a>'.
+           '<a href=" member/'.$user->id.'/delete" class="btn btn-danger btn-xs" > Delete </a>';
         })->escapeColumns([])->make(true);
     }
 

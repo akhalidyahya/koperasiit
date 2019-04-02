@@ -75,7 +75,7 @@ class IuranController extends Controller
         $belumBayar = DB::table('iurans')
                     ->join('users', 'iurans.user_id', '=', 'users.id')
                     ->where('iurans.jenis', 'pokok')
-                    ->where('iurans.status', 0)
+                    ->where('iurans.status','<>',1)
                     ->orderBy('iurans.user_id', 'asc')
                     ->get();
 
@@ -207,6 +207,7 @@ class IuranController extends Controller
     }
 
     public function aprove($kode){
+      // return Transaksi::where('kode',$kode)->get();
       DB::table('transaksis')->where('kode', $kode)->update([
           'aproval' => 1
       ]);
@@ -221,9 +222,6 @@ class IuranController extends Controller
       DB::table('transaksis')->where('kode', $kode)->update([
           'aproval' => 2
       ]);
-      //
-      //
-      // $iuran = Iuran::find($id);
 
       DB::table('iurans')->where('kode', $kode)->update([
           'status' => 3

@@ -106,7 +106,7 @@ class AngsuranController extends Controller
 
     public function apiangsuran($id)
     {
-      $id = 1;
+      // $id = 3;
       $peminjaman = Peminjaman::where('user_id',$id)->where('status',1)->orderBy('id','desc');
 
       return DataTables::of($peminjaman)
@@ -131,6 +131,9 @@ class AngsuranController extends Controller
         'user_id' => $peminjaman->user_id,
       ];
       Transaksi::create($data);
+
+      $peminjaman->status_dp = 2;
+      $peminjaman->update();
 
       return redirect("peminjaman/angsuran/detail/$peminjaman->kode");
     }

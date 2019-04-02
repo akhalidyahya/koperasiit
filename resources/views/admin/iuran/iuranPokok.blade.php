@@ -50,23 +50,19 @@
             <table class="table table-striped table-bordered table-hover text-center" id="myTable">
                 <thead>
                     <tr>
+                      <th>No</th>
                       <th>Nama</th>
-                      {{-- <th>Lunas?</th> --}}
+                      <th>Detail</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($belumBayar as $bb)
-                    <tr>
-                        <td>{{$bb->name}}</td>
-                        {{-- <td>
-                          @if($bb->status == 0) -
-                          @elseif($bb->status == 1) <i class="fa fa-check font-green-jungle" data-toggle="tooltip" title="Paid"></i>
-                          @elseif($bb->status == 2) <i class="fa fa-refresh font-dark" data-toggle="tooltip" title="Waiting for confirmation"></i>
-                          @elseif($bb->status == 3) <i class="fa fa-times font-red" data-toggle="tooltip" title="Not Paid"></i>
-                          @endif
-                        </td> --}}
-                    </tr>
-                    @endforeach
+                    <?php foreach ($belumBayar as $data) { $no = 1;?>
+                      <tr>
+                        <td><?php echo $no ?></td>
+                        <td><?php echo $data->name ?></td>
+                        <td><a href="{{url('admin/member').'/'.$data->user_id}}/edit">Detail</a></td>
+                      </tr>
+                    <?php } ?>
                 </tbody>
                 <tfoot>
                     <!-- <tr>
@@ -91,7 +87,7 @@
                   </div>
               </div>
               <div class="portlet-body">
-                  <table class="table table-striped table-bordered table-hover text-center" id="myTable">
+                  <table class="table table-striped table-bordered table-hover text-center" id="myTable2">
                       <thead>
                           <tr>
                             <th>Nama</th>
@@ -126,17 +122,11 @@
       </div>
       <!-- END PAGE BASE CONTENT -->
 <script type="text/javascript">
-function bayar(){
-  save_method = 'add';
-  $('input[name=_method]').val('POST');
-  $('#myModal').modal('show');
-  $('#myModal form')[0].reset();
-  $('.modal-title').text('Upload Bukti Transfer');
-}
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
 });
 $('#myTable').dataTable();
+$('#myTable2').dataTable();
 
 </script>
 @endsection

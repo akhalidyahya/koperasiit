@@ -47,8 +47,10 @@
 <div class="row">
   <div class="col-md-12">
     <button onclick="bayarAngsuran()" class="btn btn-primary btn-flat"><i class="fa fa-upload"></i> Bayar Angsuran</button>
-    @if($peminjaman->status_dp == 1 || $peminjaman->status_dp == 2)
+    @if($peminjaman->status_dp == 1)
     <button disabled class="btn btn-primary btn-flat"><i class="fa fa-check"></i>DP Lunas</button>
+    @elseif($peminjaman->status_dp == 2)
+    <button disabled class="btn btn-primary btn-flat"><i class="fa fa-refresh"></i>Menunggu konfirmasi</button>
     @else
     <button onclick="bayarDp()" class="btn btn-primary btn-flat"><i class="fa fa-upload"></i> Bayar DP</button>
     @endif
@@ -83,6 +85,8 @@
                 <span class="">(Menunggu konfirmasi Pembayaran)</span>
               @elseif($peminjaman->status_dp==1)
                 <span class="font-green">(DP sudah dibayar)</span>
+              @else
+                <span class="font-red">(Pembayaran DP ditolak, silahkan lakukan transaksi lagi)</span>
               @endif
             </td>
           </tr>
