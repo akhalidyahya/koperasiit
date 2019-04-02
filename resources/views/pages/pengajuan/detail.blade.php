@@ -47,7 +47,6 @@
 <div class="row">
   <div class="col-md-12">
     <button <?php if($peminjaman->status == 3 || $peminjaman->status == 1) echo 'disabled'; ?> onclick="batalkan({{$peminjaman->id}})" class="btn btn-danger btn-flat"><i class="fa fa-times"></i> Batalkan Pengajuan</button>
-    <button onclick="tes({{$peminjaman->id}})" class="btn btn-danger btn-flat"><i class="fa fa-times"></i> tes</button>
     <p></p>
     <!-- BEGIN EXAMPLE TABLE PORTLET-->
     <div class="portlet light portlet-fit portlet-datatable bordered">
@@ -151,25 +150,25 @@ function batalkan(id){
   }
 }
 
-function tes(id){
-  var popup = confirm("Apakah yakin ingin membatalkan pengajuan peminjaman?");
-  if (popup == true) {
-    $('input[name=_method]').val('PATCH');
-    $.ajax({
-      url:"{{url('peminjaman/pengajuan/aprove')}}"+"/"+id,
-      type:'POST',
-      // data: $('#myModal form').serialize(),
-      data: new FormData($('#myForm')[0]),
-      contentType: false,
-      processData: false,
-      success: function($data){
-        window.location.replace("{{url('peminjaman/pengajuan')}}");
-      },
-      error: function(){
-        alert('something went wrong');
-        // $('#error').removeClass('hide');
-      } });
-  }
-}
+// function tes(id){
+//   var popup = confirm("Apakah yakin ingin membatalkan pengajuan peminjaman?");
+//   if (popup == true) {
+//     $('input[name=_method]').val('PATCH');
+//     $.ajax({
+//       url:"{{url('peminjaman/pengajuan/aprove')}}"+"/"+id,
+//       type:'POST',
+//       // data: $('#myModal form').serialize(),
+//       data: new FormData($('#myForm')[0]),
+//       contentType: false,
+//       processData: false,
+//       success: function($data){
+//         window.location.replace("{{url('peminjaman/pengajuan')}}");
+//       },
+//       error: function(){
+//         alert('something went wrong');
+//         // $('#error').removeClass('hide');
+//       } });
+//   }
+// }
 </script>
 @endsection

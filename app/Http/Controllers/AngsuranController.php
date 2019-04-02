@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Peminjaman;
 use App\Angsuran;
+use App\Transaksi;
 
 class AngsuranController extends Controller
 {
@@ -88,15 +89,18 @@ class AngsuranController extends Controller
         //
     }
 
-    public function detail($id)
+    public function detail($kode)
     {
-      $peminjaman = Peminjaman::find($id);
+      $peminjaman = Peminjaman::where('kode',$kode)->first();
+      $id = $peminjaman->id;
       $angsuran = DB::table('angsurans')->where('peminjaman_id',$id)->orderBy('id','asc')->get();
-      // print_r($angsuran);
+      $bulan_form = DB::table('angsurans')->where('peminjaman_id',$id)->where('status','<>',1)->where('status','<>',2)->orderBy('id','asc')->get();
+
       return view('pages/angsuran/detail',[
         'sidebar'=>'angsuran',
         'peminjaman' => $peminjaman,
-        'angsuran' => $angsuran
+        'angsuran' => $angsuran,
+        'bulan' => $bulan_form
       ]);
     }
 
@@ -107,9 +111,55 @@ class AngsuranController extends Controller
 
       return DataTables::of($peminjaman)
         ->addColumn('detail',function($peminjaman) {
-          return '<a href="angsuran/detail/'.$peminjaman->id.'" class="btn btn-default btn-xs"> Detail </a>';
+          return '<a href="angsuran/detail/'.$peminjaman->kode.'" class="btn btn-default btn-xs"> Detail </a>';
         })->addColumn('tanggal',function($peminjaman) {
           return $peminjaman->created_at->toDateString();
         })->escapeColumns([])->make(true);
+    }
+
+    public function bayardp(Request $request){
+      $peminjaman = Peminjaman::where('id',$request->id)->first();
+      $data = [
+        'kode' => $peminjaman->kode,
+        'jumlah' => $request['nominal'],
+        'bulan' => Date('n'),
+        'tahun' => Date('Y'),
+        'keterangan' => $request['keterangan'],
+        'foto' => $request['bukti']->getClientOriginalName(),
+        'jenis' => 'dp',
+        'aproval' => 0,
+        'user_id' => $peminjaman->user_id,
+      ];
+      Transaksi::create($data);
+
+      return redirect("peminjaman/angsuran/detail/$peminjaman->kode");
+    }
+
+    public function bayarangsuran(Request $request){
+      $peminjaman = Peminjaman::where('id',$request->id)->first();
+      $data = [
+        'kode' => $peminjaman->kode,
+        'jumlah' => $request['nominal'],
+        'bulan' => $request['bulan'],
+        'tahun' => Date('Y'),
+        'keterangan' => $request['keterangan'],
+        'foto' => $request['bukti']->getClientOriginalName(),
+        'jenis' => 'angsuran',
+        'aproval' => 0,
+        'user_id' => $peminjaman->user_id,
+      ];
+      Transaksi::create($data);
+
+      $angsuran = Angsuran::where('peminjaman_id',$request->id)->where('bulan',$request['bulan'])->first();
+      $angsuran->status = 2;
+      $angsuran->update();
+
+      return redirect("peminjaman/angsuran/detail/$peminjaman->kode");
+    }
+
+    public function aprovedp($id){
+      $peminjaman = Peminjaman::where('id',$request->id)->first();
+      $peminjaman->status_dp = 1;
+      $peminjaman->update();
     }
 }

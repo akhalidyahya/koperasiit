@@ -213,7 +213,7 @@ function pinjam(){
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
 });
-var id = 1;
+var id = 3;
 var t = $('#myTable').DataTable({
   'processing'  : true,
   'serverSide'  : true,

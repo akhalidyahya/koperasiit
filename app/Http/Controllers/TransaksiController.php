@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use Yajra\DataTables\DataTables;
-
 use Illuminate\Http\Request;
 
 use App\Transaksi;
@@ -29,11 +28,11 @@ class TransaksiController extends Controller
         return view('admin/iuran/transaksiiuranpokok', [
           'sidebar'=>'transaksiIuranPokok'
         ]);
-        
+
     }
 
     public function indexdaftarpeminjaman()
-    {   
+    {
         return view('admin/peminjaman/pengajuan', [
           'sidebar'=>'daftarpeminjaman'
         ]);
@@ -121,7 +120,6 @@ class TransaksiController extends Controller
       return DataTables::of($transaksiIuran)
         ->addColumn('aprove',function($transaksiIuran) {
           return '<a href="aprove/'.$transaksiIuran->kode.'" class="btn btn-primary btn-xs"> Aprove </a>';
-
         })->addColumn('disaprove',function($transaksiIuran) {
           return '<a href="disaprove/'.$transaksiIuran->kode.'" class="btn btn-danger btn-xs"> Disaprove </a>';
         })->escapeColumns([])->make(true);
@@ -135,42 +133,35 @@ class TransaksiController extends Controller
       return DataTables::of($transaksiIuran)
         ->addColumn('aprove',function($transaksiIuran) {
           return '<a href="aprove/'.$transaksiIuran->kode.'" class="btn btn-primary btn-xs"> Aprove </a>';
-
         })->addColumn('disaprove',function($transaksiIuran) {
           return '<a href="disaprove/'.$transaksiIuran->kode.'" class="btn btn-danger btn-xs"> Disaprove </a>';
         })->escapeColumns([])->make(true);
     }
 
-    
-    public function apipeminjamanadmin(){
 
+    public function apipeminjamanadmin(){
         $peminjaman = Peminjaman::where('status', 0)->orderby('created_at')->get();
-  
+
         return DataTables::of($peminjaman)
         ->addColumn('aprove',function($peminjaman) {
             return '<a href="aprove/'.$peminjaman->kode.'" class="btn btn-primary btn-xs"> Aprove </a>';
-  
           })->addColumn('disaprove',function($peminjaman) {
             return '<a href="disaprove/'.$peminjaman->kode.'" class="btn btn-danger btn-xs"> Disaprove </a>';
           })->escapeColumns([])->make(true);
       }
 
-      public function aprove($kode){                    
+      public function aprove($kode){
         DB::table('peminjamen')->where('kode', $kode)->update([
             'status'=> 1
         ]);
-
         return redirect()->back();
-
       }
 
       public function disaprove($kode){
-                
+
         DB::table('peminjamen')->where('kode', $kode)->update([
             'status'=> 2
         ]);
-
         return redirect()->back();
       }
-
 }

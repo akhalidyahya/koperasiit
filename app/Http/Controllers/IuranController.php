@@ -16,11 +16,11 @@ class IuranController extends Controller
      */
     public function index()
     {
-      $id = 1;
-      $iuran_bulanan = DB::table('iurans')->where('user_id',$id)->where('jenis','bulanan')->orderBy('id')->get();      
+      $id = 3;
+      $iuran_bulanan = DB::table('iurans')->where('user_id',$id)->where('jenis','bulanan')->orderBy('id')->get();
       $bulan = DB::table('iurans')->where('user_id',$id)->where('jenis','bulanan')->where('status','<>',1)->where('status','<>',2)->orderBy('id')->get();
       $pokok = DB::table('iurans')->where('user_id',$id)->where('jenis', 'pokok')->first();
-    //   dd($bulan);
+
       return view('pages/iuran',[
         'sidebar'=>'iuran',
         'iuran' => $iuran_bulanan,
@@ -28,6 +28,15 @@ class IuranController extends Controller
         'pokok' => $pokok
       ]);
 
+    }
+
+    public function pokokIndex(){
+      $id = 3;
+      $iuran_pokok = DB::table('iurans')->where('user_id',$id)->where('jenis','pokok')->orderBy('id')->get();
+      return view('pages/iuranpokok',[
+        'sidebar'=>'pokok',
+        'iuranpokok' => $iuran_pokok
+      ]);
     }
 
     //Iuran bulanan
@@ -124,8 +133,8 @@ class IuranController extends Controller
         return redirect('iuran');
 
         }else{
-        
-        $id = 1;
+
+        $id = 3;
 
         $data = [
           'status' => 2,
@@ -149,12 +158,7 @@ class IuranController extends Controller
         Transaksi::create($data_transaksi);
         return redirect('iuran');
         }
-        
     }
-    
-
-    
-
     /**
      * Display the specified resource.
      *
@@ -201,23 +205,15 @@ class IuranController extends Controller
     }
 
     public function aprove($kode){
-      // $transaksi = Transaksi::find($kode);
-      //
-      // dd($transaksi);
-
       DB::table('transaksis')->where('kode', $kode)->update([
           'aproval' => 1
       ]);
-      //
-      //
-      // $iuran = Iuran::find($id);
 
       DB::table('iurans')->where('kode', $kode)->update([
           'status' => 1
       ]);
       return redirect()->back();
     }
-
 
     public function disaprove($kode){
       DB::table('transaksis')->where('kode', $kode)->update([
@@ -232,6 +228,4 @@ class IuranController extends Controller
       ]);
       return redirect()->back();
     }
-
-    
 }

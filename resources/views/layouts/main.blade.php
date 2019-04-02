@@ -70,7 +70,7 @@
 
     <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo page-md">
         <!-- BEGIN HEADER -->
-        <div class="page-header navbar navbar-fixed-top">
+        <div class="page-header bg-blue-steel navbar navbar-fixed-top">
             <!-- BEGIN HEADER INNER -->
             <div class="page-header-inner ">
                 <!-- BEGIN LOGO -->
@@ -90,7 +90,7 @@
                 <div class="page-top">
                     <!-- BEGIN HEADER SEARCH BOX -->
                     <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
-                    <form class="search-form" action="page_general_search_2.html" method="GET">
+                    <!-- <form class="search-form" action="" method="GET">
                         <div class="input-group">
                             <input type="text" class="form-control input-sm" placeholder="Search..." name="query">
                             <span class="input-group-btn">
@@ -99,7 +99,7 @@
                                 </a>
                             </span>
                         </div>
-                    </form>
+                    </form> -->
                     <!-- END HEADER SEARCH BOX -->
                     <!-- BEGIN TOP NAVIGATION MENU -->
                     <div class="top-menu">
@@ -149,17 +149,30 @@
                     <!-- BEGIN SIDEBAR MENU -->
                     <ul class="page-sidebar-menu   " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
                         <li class="nav-item start {{ (\Request::route()->getName() == 'dashboard') ? 'active open' : ''}}">
-                            <a href="{{route('dashboard')}}" class="nav-link nav-toggle">
+                            <a href="{{url('dashboard')}}" class="nav-link nav-toggle">
                                 <i class="icon-home"></i>
                                 <span class="title">Dashboard</span>
                                 <span class="selected"></span>
                             </a>
                         </li>
-                        <li class="nav-item {{ ($sidebar == 'iuran') ? 'active open' : ''}} ">
-                            <a href="{{route('iuran')}}" class="nav-link">
+                        <li class="nav-item {{ (\Request::route()->getName() == 'iuran') ? 'active open' : ''}}">
+                            <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="icon-calculator"></i>
                                 <span class="title">Iuran</span>
+                                <span class="arrow"></span>
                             </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item {{ ($sidebar == 'iuran') ? 'active open' : ''}} ">
+                                    <a href="{{url('iuran')}}" class="nav-link ">
+                                        <span class="title">Iuran Bulanan</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item {{ ($sidebar == 'pokok') ? 'active open' : ''}} ">
+                                    <a href="{{url('iuran/pokok')}}" class="nav-link ">
+                                        <span class="title">Iuran Pokok</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item {{ (\Request::route()->getName() == 'peminjaman') ? 'active open' : ''}}">
                             <a href="javascript:;" class="nav-link nav-toggle">

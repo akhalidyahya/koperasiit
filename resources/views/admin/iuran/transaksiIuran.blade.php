@@ -17,7 +17,7 @@
 <div class="page-head">
     <!-- BEGIN PAGE TITLE -->
     <div class="page-title">
-        <h1>Member Koperasi Dashboard | Peminjaman
+        <h1>Admin Koperasi | Transaksi Iuran
             <small>statistics, charts and reports</small>
         </h1>
     </div>
@@ -31,11 +31,11 @@
       <i class="fa fa-circle"></i>
   </li>
   <li>
-      <a href="javascript:;">Peminjaman</a>
+      <a href="javascript:;">Transaksi</a>
       <i class="fa fa-circle"></i>
   </li>
   <li>
-      <span class="active">Angsuran</span>
+      <span class="active">Iuran</span>
   </li>
 </ul>
 <!-- END PAGE BREADCRUMB -->

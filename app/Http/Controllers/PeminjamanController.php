@@ -8,6 +8,7 @@ use App\Peminjaman;
 use App\Angsuran;
 use Illuminate\Support\Facades\DB;
 use App\Transaksi;
+use App\Option;
 
 class PeminjamanController extends Controller
 {
@@ -20,7 +21,8 @@ class PeminjamanController extends Controller
     public function index()
     {
       return view('pages/pengajuan/index',[
-        'sidebar'=>'pengajuan'
+        'sidebar'=>'pengajuan',
+        'pengaturan' => Option::orderBy('id')->get()
       ]);
     }
 
@@ -34,7 +36,8 @@ class PeminjamanController extends Controller
     public function create()
     {
       return view('pages/pengajuan/create',[
-        'sidebar'=>'pengajuan'
+        'sidebar'=>'pengajuan',
+        'pengaturan' => Option::orderBy('id')->get()
       ]);
     }
 
@@ -46,9 +49,10 @@ class PeminjamanController extends Controller
      */
     public function store(Request $request)
     {
-        $id = 1;
-        $admin = 250000;
-        $margin = .1;
+        $pengaturan = Option::orderBy('id')->get();
+        $id = 3;
+        $admin = $pengaturan[1]->value;
+        $margin = $pengaturan[0]->value;
         $random = substr(str_shuffle('1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'),0,10);
         $data = [
           'kode' => $random,

@@ -46,8 +46,12 @@
 <!-- BEGIN PAGE BASE CONTENT -->
 <div class="row">
   <div class="col-md-12">
-    <button onclick="" class="btn btn-primary btn-flat"><i class="fa fa-upload"></i> Bayar Angsuran</button>
-    <button <?php if($peminjaman->status_dp == 1) echo 'disabled'; ?> onclick="" class="btn btn-primary btn-flat"><i class="fa fa-upload"></i> Bayar DP</button>
+    <button onclick="bayarAngsuran()" class="btn btn-primary btn-flat"><i class="fa fa-upload"></i> Bayar Angsuran</button>
+    @if($peminjaman->status_dp == 1 || $peminjaman->status_dp == 2)
+    <button disabled class="btn btn-primary btn-flat"><i class="fa fa-check"></i>DP Lunas</button>
+    @else
+    <button onclick="bayarDp()" class="btn btn-primary btn-flat"><i class="fa fa-upload"></i> Bayar DP</button>
+    @endif
     <p></p>
     <!-- BEGIN EXAMPLE TABLE PORTLET-->
     <div class="portlet light portlet-fit portlet-datatable bordered">
@@ -69,7 +73,18 @@
             <td></td> <td> : </td> <td><b>Rp.{{number_format($peminjaman->jumlah + $peminjaman->after_margin + $peminjaman->biaya_admin)}}</b></td>
           </tr>
           <tr>
-            <td>Jumlah DP</td> <td> : </td> <td>Rp.{{number_format($peminjaman->dp)}} @if($peminjaman->status_dp ==0)(Belum dibayarkan. Segera bayar DP)@endif</td>
+            <td>Jumlah DP</td>
+            <td> : </td>
+            <td>
+              Rp.{{number_format($peminjaman->dp)}}
+              @if($peminjaman->status_dp ==0)
+                <span class="font-red">(Belum dibayarkan. Segera bayar DP)</span>
+              @elseif($peminjaman->status_dp==2)
+                <span class="">(Menunggu konfirmasi Pembayaran)</span>
+              @elseif($peminjaman->status_dp==1)
+                <span class="font-green">(DP sudah dibayar)</span>
+              @endif
+            </td>
           </tr>
           <tr>
             <td><b>Total Pokok</b> </td> <td> : </td> <td><b>Rp.{{number_format($peminjaman->pokok)}}</b></td>
@@ -85,7 +100,7 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class=" icon-layers font-blue"></i>
-                <span class="caption-subject font-blue sbold uppercase">Perkiraan Angsuran </span>
+                <span class="caption-subject font-blue sbold uppercase">Perhitungan Angsuran </span>
             </div>
         </div>
         <div class="portlet-body">
@@ -122,36 +137,136 @@
     <!-- END EXAMPLE TABLE PORTLET-->
   </div>
 </div>
-<form id="myForm" class=""  method="post">
-{{csrf_field()}} {{method_field('POST')}}
-<input type="hidden" name="id" id="id" value="{{$peminjaman->id}}">
-<input type="hidden" name="status" id="status" value="{{$peminjaman->status}}">
-</form>
+<!-- modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Modal Title</h4>
+            </div>
+            <div class="modal-body">
+              <form role="form" class="" method="post" enctype="multipart/form-data" action="{{url('peminjaman/angsuran/bayardp')}}">
+                {{csrf_field()}} {{method_field('POST')}}
+                <input type="hidden" name="id" value="{{$peminjaman->id}}" id="id">
+                <div class="form-body">
+                  <div class="form-group form-md-line-input has-success form-md-floating-label">
+                      <div class="input-icon">
+                          <input type="text" class="form-control" value="{{number_format($peminjaman->dp)}}" disabled>
+                          <input id="nominal" type="hidden" class="form-control" name="nominal" value="{{$peminjaman->dp}}">
+                          <label for="form_control_1">Nominal</label>
+                          <i class="fa fa-money"></i>
+                      </div>
+                  </div>
+                  <div class="form-group form-md-line-input has-success form-md-floating-label">
+                    <div class="form-group form-md-line-input form-md-floating-label">
+                        <textarea class="form-control" rows="5" name="keterangan"></textarea>
+                        <label for="form_control_1">Keterangan</label>
+                    </div>
+                  </div>
+                  <div class="form-group form-md-line-input has-success form-md-floating-label">
+                    <label for="form_control_1">Upload Foto Bukti Transfer Angsuran</label>
+                      <div class="input-icon">
+                          <input id="bukti" type="file" class="form-control" name="bukti">
+                          <i class="fa fa-photo"></i>
+                      </div>
+                  </div>
+                    <div class="form-actions noborder text-center">
+                        <button id="submit" type="submit" class="btn blue">Submit</button>
+                        <!-- <button type="button" class="btn default">Cancel</button> -->
+                    </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                <!-- <button type="button" class="btn green">Save changes</button> -->
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Modal Title</h4>
+            </div>
+            <div class="modal-body">
+              <form role="form" class="" method="post" enctype="multipart/form-data" action="{{url('peminjaman/angsuran/bayarangsuran')}}">
+                {{csrf_field()}} {{method_field('POST')}}
+                <input type="hidden" name="id" id="id" value="{{$peminjaman->id}}">
+                <div class="form-body">
+                  <div class="form-group form-md-line-input has-success form-md-floating-label">
+                      <div class="input-icon">
+                          <select class="form-control" id="bulan" name="bulan">
+                            <option value=""></option>
+                            @foreach($bulan as $data)
+                            <option value="{{$data->bulan}}">{{$data->bulan}}</option>
+                            @endforeach
+                          </select>
+                          <label for="form_control_1">Bulan ke-</label>
+                          <i class="fa fa-calendar"></i>
+                      </div>
+                  </div>
+                  <div class="form-group form-md-line-input has-success form-md-floating-label">
+                      <div class="input-icon">
+                          <input id="" type="text" class="form-control" name="" value="{{number_format($peminjaman->angsuran_bulanan)}}" disabled>
+                          <input id="nominal" type="hidden" class="form-control" value="{{number_format($peminjaman->angsuran_bulanan)}}" name="nominal">
+                          <label for="form_control_1">Nominal</label>
+                          <i class="fa fa-money"></i>
+                      </div>
+                  </div>
+                  <div class="form-group form-md-line-input has-success form-md-floating-label">
+                    <div class="form-group form-md-line-input form-md-floating-label">
+                        <textarea class="form-control" rows="5" name="keterangan"></textarea>
+                        <label for="form_control_1">Keterangan</label>
+                    </div>
+                  </div>
+                  <div class="form-group form-md-line-input has-success form-md-floating-label">
+                    <label for="form_control_1">Upload Foto Bukti Transfer Iuran</label>
+                      <div class="input-icon">
+                          <input id="bukti" type="file" class="form-control" name="bukti">
+                          <i class="fa fa-photo"></i>
+                      </div>
+                  </div>
+                    <div class="form-actions noborder text-center">
+                        <button id="submit" type="submit" class="btn blue">Submit</button>
+                        <!-- <button type="button" class="btn default">Cancel</button> -->
+                    </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                <!-- <button type="button" class="btn green">Save changes</button> -->
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 <!-- END PAGE BASE CONTENT -->
 <script type="text/javascript">
-function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+function bayarDp(){
+  save_method = 'add';
+  $('input[name=_method]').val('POST');
+  $('#myModal').modal('show');
+  $('#myModal form')[0].reset();
+  $('.modal-title').text('Upload Bukti Transfer');
 }
 
-function batalkan(id){
-  var popup = confirm("Apakah yakin ingin membatalkan pengajuan peminjaman?");
-  if (popup == true) {
-    $('input[name=_method]').val('PATCH');
-    $.ajax({
-      url:"{{url('peminjaman/cancel')}}"+"/"+id,
-      type:'POST',
-      // data: $('#myModal form').serialize(),
-      data: new FormData($('#myForm')[0]),
-      contentType: false,
-      processData: false,
-      success: function($data){
-        window.location.replace("{{url('peminjaman')}}");
-      },
-      error: function(){
-        alert('something went wrong');
-        // $('#error').removeClass('hide');
-      } });
-  }
+function bayarAngsuran(){
+  save_method = 'add';
+  $('input[name=_method]').val('POST');
+  $('#myModal2').modal('show');
+  $('#myModal2 form')[0].reset();
+  $('.modal-title').text('Upload Bukti Transfer');
 }
 </script>
 @endsection

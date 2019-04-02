@@ -28,6 +28,7 @@ Route::get('profile/account', 'MemberController@account');
 Route::post('profile/account/update', 'MemberController@updateProfile')->name('update.profile');
 Route::resource('member','MemberController');
 
+Route::get('iuran/pokok','IuranController@pokokIndex')->name('iuran');
 Route::resource('iuran','IuranController',['names'=>[
   'index' => 'iuran'
 ]]);
@@ -37,7 +38,7 @@ Route::post('iuran/bayar-iuran-pokok', 'IuranController@storeIuranPokok')->name(
 Route::prefix('peminjaman')->group(function(){
 
   Route::get('api/pengajuan/{id}','PeminjamanController@apipeminjaman');
-  Route::get('pengajuan/detail/{id}','PeminjamanController@detail')->name('peminjaman');
+  Route::get('pengajuan/detail/{kode}','PeminjamanController@detail')->name('peminjaman');
   Route::patch('pengajuan/cancel/{id}','PeminjamanController@cancel');
   Route::patch('pengajuan/aprove/{id}','PeminjamanController@aprove');
   Route::resource('pengajuan','PeminjamanController',['names'=>[
@@ -45,13 +46,14 @@ Route::prefix('peminjaman')->group(function(){
     'create' => 'peminjaman'
   ]]);
 
-  Route::get('angsuran/detail/{id}','AngsuranController@detail')->name('peminjaman');
+  Route::get('angsuran/detail/{kode}','AngsuranController@detail')->name('peminjaman');
   Route::get('api/angsuran/{id}','AngsuranController@apiangsuran');
+  Route::post('angsuran/bayardp','AngsuranController@bayardp');
+  Route::post('angsuran/bayarangsuran','AngsuranController@bayarangsuran');
   Route::resource('angsuran','AngsuranController',['names'=>[
     'index' => 'peminjaman',
     'create' => 'peminjaman'
   ]]);
-
 });
 
 Route::prefix('admin')->group(function(){
@@ -59,11 +61,6 @@ Route::prefix('admin')->group(function(){
   Route::resource('dashboard','AdminDashboardController',['names'=>[
     'index' => 'dashboard'
   ]]);
-
-  // Route::resource('member','MemberController',['names'=>[
-  //   'index' => 'member',
-  //   'create' => 'member'
-  // ]]);
 
   Route::get('member', 'MemberController@index')->name('member');
   Route::get('member/create', 'MemberController@create')->name('member');
@@ -84,6 +81,8 @@ Route::prefix('admin')->group(function(){
   Route::get('transaksi/aprove/{kode}', 'TransaksiController@aprove');
   Route::get('transaksi/disaprove/{kode}', 'TransaksiController@disaprove');
 
+  Route::get('pengaturan','PengaturanController@index');
+  Route::post('pengaturan/update','PengaturanController@update')->name('pengaturan.update');
 });
 
 Route::get('api/transaksiiuran', 'TransaksiController@apitransaksiiuran')->name('transaksiiuran');
