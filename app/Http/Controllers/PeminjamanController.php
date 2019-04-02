@@ -189,6 +189,13 @@ class PeminjamanController extends Controller
       return redirect('admin/peminjaman/pengajuanPeminjaman');
     }
 
+    public function disaprove($kode){
+      $peminjaman = Peminjaman::where('kode',$kode)->first();
+      $peminjaman->status = 2;
+      $peminjaman->update();
+      return redirect('admin/peminjaman/pengajuanPeminjaman');
+    }
+
     public function apipeminjaman($id)
     {
       // $id = 3
@@ -208,7 +215,7 @@ class PeminjamanController extends Controller
           } else if($peminjaman->status == 2) {
             return '<span class="font-red">Declined</span>';
           }else if($peminjaman->status == 3) {
-            return '<span class="font-grey">Canceled</span>';
+            return '<span class="font-red">Canceled</span>';
           } else {
             return 'something went wrong';
           }
