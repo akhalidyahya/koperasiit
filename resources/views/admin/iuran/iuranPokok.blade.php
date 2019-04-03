@@ -65,10 +65,6 @@
                     <?php } ?>
                 </tbody>
                 <tfoot>
-                    <!-- <tr>
-                        <th colspan="10" style="text-align:right">Total:&nbsp;&nbsp;</th>
-                        <th></th>
-                    </tr> -->
                 </tfoot>
             </table>
         </div>
@@ -88,32 +84,24 @@
               </div>
               <div class="portlet-body">
                   <table class="table table-striped table-bordered table-hover text-center" id="myTable2">
-                      <thead>
+                    <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>Nama</th>
+                          <th>Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($sudahBayar as $data) { $no = 1;?>
                           <tr>
-                            <th>Nama</th>
-                            {{-- <th>Lunas?</th> --}}
+                            <td><?php echo $no ?></td>
+                            <td><?php echo $data->name ?></td>
+                            <td><a href="{{url('admin/member').'/'.$data->user_id}}/edit">Detail</a></td>
                           </tr>
-                      </thead>
-                      <tbody>
-                          @foreach($sudahBayar as $sb)
-                          <tr>
-                              <td>{{$sb->name}}</td>
-                              {{-- <td>
-                                @if($bb->status == 0) -
-                                @elseif($bb->status == 1) <i class="fa fa-check font-green-jungle" data-toggle="tooltip" title="Paid"></i>
-                                @elseif($bb->status == 2) <i class="fa fa-refresh font-dark" data-toggle="tooltip" title="Waiting for confirmation"></i>
-                                @elseif($bb->status == 3) <i class="fa fa-times font-red" data-toggle="tooltip" title="Not Paid"></i>
-                                @endif
-                              </td> --}}
-                          </tr>
-                          @endforeach
-                      </tbody>
-                      <tfoot>
-                          <!-- <tr>
-                              <th colspan="10" style="text-align:right">Total:&nbsp;&nbsp;</th>
-                              <th></th>
-                          </tr> -->
-                      </tfoot>
+                        <?php } ?>
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
                   </table>
               </div>
           </div>

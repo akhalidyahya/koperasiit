@@ -104,10 +104,40 @@ class AngsuranController extends Controller
       ]);
     }
 
+    public function detailangsuran($kode){
+    //   $pengajuan = Peminjaman::find($id);
+    $pengajuan = DB::table('peminjamen')
+    ->where('kode', '=', $kode)
+    ->get();
+
+      return view ('admin/peminjaman/detailangsuran', [
+        'sidebar' => 'angsuran',
+        'pengajuan' => $pengajuan
+      ]);
+    // return $pengajuan[0]->status;
+    }
+
     public function apiangsuran($id)
     {
       // $id = 3;
       $peminjaman = Peminjaman::where('user_id',$id)->where('status',1)->orderBy('id','desc');
+
+      return DataTables::of($peminjaman)
+        ->addColumn('detail',function($peminjaman) {
+          return '<a href="angsuran/detail/'.$peminjaman->kode.'" class="btn btn-default btn-xs"> Detail </a>';
+        })->addColumn('tanggal',function($peminjaman) {
+          return $peminjaman->created_at->toDateString();
+        })->escapeColumns([])->make(true);
+    }
+
+    public function apiangsuranall()
+    {
+      // $id = 3;
+      $peminjaman = Peminjaman::where('status',1)->orderBy('id','desc');
+      $data = DB::table('peminjamen')
+      ->join('users','users.id', '=', 'peminjamen.user_id')
+      ->where('peminjamen.status',1)
+      ->orderBy('transaksis.id','desc')->get();
 
       return DataTables::of($peminjaman)
         ->addColumn('detail',function($peminjaman) {
