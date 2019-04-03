@@ -96,9 +96,9 @@
                                 <li>
                                     <a href="#tab_1_2" data-toggle="tab">Change Avatar</a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a href="#tab_1_3" data-toggle="tab">Change Password</a>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                         <div class="portlet-body">
@@ -114,9 +114,9 @@
                                         <div class="form-group">
                                             <label class="control-label">Email</label>
                                             <input type="text" placeholder="Doe" name="email" class="form-control" value="{{$user->email}}"/> </div>
-                                        <!-- <div class="form-group">
+                                        <div class="form-group">
                                             <label class="control-label">Password</label>
-                                            <input type="text" placeholder="+1 646 580 DEMO (6284)" name="password" class="form-control" value="{{$user->password}}"/> </div> -->
+                                            <input type="text" placeholder="+1 646 580 DEMO (6284)" name="password" class="form-control" /> </div>
                                         <div class="form-group">
                                             <label class="control-label">TTL</label>
                                             <input type="text" placeholder="Design, Web etc." name="ttl" class="form-control" value="{{$user->ttl}}"/> </div>
@@ -132,6 +132,7 @@
                                         <div class="form-group">
                                             <label class="control-label">Alamat</label>
                                             <input type="text" placeholder="http://www.mywebsite.com" name="alamat" class="form-control" value="{{$user->alamat}}"/> </div>
+                                            
                                         <div class="form-group">
                                             <label class="control-label">HP</label>
                                             <input type="text" placeholder="http://www.mywebsite.com" name="hp" class="form-control" value="{{$user->hp}}"/> </div>
@@ -198,7 +199,7 @@
                                 </div>
                                 <!-- END CHANGE AVATAR TAB -->
                                 <!-- CHANGE PASSWORD TAB -->
-                                <div class="tab-pane" id="tab_1_3">
+                                <!-- <div class="tab-pane" id="tab_1_3">
                                     <form action="{{route('update.profile')}}" method="post">
                                     {{csrf_field()}}
                                         <div class="form-group">
@@ -215,7 +216,7 @@
                                             <a href="javascript:;" class="btn default"> Cancel </a>
                                         </div>
                                     </form>
-                                </div>
+                                </div> -->
                                 <!-- END CHANGE PASSWORD TAB -->
 
                             </div>

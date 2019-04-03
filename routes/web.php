@@ -65,6 +65,7 @@ Route::prefix('admin')->group(function(){
   Route::get('member/{id}/edit', 'MemberController@edit');
   Route::get('member/{id}/delete', 'MemberController@destroy');
   Route::post('member/{id}/update', 'MemberController@update')->name('member.update');
+  Route::post('member/store','MemberController@store')->name('member.store');
   Route::get('api/member','MemberController@apimember');
 
   Route::get('transaksi/iuran/aprove/{id}', 'IuranController@aprove')->name('iuranAprove');
@@ -76,11 +77,16 @@ Route::prefix('admin')->group(function(){
   Route::get('iuran/iuranPokok', 'IuranController@iuranPokokAdmin');
   Route::get('transaksi/daftarpeminjaman', 'TransaksiController@indexdaftarpeminjaman'); //coba dievaluate
 
-  // Route::get('transaksi/aprove/{kode}', 'TransaksiController@aprove');
-  // Route::get('transaksi/disaprove/{kode}', 'TransaksiController@disaprove');
+  Route::get('transaksi/aprove/{kode}', 'TransaksiController@aprove');
+  Route::get('transaksi/disaprove/{kode}', 'TransaksiController@disaprove');
+
+  
 
   Route::get('transaksi/dp', 'TransaksiController@indexdp')->name('transaksi');
   Route::get('transaksi/angsuran', 'TransaksiController@indexangsuran')->name('transaksi');
+
+  // Route::get('transaksi/iuranbulanan/approve/{kode}', 'TransaksiController@approve');
+
 
   Route::get('transaksi/dp/aprove/{id}', 'TransaksiController@aprovedp')->name('dpAprove');
   Route::get('transaksi/dp/disaprove/{kode}', 'TransaksiController@disaprovedp')->name('dpDisaprove');

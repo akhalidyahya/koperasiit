@@ -47,7 +47,7 @@ class MemberController extends Controller
         $data = [
           'name' => $request['nama'],
           'email' => $request['email'],
-          'password' => $request['password'],
+          'password' => bcrypt($request->password),
           'ttl' => $request['ttl'],
           'jk' => $request['jk'],
           'identitas' => $request['identitas'],
@@ -90,7 +90,7 @@ class MemberController extends Controller
         $request->session()->flash('success', 'Your register was success!');
 
         // Nanti tinggal di if else kalo admin redirect ke table view, kalo register user reirect login
-        return redirect('/login');
+        return redirect()->back();
     }
 
     /**
@@ -151,7 +151,7 @@ class MemberController extends Controller
     public function updateProfile(Request $r)
     {
       // return 1;
-      $id = 1;
+      $id = 2;
 
       if($r->hasfile('gambar')){
 
@@ -164,7 +164,7 @@ class MemberController extends Controller
         DB::table('users')->where('id', $id)->update([
           'name' => $r->nama,
           'email' => $r->email,
-          'password' => $r->password,
+          'password' => bcrypt($r->password),
           'ttl' => $r->ttl,
           'jk' => $r->jk,
           'identitas' => $r->identitas,
@@ -180,7 +180,7 @@ class MemberController extends Controller
 
       return redirect('profile/detail');
 
-      return 1;
+      
 
     }
 

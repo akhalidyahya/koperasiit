@@ -62,7 +62,7 @@ class PeminjamanController extends Controller
     public function store(Request $request)
     {
         $pengaturan = Option::orderBy('id')->get();
-        $id = 3;
+        $id = 2;
         // $id = 1;
         $admin = $pengaturan[1]->value;
         $margin = (float)$pengaturan[0]->value;
@@ -191,7 +191,7 @@ class PeminjamanController extends Controller
 
     public function apipeminjaman($id)
     {
-      // $id = 3
+      $id = 2;
       // $id = 1;
       $peminjaman = Peminjaman::where('user_id',$id)->orderBy('id','desc');
 

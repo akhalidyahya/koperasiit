@@ -121,12 +121,12 @@
         </div>
       </div>
       <!-- END PAGE BASE CONTENT -->
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
 });
 $('#myTable').dataTable();
 $('#myTable2').dataTable();
 
-</script>
+</script> -->
 @endsection

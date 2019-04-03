@@ -21,6 +21,7 @@ class TransaksiController extends Controller
         return view('admin/iuran/transaksiIuran', [
           'sidebar'=>'transaksiIuran'
         ]);
+
     }
 
     public function indexIuranPokok()
@@ -115,7 +116,14 @@ class TransaksiController extends Controller
     public function apitransaksiiuran()
     {
       // $id = 3;
-      $transaksiIuran = Transaksi::where('jenis', 'iuran')->where('aproval',0)->where('bulan', '!=', 0)->orderBy('id','desc')->get();
+
+    //   $transaksiIuran = Transaksi::where('jenis', 'iuran')->where('aproval',0)->where('bulan', '!=', 0)->orderBy('id','desc')->get();
+        $transaksiIuran = DB::table('transaksis')
+        ->join('users', 'transaksis.user_id', '=', 'users.id')
+        ->select('users.name', 'transaksis.kode', 'transaksis.created_at', 'transaksis.jumlah','transaksis.bulan')
+        ->where('jenis', 'iuran')->where('aproval',0)->where('bulan', '!=', 0)->orderBy('transaksis.created_at','desc')->get();
+
+        // dd($transaksiIuran);
 
       return DataTables::of($transaksiIuran)
         ->addColumn('aprove',function($transaksiIuran) {
@@ -153,19 +161,32 @@ class TransaksiController extends Controller
     // }
 
     public function aprove($kode){
-        DB::table('peminjamen')->where('kode', $kode)->update([
-            'status'=> 1
-        ]);
+        
+        // DB::table('peminjamen')->where('kode', $kode)->update([
+        //     'status'=> 1
+        // ]);
 
-        $t = DB::table('peminjamen')->where('kode', $kode)->get();
+        // $t = DB::table('peminjamen')->where('kode', $kode)->get();
         // return redirect('admin/peminjaman/pengajuanPeminjaman');
-        return $t[0]->status;
+        // return $t[0]->status;
+
+        DB::table('transaksis')->where('kode', $kode)->update([
+            'aproval' =>1
+        ]);
+        DB::table('iurans')->where('kode', $kode)->update([
+            'status' => 1
+        ]);
+        return redirect('admin/peminjaman/pengajuanPeminjaman');
+
     }
 
     public function disaprove($kode){
 
-        DB::table('peminjamen')->where('kode', $kode)->update([
-            'status'=> 2
+        DB::table('transaksis')->where('kode', $kode)->update([
+            'aproval' =>2
+        ]);
+        DB::table('iurans')->where('kode', $kode)->update([
+            'status' => 3
         ]);
         return redirect('admin/peminjaman/pengajuanPeminjaman');
     }

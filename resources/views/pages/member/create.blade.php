@@ -91,7 +91,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label hint">Password Akun</label>
-                    <input class="form-control placeholder-no-fix" type="password" placeholder="Password Akun" name="password" />
+                    <input class="form-control placeholder-no-fix"  placeholder="Password Akun" name="password" />
                 </div>
                 <hr>
                 <h4 class=""> B. Data Lembaga </h4>
