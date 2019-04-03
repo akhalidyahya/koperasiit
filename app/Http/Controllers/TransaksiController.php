@@ -179,11 +179,22 @@ class TransaksiController extends Controller
     public function apitransaksidp()
     {
       // $id = 3;
+      // $data = DB::table('transaksis')
+      // ->join('users','users.id', '=', 'transaksis.user_id')
+      // ->where('aproval',0)
+      // ->where('jenis', 'dp')
+      // ->orderBy('transaksis.id','desc')->get();
+
       $data = DB::table('transaksis')
-      ->join('users','users.id', '=', 'transaksis.user_id')
-      ->where('aproval',0)
+      ->join('users', 'transaksis.user_id', '=', 'users.id')
+      ->select('users.name', 'transaksis.kode', 'transaksis.jumlah', 'transaksis.created_at' )
+      ->where('aproval', 0)
       ->where('jenis', 'dp')
-      ->orderBy('transaksis.id','desc')->get();
+      ->orderBy('transaksis.id', 'desc')
+      ->get();
+
+      
+      
 
       return DataTables::of($data)
         ->addColumn('aprove',function($data) {
@@ -260,6 +271,7 @@ class TransaksiController extends Controller
     }
 
     public function aprovedp($kode){
+
       DB::table('transaksis')->where('jenis','dp')->where('kode', $kode)->update([
         'aproval'=> 1
       ]);
@@ -267,10 +279,11 @@ class TransaksiController extends Controller
         'status_dp'=> 1
       ]);
       return redirect()->back();
+      
     }
 
     public function disaprovedp($kode){
-      DB::table('peminjamen')->where('jenis','dp')->where('kode', $kode)->update([
+      DB::table('peminjamen')->where('kode', $kode)->update([
         'status_dp'=> 3
       ]);
       DB::table('transaksis')->where('kode', $kode)->update([
@@ -280,7 +293,7 @@ class TransaksiController extends Controller
     }
 
     public function aproveangsuran($id,$kode,$bulan){
-      DB::table('transaksis')->where('jenis','angsuran')->where('kode', $kode)->update([
+      DB::table('transaksis')->where('kode', $kode)->update([
         'aproval'=> 1
       ]);
       DB::table('angsurans')->where('bulan',$bulan)->where('peminjaman_id', $id)->update([

@@ -216,9 +216,11 @@ function pinjam(){
   $('.modal-title').text('Ajukan Peminjaman');
 }
 $(document).ready(function(){
+
   $('[data-toggle="tooltip"]').tooltip();
 
   $('#jumlah,#dp,#angsuran').change(function(){
+    
     var jml_pmnjmn = $('#jumlah').val();
     var jml_dp = $('#dp').val();
     var p_angsuran = $('#angsuran').val();

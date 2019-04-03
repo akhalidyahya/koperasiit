@@ -32,6 +32,7 @@ class IuranController extends Controller
     }
 
     public function pokokIndex(){
+        // dd(1);
       $id = 3;
       $iuran_pokok = DB::table('iurans')->where('user_id',$id)->where('jenis','pokok')->orderBy('id')->get();
       $bulan = DB::table('iurans')->where('user_id',$id)->where('jenis','bulanan')->where('status','<>',1)->where('status','<>',2)->orderBy('id')->get();

@@ -193,6 +193,7 @@
                             <span class="arrow"></span>
                           </a>
                           <ul class="sub-menu">
+                          
                             <li class="nav-item {{ ($sidebar == 'transaksiIuran') ? 'active open' : ''}} ">
                               <a href="{{url('admin/transaksi/iuranbulanan')}}" class="nav-link ">
                                 <span class="title">Iuran Bulanan</span>

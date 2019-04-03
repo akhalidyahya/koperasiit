@@ -61,8 +61,9 @@ class PeminjamanController extends Controller
      */
     public function store(Request $request)
     {
+
         $pengaturan = Option::orderBy('id')->get();
-        $id = 2;
+        $id = 3;
         // $id = 1;
         $admin = $pengaturan[1]->value;
         $margin = (float)$pengaturan[0]->value;
@@ -173,6 +174,7 @@ class PeminjamanController extends Controller
 
       $temp_pokok = $peminjaman[0]->pokok;
       $pokok = number_format($temp_pokok);
+
       for ($i=1; $i <= $peminjaman[0]->angsuran ; $i++) {
         $data=[
           'bulan' => $i,
@@ -197,29 +199,29 @@ class PeminjamanController extends Controller
     }
 
     public function apipeminjaman($id)
-    {
-      $id = 2;
-      // $id = 1;
-      $peminjaman = Peminjaman::where('user_id',$id)->orderBy('id','desc');
+    {      
+        $id =3;
+        $peminjaman = Peminjaman::where('user_id', $id)->orderBy('id', 'dsc');
 
       return DataTables::of($peminjaman)
         ->addColumn('detail',function($peminjaman) {
-          return '<a href="pengajuan/detail/'.$peminjaman->kode.'" class="btn btn-default btn-xs"> Detail </a>';
-        })->addColumn('tanggal',function($peminjaman) {
-          return $peminjaman->created_at->toDateString();
+          return '<a href="pengajuan/detail/'.$peminjaman->kode.'" class="btn btn-default btn-xs">Detail</a>' ;
+        })
+        ->addColumn('tanggal',function($peminjaman) {
+          return $peminjaman->created_at->toDateString(); 
         })->addColumn('status',function($peminjaman) {
-          if ($peminjaman->status == 0) {
-            return 'Waiting';
-          } elseif ($peminjaman->status == 1) {
-            return '<span class="font-green">Accepted</span>';
-          } else if($peminjaman->status == 2) {
-            return '<span class="font-red">Declined</span>';
-          }else if($peminjaman->status == 3) {
-            return '<span class="font-red">Canceled</span>';
-          } else {
-            return 'something went wrong';
-          }
+            if($peminjaman->status == 0){
+              return 'Waiting';
+            }elseif($peminjaman->status == 1){
+              return '<span class="font-green">Accepted</span>' ;
+            }elseif($peminjaman->status == 2){
+              return '<span class="font-red">Declined</span>  ' ;
+            }else{
+              return '<span class="font-red">Canceled</span>  ' ;
+            }
         })->escapeColumns([])->make(true);
+
+
     }
 
     public function apipengajuanadmin(){

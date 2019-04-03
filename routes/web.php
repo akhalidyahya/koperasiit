@@ -33,6 +33,8 @@ Route::resource('iuran','IuranController',['names'=>[
   'index' => 'iuran'
 ]]);
 
+
+
 Route::post('iuran/bayar-iuran-pokok', 'IuranController@storeIuranPokok')->name('bayar.iuran.pokok');
 
 Route::prefix('peminjaman')->group(function(){
@@ -98,7 +100,6 @@ Route::prefix('admin')->group(function(){
   Route::get('peminjaman/aprove/{kode}', 'PeminjamanController@aprove')->name('peminjamanAprove');
   Route::get('peminjaman/disaprove/{kode}', 'PeminjamanController@disaprove')->name('peminjamanDisaprove');
   Route::get('peminjaman/detailPengajuan/{kode}', 'PeminjamanController@detailPengajuanAdmin');
-  Route::get('peminjaman/detail/angsuran/{kode}', 'AngsuranController@detailangsuran');
 
   Route::get('peminjaman/angsuranPeminjaman', 'PeminjamanController@angsuranAdmin');
 
