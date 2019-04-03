@@ -189,6 +189,13 @@ class PeminjamanController extends Controller
       return redirect('admin/peminjaman/pengajuanPeminjaman');
     }
 
+    public function disaprove($kode){
+      $peminjaman = Peminjaman::where('kode',$kode)->first();
+      $peminjaman->status = 2;
+      $peminjaman->update();
+      return redirect('admin/peminjaman/pengajuanPeminjaman');
+    }
+
     public function apipeminjaman($id)
     {
       $id = 2;
@@ -208,7 +215,7 @@ class PeminjamanController extends Controller
           } else if($peminjaman->status == 2) {
             return '<span class="font-red">Declined</span>';
           }else if($peminjaman->status == 3) {
-            return '<span class="font-grey">Canceled</span>';
+            return '<span class="font-red">Canceled</span>';
           } else {
             return 'something went wrong';
           }
@@ -243,22 +250,19 @@ class PeminjamanController extends Controller
     // return $pengajuan[0]->status;
     }
 
-    public function apiangsuranadmin($id)
+    public function apiangsuranadmin()
     {
       // $id = 3;
     //   $peminjaman = Peminjaman::where('status',1)->orderBy('id','desc');
     $peminjaman = DB::table('peminjamen')
-    ->join('users', 'peminjamans.user_id', 'users.id')
-    ->where('peminjamans.status', '=', 1)
-    ->orderBy('peminjamans.id')
-    ->orderBy('peminjamans.desc')
+    ->join('users', 'peminjamen.user_id', 'users.id')
+    ->where('peminjamen.status', '=', 1)
+    ->orderBy('peminjamen.id','desc')
     ->get();
 
       return DataTables::of($peminjaman)
         ->addColumn('detail',function($peminjaman) {
-          return '<a href="admin/angsuran/detail/'.$peminjaman->kode.'" class="btn btn-default btn-xs"> Detail </a>';
-        })->addColumn('tanggal',function($peminjaman) {
-          return $peminjaman->created_at->toDateString();
+          return '<a href="'.url('admin/peminjaman/detail/angsuran').'/'.$peminjaman->kode.'" class="btn btn-default btn-xs"> Detail </a>';
         })->escapeColumns([])->make(true);
     }
 

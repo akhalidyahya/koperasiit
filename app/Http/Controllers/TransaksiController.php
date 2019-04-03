@@ -40,11 +40,27 @@ class TransaksiController extends Controller
 
     }
 
+    public function indexdp()
+    {
+        return view('admin/transaksi/dp', [
+          'sidebar'=>'transaksidp'
+        ]);
+
+    }
+
     public function indexPeminjaman()
     {
         return view('admin/peminjaman/transaksiPeminjaman', [
           'sidebar'=>'transaksiPeminjaman'
         ]);
+    }
+
+    public function indexAngsuran()
+    {
+        return view('admin/transaksi/angsuran', [
+          'sidebar'=>'transaksiangsuran'
+        ]);
+
     }
 
     /**
@@ -117,36 +133,88 @@ class TransaksiController extends Controller
     {
       // $id = 3;
 
+
     //   $transaksiIuran = Transaksi::where('jenis', 'iuran')->where('aproval',0)->where('bulan', '!=', 0)->orderBy('id','desc')->get();
-        $transaksiIuran = DB::table('transaksis')
-        ->join('users', 'transaksis.user_id', '=', 'users.id')
-        ->select('users.name', 'transaksis.kode', 'transaksis.created_at', 'transaksis.jumlah','transaksis.bulan')
-        ->where('jenis', 'iuran')->where('aproval',0)->where('bulan', '!=', 0)->orderBy('transaksis.created_at','desc')->get();
+        // $transaksiIuran = DB::table('transaksis')
+        // ->join('users', 'transaksis.user_id', '=', 'users.id')
+        // ->select('users.name', 'transaksis.kode', 'transaksis.created_at', 'transaksis.jumlah','transaksis.bulan')
+        // ->where('jenis', 'iuran')->where('aproval',0)->where('bulan', '!=', 0)->orderBy('transaksis.created_at','desc')->get();
 
         // dd($transaksiIuran);
 
+      // $transaksiIuran = Transaksi::where('jenis', 'iuran')->where('aproval',0)->where('bulan', '!=', 0)->orderBy('id','desc')->get();
+      $transaksiIuran = DB::table('transaksis')
+      ->join('users','users.id', '=', 'transaksis.user_id')
+      ->where('jenis','iuran')
+      ->where('aproval',0)
+      ->where('bulan','<>', 0)
+      ->orderBy('transaksis.id','desc')->get();
+
+
       return DataTables::of($transaksiIuran)
         ->addColumn('aprove',function($transaksiIuran) {
-          return '<a href="aprove/'.$transaksiIuran->kode.'" class="btn btn-primary btn-xs"> Aprove </a>';
+          return '<a href="iuran/aprove/'.$transaksiIuran->kode.'" class="btn btn-primary btn-xs"> Aprove </a>';
         })->addColumn('disaprove',function($transaksiIuran) {
-          return '<a href="disaprove/'.$transaksiIuran->kode.'" class="btn btn-danger btn-xs"> Disaprove </a>';
+          return '<a href="iuran/disaprove/'.$transaksiIuran->kode.'" class="btn btn-danger btn-xs"> Disaprove </a>';
         })->escapeColumns([])->make(true);
     }
 
     public function apitransaksiiuranpokok()
     {
       // $id = 3;
-      $transaksiIuran = Transaksi::where('jenis', 'iuran')->where('aproval',0)->where('bulan', 0)->orderBy('id','desc')->get();
+      $transaksiIuran = DB::table('transaksis')
+      ->join('users','users.id', '=', 'transaksis.user_id')
+      ->where('aproval',0)
+      ->where('bulan', 0)
+      ->orderBy('transaksis.id','desc')->get();
 
       return DataTables::of($transaksiIuran)
         ->addColumn('aprove',function($transaksiIuran) {
-          return '<a href="aprove/'.$transaksiIuran->kode.'" class="btn btn-primary btn-xs"> Aprove </a>';
+          return '<a href="iuran/aprove/'.$transaksiIuran->kode.'" class="btn btn-primary btn-xs"> Aprove </a>';
         })->addColumn('disaprove',function($transaksiIuran) {
-          return '<a href="disaprove/'.$transaksiIuran->kode.'" class="btn btn-danger btn-xs"> Disaprove </a>';
+          return '<a href="iuran/disaprove/'.$transaksiIuran->kode.'" class="btn btn-danger btn-xs"> Disaprove </a>';
         })->escapeColumns([])->make(true);
     }
 
+    public function apitransaksidp()
+    {
+      // $id = 3;
+      $data = DB::table('transaksis')
+      ->join('users','users.id', '=', 'transaksis.user_id')
+      ->where('aproval',0)
+      ->where('jenis', 'dp')
+      ->orderBy('transaksis.id','desc')->get();
 
+      return DataTables::of($data)
+        ->addColumn('aprove',function($data) {
+          return '<a href="dp/aprove/'.$data->kode.'" class="btn btn-primary btn-xs"> Aprove </a>';
+        })->addColumn('disaprove',function($data) {
+          return '<a href="dp/disaprove/'.$data->kode.'" class="btn btn-danger btn-xs"> Disaprove </a>';
+        })->escapeColumns([])->make(true);
+    }
+
+    public function apitransaksiangsuran()
+    {
+      // $id = 3;
+      $data = DB::table('transaksis')
+      ->join('users','users.id', '=', 'transaksis.user_id')
+      // ->join('users','users.id', '=', 'peminjaman.user_id')
+      ->where('transaksis.aproval',0)
+      ->where('transaksis.jenis', 'angsuran')
+      ->orderBy('transaksis.id','desc')->get();
+
+      return DataTables::of($data)
+        ->addColumn('kode',function($data) {
+          return '<a href="'.url('peminjaman/angsuran/detail').'/'.$data->kode.'"> '.$data->kode.' </a>';
+        })
+        ->addColumn('aprove',function($data) {
+          $peminjaman = Peminjaman::where('kode',$data->kode)->first();
+          return '<a href="'.url('admin/transaksi/angsuran/aprove').'/'.$peminjaman->id.'/'.$data->kode.'/'.$data->bulan.'" class="btn btn-primary btn-xs"> Aprove </a>';
+        })->addColumn('disaprove',function($data) {
+          $peminjaman = Peminjaman::where('kode',$data->kode)->first();
+          return '<a href="'.url('admin/transaksi/angsuran/disaprove').'/'.$peminjaman->id.'/'.$data->kode.'/'.$data->bulan.'" class="btn btn-danger btn-xs"> Disaprove </a>';
+        })->escapeColumns([])->make(true);
+    }
 
     // public function apipengajuanadmin(){
 
@@ -189,6 +257,46 @@ class TransaksiController extends Controller
             'status' => 3
         ]);
         return redirect('admin/peminjaman/pengajuanPeminjaman');
+    }
+
+    public function aprovedp($kode){
+      DB::table('transaksis')->where('jenis','dp')->where('kode', $kode)->update([
+        'aproval'=> 1
+      ]);
+      DB::table('peminjamen')->where('kode', $kode)->update([
+        'status_dp'=> 1
+      ]);
+      return redirect()->back();
+    }
+
+    public function disaprovedp($kode){
+      DB::table('peminjamen')->where('jenis','dp')->where('kode', $kode)->update([
+        'status_dp'=> 3
+      ]);
+      DB::table('transaksis')->where('kode', $kode)->update([
+        'aproval'=> 2
+      ]);
+      return redirect()->back();
+    }
+
+    public function aproveangsuran($id,$kode,$bulan){
+      DB::table('transaksis')->where('jenis','angsuran')->where('kode', $kode)->update([
+        'aproval'=> 1
+      ]);
+      DB::table('angsurans')->where('bulan',$bulan)->where('peminjaman_id', $id)->update([
+        'status'=> 1
+      ]);
+      return redirect()->back();
+    }
+
+    public function disaproveangsuran($id,$kode,$bulan){
+      DB::table('transaksis')->where('jenis','angsuran')->where('kode', $kode)->update([
+        'aproval'=> 2
+      ]);
+      DB::table('angsurans')->where('bulan',$bulan)->where('peminjaman_id', $id)->update([
+        'status'=> 3
+      ]);
+      return redirect()->back();
     }
 
 }
