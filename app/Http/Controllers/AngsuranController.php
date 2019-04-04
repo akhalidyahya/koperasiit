@@ -108,12 +108,14 @@ class AngsuranController extends Controller
             'angsuran' => $angsuran,
             'bulan' => $bulan_form
           ]);
-      }else {
+      }elseif (Auth::user()->role == '1') {
         return view('admin/dashboard', [
           'sidebar' => 'dashboard'
         ]);
+      }else {
+          return redirect('login');
       }
-      
+
     }
 
     public function detailangsuran($kode){
@@ -127,17 +129,19 @@ class AngsuranController extends Controller
           'sidebar' => 'angsuran',
           'pengajuan' => $pengajuan
         ]);
-      }else {
+      }elseif (Auth::user()->role == '0') {
         return view('pages/dashboard', [
           'sidebar' => 'dashboard'
         ]);
+      }else {
+        return redirect('login');
       }
     // return $pengajuan[0]->status;
     }
 
     public function apiangsuran($id)
     {
-      // $id = 3;
+      $id = Auth::user()->id;
       $peminjaman = Peminjaman::where('user_id',$id)->where('status',1)->orderBy('id','desc');
 
       return DataTables::of($peminjaman)
@@ -150,7 +154,7 @@ class AngsuranController extends Controller
 
     public function apiangsuranall()
     {
-      // $id = 3;
+      $id = Auth::user()->id;
       $peminjaman = Peminjaman::where('status',1)->orderBy('id','desc');
       $data = DB::table('peminjamen')
       ->join('users','users.id', '=', 'peminjamen.user_id')

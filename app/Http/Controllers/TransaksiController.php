@@ -198,8 +198,8 @@ class TransaksiController extends Controller
       ->orderBy('transaksis.id', 'desc')
       ->get();
 
-      
-      
+
+
 
       return DataTables::of($data)
         ->addColumn('aprove',function($data) {
@@ -245,7 +245,7 @@ class TransaksiController extends Controller
     // }
 
     public function aprove($kode){
-        
+
         // DB::table('peminjamen')->where('kode', $kode)->update([
         //     'status'=> 1
         // ]);
@@ -284,7 +284,7 @@ class TransaksiController extends Controller
         'status_dp'=> 1
       ]);
       return redirect()->back();
-      
+
     }
 
     public function disaprovedp($kode){

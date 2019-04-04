@@ -22,35 +22,66 @@ class IuranController extends Controller
      */
     public function index()
     {
-      $id = 3;
+      $id = Auth::user()->id;
       $iuran_bulanan = DB::table('iurans')->where('user_id',$id)->where('jenis','bulanan')->orderBy('id')->get();
       $bulan = DB::table('iurans')->where('user_id',$id)->where('jenis','bulanan')->where('status','<>',1)->where('status','<>',2)->orderBy('id')->get();
       $pokok = DB::table('iurans')->where('user_id',$id)->where('jenis', 'pokok')->first();
 
-      return view('pages/iuran',[
-        'sidebar'=>'iuran',
-        'iuran' => $iuran_bulanan,
-        'bulan' => $bulan,
-        'pokok' => $pokok
-      ]);
+    //   return view('pages/iuran',[
+    //     'sidebar'=>'iuran',
+    //     'iuran' => $iuran_bulanan,
+    //     'bulan' => $bulan,
+    //     'pokok' => $pokok
+    //   ]);
+
+      if (Auth::user()->role == '1') {
+        return view ('admin/dashboard', [
+          'sidebar' => 'dashboard',
+        ]);
+      }elseif (Auth::user()->role == '0') {
+        return view('pages/iuran',[
+            'sidebar'=>'iuran',
+            'iuran' => $iuran_bulanan,
+            'bulan' => $bulan,
+            'pokok' => $pokok
+        ]);
+      }else {
+        return redirect('login');
+      }
 
     }
 
     public function pokokIndex(){
         // dd(1);
-      $id = 3;
+      $id = Auth::user()->id;
       $iuran_pokok = DB::table('iurans')->where('user_id',$id)->where('jenis','pokok')->orderBy('id')->get();
       $bulan = DB::table('iurans')->where('user_id',$id)->where('jenis','bulanan')->where('status','<>',1)->where('status','<>',2)->orderBy('id')->get();
       $pokok = DB::table('iurans')->where('user_id',$id)->where('jenis', 'pokok')->first();
       $option = Option::orderBy('id')->get();
 
-      return view('pages/iuranpokok',[
-        'sidebar'=>'pokok',
-        'iuranpokok' => $iuran_pokok,
-        'bulan' => $bulan,
-        'pokok' => $pokok,
-        'pengaturan' => $option
-      ]);
+    //   return view('pages/iuranpokok',[
+    //     'sidebar'=>'pokok',
+    //     'iuranpokok' => $iuran_pokok,
+    //     'bulan' => $bulan,
+    //     'pokok' => $pokok,
+    //     'pengaturan' => $option
+    //   ]);
+
+      if (Auth::user()->role == '1') {
+        return view ('admin/dashboard', [
+          'sidebar' => 'dashboard',
+        ]);
+      }elseif (Auth::user()->role == '0') {
+        return view('pages/iuranpokok',[
+            'sidebar'=>'pokok',
+            'iuranpokok' => $iuran_pokok,
+            'bulan' => $bulan,
+            'pokok' => $pokok,
+            'pengaturan' => $option
+        ]);
+      }else {
+        return redirect('login');
+      }
     }
 
     //Iuran bulanan
@@ -68,11 +99,25 @@ class IuranController extends Controller
                     ->orderBy('iurans.bulan', 'asc')
                     ->get();
 
-        return view('admin/iuran/iuranBulanan',[
-            'sidebar'=>'iuranBulanan',
-            'nama'=> $daftarNama,
-            'bulanan'=>$tagihanPerBulan
-        ]);
+        // return view('admin/iuran/iuranBulanan',[
+        //     'sidebar'=>'iuranBulanan',
+        //     'nama'=> $daftarNama,
+        //     'bulanan'=>$tagihanPerBulan
+        // ]);
+
+        if (Auth::user()->role == '1') {
+            return view ('admin/iuran/iuranBulanan',[
+                'sidebar'=>'iuranBulanan',
+                'nama'=> $daftarNama,
+                'bulanan'=>$tagihanPerBulan
+            ]);
+          }elseif (Auth::user()->role == '0') {
+            return view('pages/dashboard',[
+                'sidebar'=>'dashboard'
+            ]);
+          }else {
+            return redirect('login');
+          }
     }
 
     //Iuran pokok
@@ -93,11 +138,25 @@ class IuranController extends Controller
                     ->orderBy('iurans.user_id', 'asc')
                     ->get();
 
-        return view('admin/iuran/iuranPokok', [
-            'sidebar'=>'iuranPokok',
-            'belumBayar'=> $belumBayar,
-            'sudahBayar'=> $sudahBayar
-        ]);
+        // return view('admin/iuran/iuranPokok', [
+        //     'sidebar'=>'iuranPokok',
+        //     'belumBayar'=> $belumBayar,
+        //     'sudahBayar'=> $sudahBayar
+        // ]);
+
+        if (Auth::user()->role == '1') {
+            return view ('admin/iuran/iuranPokok', [
+                'sidebar'=>'iuranPokok',
+                'belumBayar'=> $belumBayar,
+                'sudahBayar'=> $sudahBayar
+            ]);
+          }elseif (Auth::user()->role == '0') {
+            return view('pages/dashboard',[
+                'sidebar'=>'dashboard'
+            ]);
+          }else {
+            return redirect('login');
+          }
 
     }
 
@@ -119,7 +178,7 @@ class IuranController extends Controller
      */
     public function store(Request $request)
     {
-        $id = 3;
+        $id = Auth::user()->id;
         $bulan = $request['bulan'];
         $data = [
           'status' => 2,
@@ -145,7 +204,7 @@ class IuranController extends Controller
     }
 
     public function storepokok(Request $request){
-      $id = 3;
+      $id = Auth::user()->id;
       $data = [
         'status' => 2,
         'keterangan' => $request->keterangan,

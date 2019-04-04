@@ -77,12 +77,12 @@ Route::prefix('admin')->group(function(){
   Route::get('peminjaman/transaksiPeminjaman', 'TransaksiController@indexPeminjaman'); //coba di evalluate
   Route::get('iuran/iuranBulanan', 'IuranController@iuranBulananAdmin');
   Route::get('iuran/iuranPokok', 'IuranController@iuranPokokAdmin');
-  Route::get('transaksi/daftarpeminjaman', 'TransaksiController@indexdaftarpeminjaman'); //coba dievaluate
+//   Route::get('transaksi/daftarpeminjaman', 'TransaksiController@indexdaftarpeminjaman'); //gak ada linknya
 
   Route::get('transaksi/aprove/{kode}', 'TransaksiController@aprove');
   Route::get('transaksi/disaprove/{kode}', 'TransaksiController@disaprove');
 
-  
+
 
   Route::get('transaksi/dp', 'TransaksiController@indexdp')->name('transaksi');
   Route::get('transaksi/angsuran', 'TransaksiController@indexangsuran')->name('transaksi');
