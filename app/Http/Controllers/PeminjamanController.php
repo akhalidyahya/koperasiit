@@ -25,22 +25,57 @@ class PeminjamanController extends Controller
 
     public function index()
     {
-      return view('pages/pengajuan/index',[
-        'sidebar'=>'pengajuan',
-        'pengaturan' => Option::orderBy('id')->get()
-      ]);
+
+      if (Auth::user()->role == '1') {
+
+        return view ('admin/dashboard', [
+          'sidebar' => 'dashboard',          
+        ]);
+
+      }else {
+
+        return view('pages/pengajuan/index',[
+          'sidebar'=>'pengajuan',
+          'pengaturan' => Option::orderBy('id')->get()
+        ]);
+
+      }
+
+      
     }
 
     public function pengajuanAdmin(){
-      return view('admin/peminjaman/pengajuan',[
-        'sidebar' => 'pengajuan',
-      ]);
+
+      if (Auth::user()->role == '1') {
+        return view('admin/peminjaman/pengajuan',[
+          'sidebar' => 'pengajuan',
+        ]);
+
+      }else {
+
+        return view('pages/dashboard', [
+          'sidebar' => 'dashboard'
+        ]);
+
+      }
+      
     }
 
     public function angsuranAdmin(){
-      return view('admin/peminjaman/angsuran',[
-        'sidebar' => 'angsuran'
-      ]);
+
+      if (Auth::user()->role == '1') {
+
+        return view('admin/peminjaman/angsuran',[
+          'sidebar' => 'angsuran'
+        ]);
+
+      }else {        
+        return view('pages/dashboard', [
+          'sidebar' => 'dashboard'
+        ]);
+      }
+
+      
     }
 
     //ini buat admin
@@ -52,10 +87,21 @@ class PeminjamanController extends Controller
      */
     public function create()
     {
-      return view('pages/pengajuan/create',[
-        'sidebar'=>'pengajuan',
-        'pengaturan' => Option::orderBy('id')->get()
-      ]);
+
+      if (Auth::user()->role == '1') {
+
+        return view('admin/dashboard',[
+          'sidebar' => 'dashboard'
+        ]);
+
+      }else {        
+        return view('pages/pengajuan/create',[
+          'sidebar'=>'pengajuan',
+          'pengaturan' => Option::orderBy('id')->get()
+        ]);
+      }
+
+      
     }
 
     /**
@@ -67,9 +113,15 @@ class PeminjamanController extends Controller
     public function store(Request $request)
     {
 
+      if (Auth::user()->role == '1') {
+        return view('admin/dashboard', [
+          'sidebar' => 'dashboard'
+        ]);
+      }else {
+
         $pengaturan = Option::orderBy('id')->get();
-        $id = 3;
-        // $id = 1;
+        $id = Auth::user()->id;
+        
         $admin = $pengaturan[1]->value;
         $margin = (float)$pengaturan[0]->value;
         $random = substr(str_shuffle('1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'),0,10);
@@ -96,6 +148,12 @@ class PeminjamanController extends Controller
         Peminjaman::create($data);
 
         return redirect('peminjaman/pengajuan');
+
+
+      }
+
+        
+
     }
 
     /**
@@ -145,12 +203,24 @@ class PeminjamanController extends Controller
 
     public function detail($kode)
     {
-      $peminjaman = Peminjaman::where('kode',$kode)->first();
+      if (Auth::user()->role == '1') {
 
-      return view('pages/pengajuan/detail',[
-        'sidebar'=>'pengajuan',
-        'peminjaman' => $peminjaman
-      ]);
+        return view ('admin/dashboard', [
+          'sidebar' => 'dashboard',          
+        ]);
+
+      }else {
+
+        $peminjaman = Peminjaman::where('kode',$kode)->first();
+
+        return view('pages/pengajuan/detail',[
+          'sidebar'=>'pengajuan',
+          'peminjaman' => $peminjaman
+        ]);
+
+      }
+
+      
     }
 
     public function cancel($id)
@@ -161,11 +231,15 @@ class PeminjamanController extends Controller
     }
 
     public function aprove($kode){
+
     //   $peminjaman = Peminjaman::find($kode);
     //   $peminjaman->status = 1;
     //   $peminjaman->update();
 
-    DB::table('peminjamen')
+    if (Auth::user()->role == '1') {
+
+
+      DB::table('peminjamen')
     ->where('kode', '=', $kode)
     ->update([
         'status' => 1
@@ -194,18 +268,37 @@ class PeminjamanController extends Controller
       }
 
       return redirect('admin/peminjaman/pengajuanPeminjaman');
+
+    }else {
+
+      return view('pages/dashboard', [
+        'sidebar' => 'dashboard'
+      ]);
+
+    }
+
+    
     }
 
     public function disaprove($kode){
-      $peminjaman = Peminjaman::where('kode',$kode)->first();
-      $peminjaman->status = 2;
-      $peminjaman->update();
-      return redirect('admin/peminjaman/pengajuanPeminjaman');
+
+      if (Auth::user()->role == '1') {
+        $peminjaman = Peminjaman::where('kode',$kode)->first();
+        $peminjaman->status = 2;
+        $peminjaman->update();
+        return redirect('admin/peminjaman/pengajuanPeminjaman');
+      }else {
+        return view('pages/dashboard', [
+          'sidebar' => 'dashboard'
+        ]);
+      }
+
+      
     }
 
     public function apipeminjaman($id)
     {      
-        $id =3;
+        $id =Auth::user()->id;
         $peminjaman = Peminjaman::where('user_id', $id)->orderBy('id', 'dsc');
 
       return DataTables::of($peminjaman)
@@ -245,16 +338,26 @@ class PeminjamanController extends Controller
     }
 
     public function detailPengajuanAdmin($kode){
-    //   $pengajuan = Peminjaman::find($id);
-    $pengajuan = DB::table('peminjamen')
-    ->where('kode', '=', $kode)
-    ->get();
+    
+      if (Auth::user()->role == '1') {
+        
+        $pengajuan = DB::table('peminjamen')
+        ->where('kode', '=', $kode)
+        ->get();
 
-      return view ('admin/peminjaman/detailPengajuan', [
-        'sidebar' => 'pengajuan',
-        'pengajuan' => $pengajuan
-      ]);
-    // return $pengajuan[0]->status;
+        return view ('admin/peminjaman/detailPengajuan', [
+          'sidebar' => 'pengajuan',
+          'pengajuan' => $pengajuan
+        ]);
+
+      }else {
+        return view('pages/dashboard', [
+          'sidebar' => 'dashboard'
+        ]);
+      }
+
+    
+    
     }
 
     public function apiangsuranadmin()

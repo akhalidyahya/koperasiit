@@ -24,23 +24,42 @@ class PengaturanController extends Controller
         //   'sidebar' => 'pengaturan',
         //   'pengaturan' => Option::orderBy('id','asc')->get()
         // ]);
-        $role = app('App\Http\Controllers\DashboardController')->getRole();
-        if($role == 'user'){
 
-            return view('pages/dashboard',[
-                'sidebar'=>'dashboard',
-            ]
-              );
+        // $role = app('App\Http\Controllers\DashboardController')->getRole();
+        // if($role == 'user'){
 
-        }elseif($role == 'admin'){
-            return view('admin/option',[
-                'sidebar' => 'pengaturan',
-                'pengaturan' => Option::orderBy('id','asc')->get()
-              ]);
-        }else{
-            redirect('login');
-        }
+        //     return view('pages/dashboard',[
+        //         'sidebar'=>'dashboard',
+        //     ]
+        //       );
+
+        // }elseif($role == 'admin'){
+        //     return view('admin/option',[
+        //         'sidebar' => 'pengaturan',
+        //         'pengaturan' => Option::orderBy('id','asc')->get()
+        //       ]);
+        // }else{
+        //     redirect('login');
+        // }
+
+
+        
+
+    if (Auth::user()->role == '1') {
+
+        return view('admin/option',[
+            'sidebar' => 'pengaturan',
+            'pengaturan' => Option::orderBy('id','asc')->get()
+        ]);
+
     }
+    else {
+        return view('pages/dashboard', [
+            'sidebar' => 'dashboard'
+        ]);
+    }
+
+}
 
     /**
      * Show the form for creating a new resource.
@@ -94,14 +113,26 @@ class PengaturanController extends Controller
      */
     public function update(Request $request)
     {
-      $admin = str_replace(',','',$request->admin);
-      DB::table('options')->where('name', 'margin')->update([
-        'value' => $request->margin
-      ]);
-      DB::table('options')->where('name', 'administrasi')->update([
-        'value' => $admin
-      ]);
-      return redirect()->back();
+        
+
+        if (Auth::user()->role == '1') {
+
+            $admin = str_replace(',','',$request->admin);
+            DB::table('options')->where('name', 'margin')->update([
+                'value' => $request->margin
+            ]);
+            DB::table('options')->where('name', 'administrasi')->update([
+                'value' => $admin
+            ]);
+            return redirect()->back();
+            
+        }else {
+            return view('pages/dashboard', [
+            'sidebar' => 'dashboard'
+            ]);
+        }
+
+      
     }
 
     /**

@@ -21,50 +21,94 @@ class TransaksiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexIuran()
+    public function indexIuran()    
     {
-        return view('admin/iuran/transaksiIuran', [
-          'sidebar'=>'transaksiIuran'
+      if(Auth::user()->role == '1'){
+          return view('admin/iuran/transaksiIuran', [
+            'sidebar'=>'transaksiIuran'
+          ]);
+      }else{
+        return view('pages/dashboard', [
+          'sidebar' => 'dashboard'
         ]);
+      }
+        
 
     }
 
     public function indexIuranPokok()
     {
+
+      if(Auth::user()->role == '1'){
         return view('admin/iuran/transaksiiuranpokok', [
           'sidebar'=>'transaksiIuranPokok'
         ]);
+      }else{
+        return view('pages/dashboard', [
+          'sidebar' => 'dashboard'
+        ]);
+      }
 
     }
 
     public function indexdaftarpeminjaman()
     {
+      if(Auth::user()->role == '1'){
         return view('admin/peminjaman/pengajuan', [
           'sidebar'=>'daftarpeminjaman'
         ]);
-
+      }else{
+        return view('pages/dashboard', [
+          'sidebar' => 'dashboard'
+        ]);
+      }
     }
 
     public function indexdp()
     {
+
+      if(Auth::user()->role == '1'){
         return view('admin/transaksi/dp', [
           'sidebar'=>'transaksidp'
         ]);
+      }else{
+        return view('pages/dashboard', [
+          'sidebar' => 'dashboard'
+        ]);
+      }
 
     }
 
     public function indexPeminjaman()
     {
+
+      if(Auth::user()->role == '1'){
         return view('admin/peminjaman/transaksiPeminjaman', [
           'sidebar'=>'transaksiPeminjaman'
         ]);
+      }else{
+        return view('pages/dashboard', [
+          'sidebar' => 'dashboard'
+        ]);
+      }
+
+        
     }
 
     public function indexAngsuran()
     {
+
+      if(Auth::user()->role == '1'){
         return view('admin/transaksi/angsuran', [
           'sidebar'=>'transaksiangsuran'
         ]);
+      }else{
+        return view('pages/dashboard', [
+          'sidebar' => 'dashboard'
+        ]);
+      }
+
+        
 
     }
 
@@ -254,67 +298,140 @@ class TransaksiController extends Controller
         // return redirect('admin/peminjaman/pengajuanPeminjaman');
         // return $t[0]->status;
 
-        DB::table('transaksis')->where('kode', $kode)->update([
+        if(Auth::user()->role == '1'){
+
+          DB::table('transaksis')->where('kode', $kode)->update([
             'aproval' =>1
-        ]);
-        DB::table('iurans')->where('kode', $kode)->update([
-            'status' => 1
-        ]);
-        return redirect('admin/peminjaman/pengajuanPeminjaman');
+          ]);
+          DB::table('iurans')->where('kode', $kode)->update([
+              'status' => 1
+          ]);
+          return redirect('admin/peminjaman/pengajuanPeminjaman');
+
+        }
+        else{
+
+          return view('pages/dashboard', [
+            'sidebar' => 'dashboard'
+          ]);
+
+        }
+
+        
 
     }
 
     public function disaprove($kode){
 
+      if (Auth::user()->role == '1') {
+
         DB::table('transaksis')->where('kode', $kode)->update([
-            'aproval' =>2
-        ]);
+          'aproval' =>2
+      ]);
         DB::table('iurans')->where('kode', $kode)->update([
             'status' => 3
         ]);
         return redirect('admin/peminjaman/pengajuanPeminjaman');
+
+      }
+      else {
+        return view('pages/dashboard', [
+          'sidebar' => 'dashboard'
+        ]);
+
+      }
+
+
+        
     }
 
     public function aprovedp($kode){
 
-      DB::table('transaksis')->where('jenis','dp')->where('kode', $kode)->update([
-        'aproval'=> 1
-      ]);
-      DB::table('peminjamen')->where('kode', $kode)->update([
-        'status_dp'=> 1
-      ]);
-      return redirect()->back();
+      if (Auth::user()->role == '1') {
+
+        DB::table('transaksis')->where('jenis','dp')->where('kode', $kode)->update([
+          'aproval'=> 1
+        ]);
+        DB::table('peminjamen')->where('kode', $kode)->update([
+          'status_dp'=> 1
+        ]);
+        return redirect()->back();
+
+      }
+      else {
+
+        return view('pages/dashboard', [
+          'sidebar' => 'dashboard'
+        ]);
+
+      }
+
+
+      
       
     }
 
     public function disaprovedp($kode){
-      DB::table('peminjamen')->where('kode', $kode)->update([
-        'status_dp'=> 3
-      ]);
-      DB::table('transaksis')->where('kode', $kode)->update([
-        'aproval'=> 2
-      ]);
-      return redirect()->back();
+
+      if (Auth::user()->role == '1') {
+
+        DB::table('peminjamen')->where('kode', $kode)->update([
+          'status_dp'=> 3
+        ]);
+        DB::table('transaksis')->where('kode', $kode)->update([
+          'aproval'=> 2
+        ]);
+        return redirect()->back();
+
+      }else {
+        return view('pages/dashboard', [
+          'sidebar' => 'dashboard'
+        ]);
+      }
+
+
+      
+
     }
 
     public function aproveangsuran($id,$kode,$bulan){
-      DB::table('transaksis')->where('kode', $kode)->update([
-        'aproval'=> 1
-      ]);
-      DB::table('angsurans')->where('bulan',$bulan)->where('peminjaman_id', $id)->update([
-        'status'=> 1
-      ]);
-      return redirect()->back();
+
+      if (Auth::user()->role == '1') {
+
+        DB::table('transaksis')->where('kode', $kode)->update([
+          'aproval'=> 1
+        ]);
+        DB::table('angsurans')->where('bulan',$bulan)->where('peminjaman_id', $id)->update([
+          'status'=> 1
+        ]);
+        return redirect()->back();
+
+      }else {
+        return view('pages/dashboard', [
+          'sidebar' => 'dashboard'
+        ]);
+      }
+
+      
     }
 
     public function disaproveangsuran($id,$kode,$bulan){
-      DB::table('transaksis')->where('jenis','angsuran')->where('kode', $kode)->update([
-        'aproval'=> 2
-      ]);
-      DB::table('angsurans')->where('bulan',$bulan)->where('peminjaman_id', $id)->update([
-        'status'=> 3
-      ]);
-      return redirect()->back();
+
+      if (Auth::user()->role == '1') {
+
+        DB::table('transaksis')->where('jenis','angsuran')->where('kode', $kode)->update([
+          'aproval'=> 2
+        ]);
+        DB::table('angsurans')->where('bulan',$bulan)->where('peminjaman_id', $id)->update([
+          'status'=> 3
+        ]);
+        return redirect()->back();
+
+      }else {
+        return view('pages/dashboard', [
+          'sidebar' => 'dashboard'
+        ]);
+      }      
     }
 
 }
