@@ -7,9 +7,14 @@ use Illuminate\Support\Facades\DB;
 use App\Iuran;
 use App\Transaksi;
 use App\Option;
+use Auth;
 
 class IuranController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *

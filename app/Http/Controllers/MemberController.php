@@ -8,9 +8,14 @@ use App\User;
 use App\Iuran;
 use Yajra\DataTables\DataTables;
 use DB;
+use Auth;
 
 class MemberController extends Controller
 {
+  public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *

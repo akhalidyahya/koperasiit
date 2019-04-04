@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Auth;
 use App\Option;
 
 class PengaturanController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,10 +20,26 @@ class PengaturanController extends Controller
      */
     public function index()
     {
-        return view('admin/option',[
-          'sidebar' => 'pengaturan',
-          'pengaturan' => Option::orderBy('id','asc')->get()
-        ]);
+        // return view('admin/option',[
+        //   'sidebar' => 'pengaturan',
+        //   'pengaturan' => Option::orderBy('id','asc')->get()
+        // ]);
+        $role = app('App\Http\Controllers\DashboardController')->getRole();
+        if($role == 'user'){
+
+            return view('pages/dashboard',[
+                'sidebar'=>'dashboard',
+            ]
+              );
+
+        }elseif($role == 'admin'){
+            return view('admin/option',[
+                'sidebar' => 'pengaturan',
+                'pengaturan' => Option::orderBy('id','asc')->get()
+              ]);
+        }else{
+            redirect('login');
+        }
     }
 
     /**

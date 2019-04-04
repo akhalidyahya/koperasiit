@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Auth;
 
 class LoginController extends Controller
 {
+
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -37,9 +39,17 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+
     //custom login
     public function showLoginForm()
     {
       return view('login');
     }
+
+    public function dologin(){
+        if(Auth::user()->role == 0 ){
+            return true;
+        }
+    }
+
 }

@@ -9,9 +9,14 @@ use App\Angsuran;
 use Illuminate\Support\Facades\DB;
 use App\Transaksi;
 use App\Option;
+use Auth;
 
 class PeminjamanController extends Controller
 {
+  public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *

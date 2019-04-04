@@ -8,9 +8,14 @@ use Illuminate\Http\Request;
 use App\Peminjaman;
 use App\Angsuran;
 use App\Transaksi;
+use Auth;
 
 class AngsuranController extends Controller
 {
+  public function __construct()
+  {
+      $this->middleware('auth');
+  }
     /**
      * Display a listing of the resource.
      *
@@ -96,12 +101,19 @@ class AngsuranController extends Controller
       $angsuran = DB::table('angsurans')->where('peminjaman_id',$id)->orderBy('id','asc')->get();
       $bulan_form = DB::table('angsurans')->where('peminjaman_id',$id)->where('status','<>',1)->where('status','<>',2)->orderBy('id','asc')->get();
 
-      return view('pages/angsuran/detail',[
-        'sidebar'=>'angsuran',
-        'peminjaman' => $peminjaman,
-        'angsuran' => $angsuran,
-        'bulan' => $bulan_form
-      ]);
+      if(Auth::user()->role == '0'){
+        return view('pages/angsuran/detail',[
+            'sidebar'=>'angsuran',
+            'peminjaman' => $peminjaman,
+            'angsuran' => $angsuran,
+            'bulan' => $bulan_form
+          ]);
+      }else {
+        return view('admin/dashboard', [
+          'sidebar' => 'dashboard'
+        ]);
+      }
+      
     }
 
     public function detailangsuran($kode){
@@ -110,10 +122,16 @@ class AngsuranController extends Controller
     ->where('kode', '=', $kode)
     ->get();
 
-      return view ('admin/peminjaman/detailangsuran', [
-        'sidebar' => 'angsuran',
-        'pengajuan' => $pengajuan
-      ]);
+      if (Auth::user()->role == '1') {
+        return view ('admin/peminjaman/detailangsuran', [
+          'sidebar' => 'angsuran',
+          'pengajuan' => $pengajuan
+        ]);
+      }else {
+        return view('pages/dashboard', [
+          'sidebar' => 'dashboard'
+        ]);
+      }
     // return $pengajuan[0]->status;
     }
 

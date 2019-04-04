@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class AdminDashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,9 +18,20 @@ class AdminDashboardController extends Controller
      */
     public function index()
     {
-      return view('admin/dashboard',[
-        'sidebar'=>'dashboard'
-      ]);
+      $role = app('App\Http\Controllers\DashboardController')->getRole();
+        if($role == 'user'){
+            return view('pages/dashboard',[
+                'sidebar'=>'dashboard',
+            ]
+              );
+
+        }elseif($role == 'admin'){
+            return view('admin/dashboard',[
+                'sidebar'=>'dashboard'
+              ]);
+        }else{
+            redirect('login');
+        }
     }
 
     /**

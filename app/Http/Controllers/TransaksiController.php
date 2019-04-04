@@ -8,9 +8,14 @@ use App\Transaksi;
 use App\Iuran;
 use App\Peminjaman;
 use DB;
+use Auth;
 
 class TransaksiController extends Controller
 {
+  public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
