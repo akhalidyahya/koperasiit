@@ -58,8 +58,8 @@
                     <tr>
                       <th>Nama</th>
                       <th>Kode</th>
+                      <th>Nominal pinjaman</th>
                       <th>Waktu</th>
-                      <th>Nominal</th>
                       <th>Angsuran</th>
                       <th>Keperluan</th>
                       <th>Detail</th>

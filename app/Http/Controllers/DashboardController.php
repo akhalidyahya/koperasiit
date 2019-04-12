@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use DB;
 
 class DashboardController extends Controller
 {
@@ -30,9 +31,13 @@ class DashboardController extends Controller
         $isadmin = $this->dologin();
 
         if($isadmin == 'user'){
+            $peminjaman = DB::table('peminjamen')
+                ->where('user_id', '=', Auth::user()->id)
+                ->get();
 
             return view('pages/dashboard',[            
-                'sidebar'=>'dashboard'
+                'sidebar'=>'dashboard',
+                'peminjaman'=>$peminjaman
               ]);
 
         }elseif($isadmin == 'admin'){
