@@ -54,6 +54,7 @@
     @else
     <button onclick="bayarDp()" class="btn btn-primary btn-flat"><i class="fa fa-upload"></i> Bayar DP</button>
     @endif
+    <a href="{{route('pdf.download', $peminjaman->kode)}}" class="btn btn-primary">Save as PDF</a>
     <p></p>
     <!-- BEGIN EXAMPLE TABLE PORTLET-->
     <div class="portlet light portlet-fit portlet-datatable bordered">

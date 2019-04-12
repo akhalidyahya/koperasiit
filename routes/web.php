@@ -55,6 +55,8 @@ Route::prefix('peminjaman')->group(function(){
     'index' => 'peminjaman',
     'create' => 'peminjaman'
   ]]);
+  Route::get('angsuran/savepdf/{kode}', 'AngsuranController@exportPDF')->name('pdf.download');
+
 });
 
 Route::prefix('admin')->group(function(){

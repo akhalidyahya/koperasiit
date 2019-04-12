@@ -9,6 +9,7 @@ use App\Peminjaman;
 use App\Angsuran;
 use App\Transaksi;
 use Auth;
+use PDF;
 
 class AngsuranController extends Controller
 {
@@ -23,6 +24,7 @@ class AngsuranController extends Controller
      */
     public function index()
     {
+      // DB::table('peminjamen')->where('user_id', Auth::user()->id)->where('');
       return view('pages/angsuran/index',[
         'sidebar'=>'angsuran'
       ]);
@@ -203,6 +205,7 @@ class AngsuranController extends Controller
         'aproval' => 0,
         'user_id' => $peminjaman->user_id,
       ];
+
       Transaksi::create($data);
 
       $angsuran = Angsuran::where('peminjaman_id',$request->id)->where('bulan',$request['bulan'])->first();
@@ -216,5 +219,24 @@ class AngsuranController extends Controller
       $peminjaman = Peminjaman::where('id',$request->id)->first();
       $peminjaman->status_dp = 1;
       $peminjaman->update();
+    }
+
+    public function exportPDF($kode){
+
+      $peminjaman = DB::table('peminjamen')
+      ->where('kode', '=', $kode)
+      ->where('user_id',Auth::user()->id)
+      ->first();
+      
+      
+      $angsuran = DB::table('angsurans')->where('peminjaman_id',$peminjaman->id)->orderBy('id','asc')->get();      
+      set_time_limit(300);
+      $pdf = PDF::loadview('pages/angsuran/pengajuanPDF', [
+        'peminjaman' => $peminjaman,
+        'angsuran' => $angsuran
+      ]);
+      return $pdf->stream('pages/angsuran/pengajuanPDF.pdf',array('Attachment'=>0));      
+      // return $pdf->download('pages/angsuran/pengajuanPDF.pdf');
+            
     }
 }
