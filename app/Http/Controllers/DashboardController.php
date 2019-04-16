@@ -64,15 +64,15 @@ class DashboardController extends Controller
                 ->select('users.name', 'transaksis.created_at', 'transaksis.jenis', 'transaksis.jumlah')
                 ->get();
 
-            // return view('admin/dashboard',[            
-            //     'sidebar'=>'dashboard',
-            //     'jumlahMember' => $countMember,
-            //     'countPeminjaman' => $countPeminjaman,
-            //     'countTransaksi' => $countTransaksi,
-            //     'recentTransaksi' => $recentTransaksi
-            //   ]);
+            return view('admin/dashboard',[            
+                'sidebar'=>'dashboard',
+                'jumlahMember' => $countMember,
+                'countPeminjaman' => $countPeminjaman,
+                'countTransaksi' => $countTransaksi,
+                'recentTransaksi' => $recentTransaksi
+              ]);
             // return $recentTransaksi;
-            return $countMember;
+            // return $countMember;
         }else{
             redirect('login');
         }
