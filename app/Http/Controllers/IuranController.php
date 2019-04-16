@@ -8,6 +8,7 @@ use App\Iuran;
 use App\Transaksi;
 use App\Option;
 use Auth;
+use Mail;
 
 class IuranController extends Controller
 {
@@ -200,11 +201,32 @@ class IuranController extends Controller
           'user_id' => $id
         ];
         Transaksi::create($data_transaksi);
+
+        $dataiuranbulanan = DB::table('iurans')
+        ->join('users', 'iurans.user_id', '=', 'users.id')
+        ->where(['user_id' => $id, 'bulan' => $bulan])
+        ->select('*')
+        ->first();                
+
+        $data = [
+          'email' => $dataiuranbulanan->email,
+          'nama' => $dataiuranbulanan->name,
+          'bulan' => $dataiuranbulanan->bulan,
+          'jenis' => $dataiuranbulanan->jenis
+        ];
+
+        Mail::send('admin.email.mailPembayaranIuran', $data, function($message) use($data){
+          $message->to('herlianto.adhi@gmail.com');
+          $message->from('herlianto.adhi@gmail.com');
+          $message->subject('Pembayaran Iuran bulan ke-'.$data['bulan']);
+        });
+
         return redirect('iuran');
     }
 
     public function storepokok(Request $request){
       $id = Auth::user()->id;
+      $bulan = 0;
       $data = [
         'status' => 2,
         'keterangan' => $request->keterangan,
@@ -224,6 +246,26 @@ class IuranController extends Controller
         'user_id' => $id
       ];
       Transaksi::create($data_transaksi);
+      
+        $dataiuranpokok = DB::table('iurans')
+        ->join('users', 'iurans.user_id', '=', 'users.id')
+        ->where(['user_id' => $id, 'bulan' => $bulan])
+        ->select('*')
+        ->first();
+        
+        $data = [
+          'email' => $dataiuranpokok->email,
+          'nama' => $dataiuranpokok->name,
+          'bulan' => $dataiuranpokok->bulan,
+          'jenis' => $dataiuranpokok->jenis
+        ];
+
+        Mail::send('admin.email.mailPembayaranIuran', $data, function($message) use($data){
+          $message->to('herlianto.adhi@gmail.com');
+          $message->from('herlianto.adhi@gmail.com');
+          $message->subject('Pembayaran Iuran bulan ke Pokok');
+        });
+
       return redirect('iuran/pokok');
     }
     /**
@@ -273,6 +315,7 @@ class IuranController extends Controller
 
     public function aprove($kode){
       // return Transaksi::where('kode',$kode)->get();
+
       DB::table('transaksis')->where('kode', $kode)->update([
           'aproval' => 1
       ]);
@@ -280,6 +323,28 @@ class IuranController extends Controller
       DB::table('iurans')->where('kode', $kode)->update([
           'status' => 1
       ]);
+
+      $dataTransaksi = DB::table('transaksis')
+        ->join('users', 'transaksis.user_id', '=', 'users.id')
+        ->where('kode', $kode)
+        ->select('*')
+        ->first();        
+
+        $data = [
+          'email' => $dataTransaksi->email,
+          'keterangan' => $dataTransaksi->keterangan,
+          'status' => $dataTransaksi->aproval,
+          'jenis' => $dataTransaksi->jenis,
+          'nama' => $dataTransaksi->name,
+          'bulan' => $dataTransaksi->bulan
+        ];
+
+        Mail::send('admin.email.mailTransaksi', $data, function($message) use($data){
+          $message->to('herlianto.adhi@gmail.com');
+          $message->from('herlianto.adhi@gmail.com');
+          $message->subject('Pembayaran '.$data['jenis']);
+        });
+
       return redirect()->back();
     }
 

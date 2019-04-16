@@ -9,6 +9,8 @@ use App\Iuran;
 use App\Peminjaman;
 use DB;
 use Auth;
+use Mail;
+use Session;
 
 class TransaksiController extends Controller
 {
@@ -289,14 +291,7 @@ class TransaksiController extends Controller
     // }
 
     public function aprove($kode){
-
-        // DB::table('peminjamen')->where('kode', $kode)->update([
-        //     'status'=> 1
-        // ]);
-
-        // $t = DB::table('peminjamen')->where('kode', $kode)->get();
-        // return redirect('admin/peminjaman/pengajuanPeminjaman');
-        // return $t[0]->status;
+        
 
         if(Auth::user()->role == '1'){
 
@@ -306,6 +301,7 @@ class TransaksiController extends Controller
           DB::table('iurans')->where('kode', $kode)->update([
               'status' => 1
           ]);
+          
           return redirect('admin/peminjaman/pengajuanPeminjaman');
 
         }
@@ -355,6 +351,28 @@ class TransaksiController extends Controller
         DB::table('peminjamen')->where('kode', $kode)->update([
           'status_dp'=> 1
         ]);
+
+        $dataTransaksi = DB::table('transaksis')
+        ->join('users', 'transaksis.user_id', '=', 'users.id')
+        ->where('kode', $kode)
+        ->select('*')
+        ->first();        
+
+        $data = [
+          'email' => $dataTransaksi->email,
+          'keterangan' => $dataTransaksi->keterangan,
+          'status' => $dataTransaksi->aproval,
+          'jenis' => $dataTransaksi->jenis,
+          'nama' => $dataTransaksi->name,
+          'bulan' => $dataTransaksi->bulan
+        ];
+
+        Mail::send('admin.email.mailTransaksi', $data, function($message) use($data){
+          $message->to('herlianto.adhi@gmail.com');
+          $message->from('herlianto.adhi@gmail.com');
+          $message->subject('Pembayaran '.$data['jenis']);
+        });
+
         return redirect()->back();
 
       }
@@ -400,6 +418,30 @@ class TransaksiController extends Controller
         DB::table('angsurans')->where('bulan',$bulan)->where('peminjaman_id', $id)->update([
           'status'=> 1
         ]);
+        
+        
+        $dataTransaksi = DB::table('transaksis')
+        ->join('users', 'transaksis.user_id', '=', 'users.id')
+        ->where('kode', $kode)
+        ->select('*')
+        ->first();        
+
+        $data = [
+          'email' => $dataTransaksi->email,
+          'keterangan' => $dataTransaksi->keterangan,
+          'status' => $dataTransaksi->aproval,
+          'jenis' => $dataTransaksi->jenis,
+          'nama' => $dataTransaksi->name,
+          'bulan' => $dataTransaksi->bulan
+        ];
+
+        Mail::send('admin.email.mailTransaksi', $data, function($message) use($data){
+          $message->to('herlianto.adhi@gmail.com');
+          $message->from('herlianto.adhi@gmail.com');
+          $message->subject('Pembayaran '.$data['jenis']);
+        });
+
+        // Session::flash()
         return redirect()->back();
 
       }else {

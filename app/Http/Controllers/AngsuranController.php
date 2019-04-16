@@ -10,6 +10,7 @@ use App\Angsuran;
 use App\Transaksi;
 use Auth;
 use PDF;
+use Mail;
 
 class AngsuranController extends Controller
 {
@@ -172,6 +173,7 @@ class AngsuranController extends Controller
     }
 
     public function bayardp(Request $request){
+
       $peminjaman = Peminjaman::where('id',$request->id)->first();
       $data = [
         'kode' => $peminjaman->kode,
@@ -188,6 +190,24 @@ class AngsuranController extends Controller
 
       $peminjaman->status_dp = 2;
       $peminjaman->update();
+
+      $byrdp = DB::table('peminjamen')
+      ->join('users', 'peminjamen.user_id', '=', 'users.id')
+      ->where('peminjamen.id', $request->id)
+      ->select('*')
+      ->first();        
+          
+
+      $data = [
+        'email' => $byrdp->email,
+        'nama' => $byrdp->name,        
+      ];
+
+      Mail::send('admin.email.mailPembayaranDP', $data, function($message) use($data){
+        $message->to('herlianto.adhi@gmail.com');
+        $message->from('herlianto.adhi@gmail.com');
+        $message->subject('Pembayaran DP');
+      });
 
       return redirect("peminjaman/angsuran/detail/$peminjaman->kode");
     }
@@ -212,6 +232,29 @@ class AngsuranController extends Controller
       $angsuran->status = 2;
       $angsuran->update();
 
+      // Mail
+
+      $byrangsuran = DB::table('peminjamen')
+      ->join('users', 'peminjamen.user_id', '=', 'users.id')
+      ->join('angsurans', 'peminjamen.id', '=', 'angsurans.peminjaman_id')
+      ->where('peminjamen.id', $request->id)
+      ->select('*')
+      ->first();        
+          
+      $data = [
+        'email' => $byrangsuran->email,
+        'nama' => $byrangsuran->name,
+        'bulan' => $byrangsuran->bulan
+      ];
+
+      Mail::send('admin.email.mailPembayaranAngsuran', $data, function($message) use($data){
+        $message->to('herlianto.adhi@gmail.com');
+        $message->from('herlianto.adhi@gmail.com');
+        $message->subject('Pembayaran Angsuran');
+        
+
+      });
+      
       return redirect("peminjaman/angsuran/detail/$peminjaman->kode");
     }
 

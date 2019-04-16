@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Transaksi;
 use App\Option;
 use Auth;
+use Mail;
 
 class PeminjamanController extends Controller
 {
@@ -232,9 +233,7 @@ class PeminjamanController extends Controller
 
     public function aprove($kode){
 
-    //   $peminjaman = Peminjaman::find($kode);
-    //   $peminjaman->status = 1;
-    //   $peminjaman->update();
+    
 
     if (Auth::user()->role == '1') {
 
@@ -267,8 +266,27 @@ class PeminjamanController extends Controller
         Angsuran::create($data);
       }
 
-      return redirect('admin/peminjaman/pengajuanPeminjaman');
+      
+      $dataPeminjaman = DB::table('peminjamen')
+        ->join('users', 'peminjamen.user_id', '=', 'users.id')
+        ->where('kode', $kode)
+        ->select('*')
+        ->first();        
 
+        $data = [
+          'email' => $dataPeminjaman->email,
+          'kode' => $dataPeminjaman->kode,
+          'keperluan' => $dataPeminjaman->keperluan,
+          'nama' => $dataPeminjaman->name
+        ];
+
+        Mail::send('admin.email.mailPeminjaman', $data, function($message) use($data){
+          $message->to('herlianto.adhi@gmail.com');
+          $message->from('herlianto.adhi@gmail.com');
+          $message->subject('Peminjaman '.$data['keperluan']);
+        });
+
+        return redirect('admin/peminjaman/pengajuanPeminjaman');
     }else {
 
       return view('pages/dashboard', [
