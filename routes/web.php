@@ -22,6 +22,7 @@ Route::get('logout', 'Auth\LoginController@logout', function () {
     return abort(404);
 });
 
+Route::resource('daftar','DaftarController');
 Route::get('profile','MemberController@profile');
 Route::get('profile/detail','MemberController@detail');
 Route::get('profile/account', 'MemberController@account');

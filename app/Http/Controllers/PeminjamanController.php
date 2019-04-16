@@ -122,6 +122,33 @@ class PeminjamanController extends Controller
 
         $pengaturan = Option::orderBy('id')->get();
         $id = Auth::user()->id;
+
+        //Upload file
+        
+        // SK
+        $imagesk = $request->sk;        
+        $images_new_namesk = time().$imagesk->getClientOriginalName();
+        $imagesk->move('public/uploads/', $images_new_namesk);
+
+        //KTP
+        $imagektp = $request->ktp;        
+        $images_new_namektp = time().$imagektp->getClientOriginalName();
+        $imagektp->move('public/uploads/', $images_new_namektp);
+
+        //KK
+        $imagekk = $request->kk;        
+        $images_new_namekk = time().$imagekk->getClientOriginalName();
+        $imagekk->move('public/uploads/', $images_new_namekk);
+
+        //slip
+        $imageslip = $request->slip;        
+        $images_new_nameslip = time().$imageslip->getClientOriginalName();
+        $imageslip->move('public/uploads/', $images_new_nameslip);
+
+        // jaminan
+        $imagejaminan = $request->jaminan;        
+        $images_new_namejaminan = time().$imagejaminan->getClientOriginalName();
+        $imagejaminan->move('public/uploads/', $images_new_namejaminan);
         
         $admin = $pengaturan[1]->value;
         $margin = (float)$pengaturan[0]->value;
@@ -132,10 +159,10 @@ class PeminjamanController extends Controller
           'angsuran' => $request['angsuran'],
           'dp' => $request['dp'],
           'keperluan' => $request['keperluan'],
-          'sk' => $request->sk->getClientOriginalName(),
-          'ktp' => $request->ktp->getClientOriginalName(),
-          'kk' => $request->kk->getClientOriginalName(),
-          'slip' => $request->slip->getClientOriginalName(),
+          'sk' => 'public/uploads/'.$images_new_namesk,
+          'ktp' => 'public/uploads/'.$images_new_namektp,
+          'kk' => 'public/uploads/'.$images_new_namekk,
+          'slip' => 'public/uploads/'.$images_new_nameslip,
           'jaminan' => '',
           'margin' => $margin,
           'after_margin' => $request['after_margin'],

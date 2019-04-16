@@ -114,7 +114,7 @@
                                     <img alt="" class="img-circle" src="{{asset('assets/layouts/layout4/img/avatar9.jpg')}}" /> </a>
                                 <ul class="dropdown-menu dropdown-menu-default">
                                   <li>
-                                      <a href="{{url('profile')}}">
+                                      <a href="{{url('profile/detail')}}">
                                           <i class="icon-user"></i> Profile
                                       </a>
                                   </li>

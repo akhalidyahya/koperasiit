@@ -69,6 +69,9 @@ class MemberController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function save(Request $request) {
+      
+    }
     public function store(Request $request)
     {
       if (Auth::user()->role == '1') {
@@ -209,11 +212,20 @@ class MemberController extends Controller
 
       if($r->hasfile('gambar')){
 
+        // save image
+        $images = $r->gambar;
+        // pemberian nama dengan bantuan time
+        $images_new_name = time().$images->getClientOriginalName();
+        $images->move('public/uploads/', $images_new_name);
+
+
        DB::table('users')->where('id',$id)->update([
-          'gambar' => $r->gambar->getClientOriginalName()
+        'gambar' => 'public/uploads/'.$images_new_name
         ]);
       }
       else{
+
+        
 
         DB::table('users')->where('id', $id)->update([
           'name' => $r->nama,
@@ -229,6 +241,7 @@ class MemberController extends Controller
           'nama_lembaga' => $r->nama_lembaga,
           'pegawaian' => $r->pegawaian,
           'no_lembaga' => $r->no_lembaga,
+          
         ]);
       }
 
@@ -263,8 +276,11 @@ class MemberController extends Controller
     }
 
     public function profile(){
+      $user = DB::table('users')->where('id', Auth::user()->id)->first();
+      
       return view('pages/profile/profile',[
-        'sidebar'=>''
+        'sidebar'=>'',
+        'user' => $user
       ]);
     }
     public function detail(){

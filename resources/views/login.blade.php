@@ -48,7 +48,7 @@
             <!-- BEGIN LOGIN FORM -->
             @if(Session::has('success'))
             <div class="alert alert-success">
-              <strong>Success!</strong> The page has been added.
+             Your registration is <strong>Success!</strong>.
             </div>
             click <a href="{{url('login')}}">here</a> to login
             @else
@@ -107,7 +107,7 @@
             </form> -->
             <!-- END FORGOT PASSWORD FORM -->
             <!-- BEGIN REGISTRATION FORM -->
-            <form class="register-form" action="{{route('member.store')}}" method="post">
+            <form class="register-form" action="{{route('daftar.store')}}" method="post">
               {{csrf_field()}} {{method_field('POST')}}
                 <h3 class="font-green">Form Isian Calon Anggota Koperasi Berkah Usaha Terpadu</h3>
                 <hr>
