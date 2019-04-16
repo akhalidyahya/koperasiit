@@ -46,23 +46,23 @@
                 <!-- END SIDEBAR USERPIC -->
                 <!-- SIDEBAR USER TITLE -->
                 <div class="profile-usertitle">
-                    <div class="profile-usertitle-name"> Marcus Doe </div>
-                    <div class="profile-usertitle-job"> Developer </div>
+                    <div class="profile-usertitle-name"> {{$user->name}} </div>
+                    <div class="profile-usertitle-job"> {{$user->pekerjaan}} </div>
                 </div>
                 <!-- END SIDEBAR USER TITLE -->
                 <!-- SIDEBAR BUTTONS -->
-                <div class="profile-userbuttons">
+                <!-- <div class="profile-userbuttons">
                     <button type="button" class="btn btn-circle green btn-sm">Follow</button>
                     <button type="button" class="btn btn-circle red btn-sm">Message</button>
-                </div>
+                </div> -->
                 <!-- END SIDEBAR BUTTONS -->
                 <!-- SIDEBAR MENU -->
                 <div class="profile-usermenu">
                     <ul class="nav">
-                        <li class="active">
+                        <!-- <li class="active">
                             <a href="{{url('profile/detail')}}">
                                 <i class="icon-home"></i> Overview </a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="{{url('profile/detail')}}">
                                 <i class="icon-settings"></i> Account Settings </a>
@@ -96,7 +96,7 @@
                             </div>
                         </div>
                         <!-- END STAT -->
-                        <div>
+                        <!-- <div>
                             <h4 class="profile-desc-title">About Marcus Doe</h4>
                             <span class="profile-desc-text"> Lorem ipsum dolor sit amet diam nonummy nibh dolore. </span>
                             <div class="margin-top-20 profile-desc-link">
@@ -111,13 +111,13 @@
                                 <i class="fa fa-facebook"></i>
                                 <a href="http://www.facebook.com/keenthemes/">keenthemes</a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <!-- END PORTLET -->
                 </div>
                 <div class="col-md-6">
                     <!-- BEGIN PORTLET -->
-                    <div class="portlet light bordered">
+                    <!-- <div class="portlet light bordered">
                         <div class="portlet-title tabbable-line">
                             <div class="caption caption-md">
                                 <i class="icon-globe theme-font hide"></i>
@@ -130,7 +130,7 @@
                             </ul>
                         </div>
                         <div class="portlet-body">
-                            <!--BEGIN TABS-->
+                            
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tab_1_2">
                                     <div class="scroller" style="height: 337px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
@@ -331,9 +331,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--END TABS-->
+                            
                         </div>
-                    </div>
+                    </div> -->
                     <!-- END PORTLET -->
                 </div>
             </div>

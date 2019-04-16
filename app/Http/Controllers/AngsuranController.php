@@ -174,6 +174,12 @@ class AngsuranController extends Controller
 
     public function bayardp(Request $request){
 
+      // save image
+      $images = $request->bukti;
+      // pemberian nama dengan bantuan time
+      $images_new_name = time().$images->getClientOriginalName();
+      $images->move('public/uploads/', $images_new_name);
+
       $peminjaman = Peminjaman::where('id',$request->id)->first();
       $data = [
         'kode' => $peminjaman->kode,
@@ -181,7 +187,7 @@ class AngsuranController extends Controller
         'bulan' => Date('n'),
         'tahun' => Date('Y'),
         'keterangan' => $request['keterangan'],
-        'foto' => $request['bukti']->getClientOriginalName(),
+        'foto' => 'public/uploads/' . $images_new_name,
         'jenis' => 'dp',
         'aproval' => 0,
         'user_id' => $peminjaman->user_id,
@@ -214,13 +220,19 @@ class AngsuranController extends Controller
 
     public function bayarangsuran(Request $request){
       $peminjaman = Peminjaman::where('id',$request->id)->first();
+      
+      
+      $images = $request->bukti;      
+      $images_new_name = time().$images->getClientOriginalName();
+      $images->move('public/uploads/', $images_new_name);
+
       $data = [
         'kode' => $peminjaman->kode,
         'jumlah' => $request['nominal'],
         'bulan' => $request['bulan'],
         'tahun' => Date('Y'),
         'keterangan' => $request['keterangan'],
-        'foto' => $request['bukti']->getClientOriginalName(),
+        'foto' => 'public/uploads/' .$images_new_name,
         'jenis' => 'angsuran',
         'aproval' => 0,
         'user_id' => $peminjaman->user_id,

@@ -34,6 +34,11 @@
                 <i class=" icon-layers font-red"></i>
                 <span class="caption-subject font-red sbold uppercase">Iuran Bulanan</span>
             </div>
+            <div class="actions">
+              <select class="form-control" id="pilih_thn">
+                <option value="2018">2018</option>
+              </select>
+            </div>
         </div>
         <div class="portlet-body">
             <table class="table table-striped table-bordered table-hover text-center" id="myTable">

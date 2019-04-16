@@ -42,7 +42,7 @@
             <div class="portlet light profile-sidebar-portlet bordered">
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic">
-                    <img src="{{asset('assets/pages/media/profile/profile_user.jpg')}}" class="img-responsive" alt=""> </div>
+                    <img src="{{asset($user->gambar)}}" class="img-responsive" alt=""> </div>
                 <!-- END SIDEBAR USERPIC -->
                 <!-- SIDEBAR USER TITLE -->
                 <div class="profile-usertitle">
@@ -60,10 +60,10 @@
 
                 <div class="profile-usermenu">
                     <ul class="nav">
-                      <li class="">
+                      <!-- <li class="">
                           <a href="{{url('profile')}}">
                               <i class="icon-home"></i> Overview </a>
-                      </li>
+                      </li> -->
                         <li class="active">
                             <a href="">
                                 <i class="icon-settings"></i> Account Settings </a>
@@ -106,7 +106,7 @@
                                 <!-- PERSONAL INFO TAB -->
                                 <div class="tab-pane active" id="tab_1_1">
 
-                                    <form role="form" action="{{route('update.profile')}}" method="post">
+                                    <form role="form" action="{{route('update.profile')}}" method="post" enctype="multipart/form-data">
                                     {{csrf_field()}}
                                         <div class="form-group">
                                             <label class="control-label">First Name</label>
@@ -116,7 +116,7 @@
                                             <input type="text" placeholder="Doe" name="email" class="form-control" value="{{$user->email}}"/> </div>
                                         <div class="form-group">
                                             <label class="control-label">Password</label>
-                                            <input type="text" placeholder="+1 646 580 DEMO (6284)" name="password" class="form-control" /> </div>
+                                            <input type="password" placeholder="your Password" name="password"  class="form-control" /> </div>
                                         <div class="form-group">
                                             <label class="control-label">TTL</label>
                                             <input type="text" placeholder="Design, Web etc." name="ttl" class="form-control" value="{{$user->ttl}}"/> </div>

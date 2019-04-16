@@ -23,7 +23,7 @@ class TransaksiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexIuran()    
+    public function indexIuran()
     {
       if(Auth::user()->role == '1'){
           return view('admin/iuran/transaksiIuran', [
@@ -34,7 +34,7 @@ class TransaksiController extends Controller
           'sidebar' => 'dashboard'
         ]);
       }
-        
+
 
     }
 
@@ -94,7 +94,7 @@ class TransaksiController extends Controller
         ]);
       }
 
-        
+
     }
 
     public function indexAngsuran()
@@ -110,7 +110,7 @@ class TransaksiController extends Controller
         ]);
       }
 
-        
+
 
     }
 
@@ -203,7 +203,9 @@ class TransaksiController extends Controller
 
 
       return DataTables::of($transaksiIuran)
-        ->addColumn('aprove',function($transaksiIuran) {
+        ->addColumn('foto',function($transaksiIuran) {
+          return '<a href="'.asset($transaksiIuran->foto).'" target="blank"> Lihat </a>';
+        })->addColumn('aprove',function($transaksiIuran) {
           return '<a href="iuran/aprove/'.$transaksiIuran->kode.'" class="btn btn-primary btn-xs"> Aprove </a>';
         })->addColumn('disaprove',function($transaksiIuran) {
           return '<a href="iuran/disaprove/'.$transaksiIuran->kode.'" class="btn btn-danger btn-xs"> Disaprove </a>';
@@ -291,7 +293,7 @@ class TransaksiController extends Controller
     // }
 
     public function aprove($kode){
-        
+
 
         if(Auth::user()->role == '1'){
 
@@ -301,7 +303,7 @@ class TransaksiController extends Controller
           DB::table('iurans')->where('kode', $kode)->update([
               'status' => 1
           ]);
-          
+
           return redirect('admin/peminjaman/pengajuanPeminjaman');
 
         }
@@ -313,7 +315,7 @@ class TransaksiController extends Controller
 
         }
 
-        
+
 
     }
 
@@ -338,7 +340,7 @@ class TransaksiController extends Controller
       }
 
 
-        
+
     }
 
     public function aprovedp($kode){
@@ -356,7 +358,7 @@ class TransaksiController extends Controller
         ->join('users', 'transaksis.user_id', '=', 'users.id')
         ->where('kode', $kode)
         ->select('*')
-        ->first();        
+        ->first();
 
         $data = [
           'email' => $dataTransaksi->email,
@@ -404,7 +406,7 @@ class TransaksiController extends Controller
       }
 
 
-      
+
 
     }
 
@@ -418,13 +420,13 @@ class TransaksiController extends Controller
         DB::table('angsurans')->where('bulan',$bulan)->where('peminjaman_id', $id)->update([
           'status'=> 1
         ]);
-        
-        
+
+
         $dataTransaksi = DB::table('transaksis')
         ->join('users', 'transaksis.user_id', '=', 'users.id')
         ->where('kode', $kode)
         ->select('*')
-        ->first();        
+        ->first();
 
         $data = [
           'email' => $dataTransaksi->email,
@@ -450,7 +452,7 @@ class TransaksiController extends Controller
         ]);
       }
 
-      
+
     }
 
     public function disaproveangsuran($id,$kode,$bulan){
@@ -469,7 +471,7 @@ class TransaksiController extends Controller
         return view('pages/dashboard', [
           'sidebar' => 'dashboard'
         ]);
-      }      
+      }
     }
 
 }

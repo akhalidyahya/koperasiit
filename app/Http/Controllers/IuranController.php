@@ -181,11 +181,18 @@ class IuranController extends Controller
     {
         $id = Auth::user()->id;
         $bulan = $request['bulan'];
+
+        // Uploads Foto
+        $images = $request->bukti;
+        // pemberian nama dengan bantuan time
+        $images_new_name = time().$images->getClientOriginalName();
+        $images->move('public/uploads/', $images_new_name);
+
         $data = [
           'status' => 2,
           'keterangan' => $request->keterangan,
           'jumlah' => $request->nominal,
-          'foto' => $request->bukti->getClientOriginalName()
+          'foto' => 'public/uploads/'.$images_new_name
         ];
         DB::table('iurans')->where('user_id', $id)->where('bulan',$bulan)->update($data);
 
@@ -196,7 +203,7 @@ class IuranController extends Controller
           'tahun' => Date('Y'),
           'keterangan' => $request->keterangan,
           'jenis' => 'iuran',
-          'foto' => $request->bukti->getClientOriginalName(),
+          'foto' => 'public/uploads/'.$images_new_name,
           'aproval' => 0,
           'user_id' => $id
         ];
@@ -340,7 +347,7 @@ class IuranController extends Controller
         ];
 
         Mail::send('admin.email.mailTransaksi', $data, function($message) use($data){
-          $message->to('herlianto.adhi@gmail.com');
+          $message->to($data['email']);
           $message->from('herlianto.adhi@gmail.com');
           $message->subject('Pembayaran '.$data['jenis']);
         });
