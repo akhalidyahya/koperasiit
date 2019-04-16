@@ -28,19 +28,34 @@
     <div class="col-md-4">
         <!-- BEGIN WIDGET THUMB -->
         <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered">
-            <h4 class="widget-thumb-heading">Pinjaman - {{$peminjaman->keperluan}}</h4>
+            <h4 class="widget-thumb-heading">Pinjaman - 
+            <?php if (!is_null($peminjaman)) {
+                echo $peminjaman->keperluan;
+            ?>
+            </h4>
             <div class="widget-thumb-wrap">
                 <i class="widget-thumb-icon bg-green icon-bulb"></i>
                 <div class="widget-thumb-body">
-                    <span class="widget-thumb-subtitle">IDR</span>
+                    <span class="widget-thumb-subtitle"><?php 
+                        if ($peminjaman->status == 0) {
+                            echo "Menunggu persetujuan";
+                        }
+                        elseif ($peminjaman->status == 1) {
+                            echo "Telah disetujui";
+                        }
+                        elseif ($peminjaman->status == 2) {
+                            echo "Telah ditolak";
+                        }
+                    ?></span>
                     <span class="widget-thumb-body-stat" data-counter="counterup" data-value="
                     <?php
-                    if (!is_null($peminjaman)) {
-                        echo $peminjaman->jumlah;
-                    }
-                    else{
-                        echo 0;
-                    }
+                    // if (!is_null($peminjaman)) {
+                        echo "IDR ".$peminjaman->jumlah;
+                    };
+                    // }
+                    // else{
+                    //     echo 0;
+                    // }
                         
                     ?>">0</span>
                 </div>
@@ -50,7 +65,7 @@
     </div>
     @endforeach
 </div>
-<div class="row">
+<!-- <div class="row">
     <div class="col-lg-6 col-xs-12 col-sm-12">
         <div class="portlet light bordered">
             <div class="portlet-title">
@@ -220,9 +235,9 @@
                                 </ol>
                                 <span class="filling-line bg-red" aria-hidden="true" style="transform: scaleX(0.0763889);"></span>
                             </div>
-                            <!-- .events -->
+                            .events
                         </div>
-                        <!-- .events-wrapper -->
+                        .events-wrapper
                         <ul class="cd-timeline-navigation mt-ht-nav-icon">
                             <li>
                                 <a href="#0" class="prev inactive btn btn-outline red md-skip">
@@ -235,9 +250,9 @@
                                 </a>
                             </li>
                         </ul>
-                        <!-- .cd-timeline-navigation -->
+                        .cd-timeline-navigation
                     </div>
-                    <!-- .timeline -->
+                    .timeline
                     <div class="events-content">
                         <ol>
                             <li class="selected" data-date="16/01/2014">
@@ -529,12 +544,12 @@
                             </li>
                         </ol>
                     </div>
-                    <!-- .events-content -->
+                    .events-content
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- END PAGE BASE CONTENT -->
 
 @endsection

@@ -33,6 +33,8 @@ class DashboardController extends Controller
         if($isadmin == 'user'){
             $peminjaman = DB::table('peminjamen')
                 ->where('user_id', '=', Auth::user()->id)
+                ->orderBy('status')
+                ->limit(3)
                 ->get();
 
             return view('pages/dashboard',[            
@@ -41,9 +43,36 @@ class DashboardController extends Controller
               ]);
 
         }elseif($isadmin == 'admin'){
-            return view('admin/dashboard',[            
-                'sidebar'=>'dashboard'
-              ]);
+            $countMember = DB::table('users')
+                ->where('role', '=', 0  )
+                ->count();
+
+            $countPeminjaman = DB::table('peminjamen')
+                ->count();
+
+            $countTransaksi = DB::table('transaksis')
+                // ->where(DB::raw("to_char(created_at, 'yyyy-mm-dd') = to_char(CURRENT_DATE, 'yyyy-mm-dd'"))
+                // ->where(DB::raw("to_char(created_at, 'yyyy-mm-dd') = ".date("Y-m-d")))
+                // ->select(DB::raw("count(*) as aggregate"))
+                ->count();
+                // ->get();
+
+            $recentTransaksi = DB::table('transaksis')
+                ->join('users', 'users.id', '=', 'transaksis.user_id')
+                ->orderBy('transaksis.created_at', 'DSC')
+                ->limit(5)
+                ->select('users.name', 'transaksis.created_at', 'transaksis.jenis', 'transaksis.jumlah')
+                ->get();
+
+            // return view('admin/dashboard',[            
+            //     'sidebar'=>'dashboard',
+            //     'jumlahMember' => $countMember,
+            //     'countPeminjaman' => $countPeminjaman,
+            //     'countTransaksi' => $countTransaksi,
+            //     'recentTransaksi' => $recentTransaksi
+            //   ]);
+            // return $recentTransaksi;
+            return $countMember;
         }else{
             redirect('login');
         }
