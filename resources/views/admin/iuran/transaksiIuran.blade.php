@@ -61,6 +61,7 @@
                       <th>Waktu</th>
                       <th>Bulan</th>
                       <th>Nominal</th>
+                      <th>Bukti</th>
                       <th>Aprove</th>
                       <th>Disaprove</th>
                     </tr>
@@ -98,6 +99,7 @@ var t = $('#myTable').DataTable({
     {data:'created_at', name: 'created_at'},
     {data:'bulan', name: 'bulan'},
     {data:'jumlah', name: 'jumlah'},
+    {data:'foto', name: 'foto'},
     {data:'aprove', name: 'aprove'},
     {data:'disaprove', name: 'disaprove'},
   ],

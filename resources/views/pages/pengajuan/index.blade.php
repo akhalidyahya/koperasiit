@@ -72,7 +72,7 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-
+    <a class="btn btn-primary btn-flat" href="{{url('peminjaman/pengajuan/create')}}"><i class="fa fa-upload"></i> Ajukan Peminjaman</a>
     <p></p>
     <!-- BEGIN EXAMPLE TABLE PORTLET-->
     <div class="portlet light portlet-fit portlet-datatable bordered">
@@ -82,7 +82,11 @@
                 <span class="caption-subject font-red sbold uppercase">Pengajuan Peminjaman</span><span style="margin-left:15px;"></span>
             </div>
             <div class="actions">
-              <a class="btn btn-primary btn-flat" href="{{url('peminjaman/pengajuan/create')}}"><i class="fa fa-upload"></i> Ajukan Peminjaman</a>
+              <div class="actions">
+                <select class="form-control" id="pilih_thn">
+                  <option value="2018">2018</option>
+                </select>
+              </div>
             </div>
         </div>
         <div class="portlet-body">
