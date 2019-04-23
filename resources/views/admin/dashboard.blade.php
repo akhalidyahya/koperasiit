@@ -31,7 +31,7 @@
             <div class="widget-thumb-wrap">
                 <i class="widget-thumb-icon bg-green icon-bulb"></i>
                 <div class="widget-thumb-body">
-                    
+
                     <span class="widget-thumb-body-stat" data-counter="counterup" data-value="<?php
                         if (!is_null($jumlahMember)) {
                             echo $jumlahMember;
@@ -50,11 +50,11 @@
     <div class="col-md-3">
         <!-- BEGIN WIDGET THUMB -->
         <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered">
-            <h4 class="widget-thumb-heading">Jumlah peminjaman</h4>
+            <h4 class="widget-thumb-heading">Jumlah pembiayaan</h4>
             <div class="widget-thumb-wrap">
                 <i class="widget-thumb-icon bg-red icon-layers"></i>
                 <div class="widget-thumb-body">
-                    
+
                     <span class="widget-thumb-body-stat" data-counter="counterup" data-value="<?php
                     if (!is_null($countPeminjaman)) {
                         echo $countPeminjaman;
@@ -62,7 +62,7 @@
                     else {
                         echo 0;
                     }
-                    
+
                     ?>">0</span>
                     <span class="widget-thumb-subtitle">Pinjaman</span>
                 </div>
@@ -84,7 +84,7 @@
                     else {
                         echo 0;
                     }
-                    
+
                     ?>">0</span>
                     <span class="widget-thumb-subtitle">Transaksi</span>
                 </div>

@@ -56,9 +56,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($belumBayar as $data) { $no = 1;?>
+                    <?php foreach ($belumBayar as $data) {?>
                       <tr>
-                        <td><?php echo $no ?></td>
+                        <td><?php echo $data->user_id ?></td>
                         <td><?php echo $data->name ?></td>
                         <td><a href="{{url('admin/member').'/'.$data->user_id}}/edit">Detail</a></td>
                       </tr>
@@ -92,9 +92,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($sudahBayar as $data) { $no = 1;?>
+                        <?php foreach ($sudahBayar as $data) {?>
                           <tr>
-                            <td><?php echo $no ?></td>
+                            <td><?php echo $data->user_id ?></td>
                             <td><?php echo $data->name ?></td>
                             <td><a href="{{url('admin/member').'/'.$data->user_id}}/edit">Detail</a></td>
                           </tr>

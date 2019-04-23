@@ -76,7 +76,7 @@
                 <!-- BEGIN LOGO -->
                 <div class="page-logo">
                     <a href="login">
-                        <img src="{{asset('assets/pages/img/logo-big-white.png')}}" alt="logo" class="logo-default" width="25px"/> 
+                        <img src="{{asset('assets/pages/img/logo-big-white.png')}}" alt="logo" class="logo-default" width="25px"/>
                         </a>
                     <div class="menu-toggler sidebar-toggler">
                         <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
@@ -178,7 +178,7 @@
                         <li class="nav-item {{ (\Request::route()->getName() == 'peminjaman') ? 'active open' : ''}}">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="icon-briefcase"></i>
-                                <span class="title">Peminjaman</span>
+                                <span class="title">Pembiayaan</span>
                                 <span class="arrow"></span>
                             </a>
                             <ul class="sub-menu">

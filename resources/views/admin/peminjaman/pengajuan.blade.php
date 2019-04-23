@@ -17,7 +17,7 @@
 <div class="page-head">
     <!-- BEGIN PAGE TITLE -->
     <div class="page-title">
-        <h1>Admin Koperasi | Peminjaman
+        <h1>Admin Koperasi | Pembiayaan
             <small>statistics, charts and reports</small>
         </h1>
     </div>
@@ -31,7 +31,7 @@
       <i class="fa fa-circle"></i>
   </li>
   <li>
-      <a href="javascript:;">Peminjaman</a>
+      <a href="javascript:;">Pembiayaan</a>
       <i class="fa fa-circle"></i>
   </li>
   <li>
@@ -79,7 +79,7 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Pengajuan Peminjaman</span><span style="margin-left:15px;"></span>
+                <span class="caption-subject font-red sbold uppercase">Pengajuan Pembiayaan</span><span style="margin-left:15px;"></span>
             </div>
             <!-- <div class="actions">
               <a class="btn btn-primary btn-flat" href="{{url('peminjaman/pengajuan/create')}}"><i class="fa fa-upload"></i> Ajukan Peminjaman</a>

@@ -193,7 +193,7 @@
                             <span class="arrow"></span>
                           </a>
                           <ul class="sub-menu">
-                          
+
                             <li class="nav-item {{ ($sidebar == 'transaksiIuran') ? 'active open' : ''}} ">
                               <a href="{{url('admin/transaksi/iuranbulanan')}}" class="nav-link ">
                                 <span class="title">Iuran Bulanan</span>
@@ -221,7 +221,7 @@
                         <li class="nav-item {{ (\Request::route()->getName() == 'peminjaman') ? 'active open' : ''}}">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="icon-briefcase"></i>
-                                <span class="title">Peminjaman</span>
+                                <span class="title">Pembiayaan</span>
                                 <span class="arrow"></span>
                             </a>
                             <ul class="sub-menu">

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    
+
             <!-- BEGIN PAGE HEAD-->
 <div class="page-head">
     <!-- BEGIN PAGE TITLE -->
@@ -31,13 +31,13 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Ajukan Peminjaman</span>
+                <span class="caption-subject font-red sbold uppercase">Ajukan Pembiayaan</span>
             </div>
     </div>
 
     <div class="portlet-body">
     <form class="register-form" action="{{route('member.update', $user->id)}}" method="post">
-              {{csrf_field()}} 
+              {{csrf_field()}}
                 <h3 class="font-green">Form Isian Calon Anggota Koperasi Berkah Usaha Terbadu</h3>
                 <hr>
                 <h4 class=""> A. Data Individu </h4>
@@ -124,10 +124,10 @@
                     <button type="button" id="register-back-btn" class="btn green btn-outline">Back</button>
                     <button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right">Submit</button>
                 </div>
-            </form>    
+            </form>
     </div>
-    
-    
+
+
     </div>
 </div>
 @endsection

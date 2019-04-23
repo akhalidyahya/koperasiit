@@ -19,7 +19,7 @@
 <div class="page-head">
     <!-- BEGIN PAGE TITLE -->
     <div class="page-title">
-        <h1>Member Koperasi Dashboard | Peminjaman
+        <h1>Member Koperasi Dashboard | Pembiayaan
             <small>statistics, charts and reports</small>
         </h1>
     </div>
@@ -33,7 +33,7 @@
       <i class="fa fa-circle"></i>
   </li>
   <li>
-      <a href="javascript:;">Peminjaman</a>
+      <a href="javascript:;">Pembiayaan</a>
       <i class="fa fa-circle"></i>
   </li>
   <li>
@@ -51,7 +51,7 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Daftar Peminjaman</span><span style="margin-left:15px;"></span>
+                <span class="caption-subject font-red sbold uppercase">Daftar Pembiayaan</span><span style="margin-left:15px;"></span>
             </div>
         </div>
         <div class="portlet-body">
@@ -59,12 +59,12 @@
                 <thead>
                     <tr>
                       <th>Nama</th>
-                      <th>Email</th>                      
-                      <th>TTL</th>                      
-                      <th>Identitas</th>                      
-                      <th>Alamat</th>                      
+                      <th>Email</th>
+                      <th>TTL</th>
+                      <th>Identitas</th>
+                      <th>Alamat</th>
                       <th>Pekerjaan</th>
-                      <th>Nama lembaga</th>                      
+                      <th>Nama lembaga</th>
                       <th>Action</th>
                     </tr>
                 </thead>
@@ -86,7 +86,7 @@ function pinjam(){
   $('input[name=_method]').val('POST');
   $('#myModal').modal('show');
   $('#myModal form')[0].reset();
-  $('.modal-title').text('Ajukan Peminjaman');
+  $('.modal-title').text('Ajukan Pembiayaan');
 }
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
@@ -101,13 +101,13 @@ var t = $('#myTable').DataTable({
   'lengthChange': true,
   'columns'     : [
     {data:'name', name: 'name'},
-    {data:'email', name: 'email'},    
-    {data:'ttl', name: 'ttl'},    
+    {data:'email', name: 'email'},
+    {data:'ttl', name: 'ttl'},
     {data:'identitas', name: 'identitas'},
-    {data:'alamat', name: 'alamat'},    
+    {data:'alamat', name: 'alamat'},
     {data:'pekerjaan', name: 'pekerjaan'},
-    {data:'nama_lembaga', name: 'nama_lembaga'},    
-    {data:'action', name: 'action'},        
+    {data:'nama_lembaga', name: 'nama_lembaga'},
+    {data:'action', name: 'action'},
   ],
   'info'        : true,
   'autoWidth'   : false

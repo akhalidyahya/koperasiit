@@ -28,7 +28,7 @@
     <div class="col-md-4">
         <!-- BEGIN WIDGET THUMB -->
         <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered">
-            <h4 class="widget-thumb-heading">Pinjaman - 
+            <h4 class="widget-thumb-heading">Pembiayaan -
             <?php if (!is_null($peminjaman)) {
                 echo $peminjaman->keperluan;
             ?>
@@ -36,7 +36,7 @@
             <div class="widget-thumb-wrap">
                 <i class="widget-thumb-icon bg-green icon-bulb"></i>
                 <div class="widget-thumb-body">
-                    <span class="widget-thumb-subtitle"><?php 
+                    <span class="widget-thumb-subtitle"><?php
                         if ($peminjaman->status == 0) {
                             echo "Menunggu persetujuan";
                         }
@@ -56,7 +56,7 @@
                     // else{
                     //     echo 0;
                     // }
-                        
+
                     ?>">0</span>
                 </div>
             </div>
