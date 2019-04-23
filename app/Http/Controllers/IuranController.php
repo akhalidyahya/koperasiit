@@ -36,9 +36,10 @@ class IuranController extends Controller
     //   ]);
 
       if (Auth::user()->role == '1') {
-        return view ('admin/dashboard', [
-          'sidebar' => 'dashboard',
-        ]);
+        // return view ('admin/dashboard', [
+        //   'sidebar' => 'dashboard',
+        // ]);
+        redirect()->route('admin/dashboard');
       }elseif (Auth::user()->role == '0') {
         return view('pages/iuran',[
             'sidebar'=>'iuran',
@@ -69,9 +70,10 @@ class IuranController extends Controller
     //   ]);
 
       if (Auth::user()->role == '1') {
-        return view ('admin/dashboard', [
-          'sidebar' => 'dashboard',
-        ]);
+        // return view ('admin/dashboard', [
+        //   'sidebar' => 'dashboard',
+        // ]);
+        redirect()->route('admin/dashboard');
       }elseif (Auth::user()->role == '0') {
         return view('pages/iuranpokok',[
             'sidebar'=>'pokok',
@@ -113,9 +115,10 @@ class IuranController extends Controller
                 'bulanan'=>$tagihanPerBulan
             ]);
           }elseif (Auth::user()->role == '0') {
-            return view('pages/dashboard',[
-                'sidebar'=>'dashboard'
-            ]);
+            // return view('pages/dashboard',[
+            //     'sidebar'=>'dashboard'
+            // ]);
+            redirect()->route('dashboard');
           }else {
             return redirect('login');
           }
@@ -152,9 +155,10 @@ class IuranController extends Controller
                 'sudahBayar'=> $sudahBayar
             ]);
           }elseif (Auth::user()->role == '0') {
-            return view('pages/dashboard',[
-                'sidebar'=>'dashboard'
-            ]);
+            // return view('pages/dashboard',[
+            //     'sidebar'=>'dashboard'
+            // ]);
+            redirect()->route('dashboard');
           }else {
             return redirect('login');
           }
@@ -213,7 +217,7 @@ class IuranController extends Controller
         ->join('users', 'iurans.user_id', '=', 'users.id')
         ->where(['user_id' => $id, 'bulan' => $bulan])
         ->select('*')
-        ->first();                
+        ->first();
 
         $data = [
           'email' => $dataiuranbulanan->email,
@@ -253,13 +257,13 @@ class IuranController extends Controller
         'user_id' => $id
       ];
       Transaksi::create($data_transaksi);
-      
+
         $dataiuranpokok = DB::table('iurans')
         ->join('users', 'iurans.user_id', '=', 'users.id')
         ->where(['user_id' => $id, 'bulan' => $bulan])
         ->select('*')
         ->first();
-        
+
         $data = [
           'email' => $dataiuranpokok->email,
           'nama' => $dataiuranpokok->name,
@@ -335,7 +339,7 @@ class IuranController extends Controller
         ->join('users', 'transaksis.user_id', '=', 'users.id')
         ->where('kode', $kode)
         ->select('*')
-        ->first();        
+        ->first();
 
         $data = [
           'email' => $dataTransaksi->email,

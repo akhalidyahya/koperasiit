@@ -29,20 +29,23 @@ class PeminjamanController extends Controller
 
       if (Auth::user()->role == '1') {
 
-        return view ('admin/dashboard', [
-          'sidebar' => 'dashboard',          
-        ]);
+        // return view ('admin/dashboard', [
+        //   'sidebar' => 'dashboard',
+        // ]);
+        redirect()->route('admin/dashboard');
 
-      }else {
+      }elseif(Auth::user()->role == '0') {
 
         return view('pages/pengajuan/index',[
           'sidebar'=>'pengajuan',
           'pengaturan' => Option::orderBy('id')->get()
         ]);
 
+      }else {
+          redirect('login');
       }
 
-      
+
     }
 
     public function pengajuanAdmin(){
@@ -52,14 +55,18 @@ class PeminjamanController extends Controller
           'sidebar' => 'pengajuan',
         ]);
 
+      }elseif (Auth::user()->role == '0') {
+
+        // return view('pages/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
+
+        redirect()->route('dashboard');
+
       }else {
-
-        return view('pages/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
-
+        redirect('login');
       }
-      
+
     }
 
     public function angsuranAdmin(){
@@ -70,13 +77,19 @@ class PeminjamanController extends Controller
           'sidebar' => 'angsuran'
         ]);
 
-      }else {        
-        return view('pages/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
+      }elseif (Auth::user()->role == '0') {
+
+        // return view('pages/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
+
+        redirect()->route('dashboard');
+
+      }else {
+        redirect('login');
       }
 
-      
+
     }
 
     //ini buat admin
@@ -91,18 +104,23 @@ class PeminjamanController extends Controller
 
       if (Auth::user()->role == '1') {
 
-        return view('admin/dashboard',[
-          'sidebar' => 'dashboard'
-        ]);
+        // return view('admin/dashboard',[
+        //   'sidebar' => 'dashboard'
+        // ]);
 
-      }else {        
+        redirect()->route('admin/dashboard');
+
+      }elseif(Auth::user()->role == '0') {
         return view('pages/pengajuan/create',[
           'sidebar'=>'pengajuan',
           'pengaturan' => Option::orderBy('id')->get()
         ]);
       }
+      else {
+        redirect('login');
+      }
 
-      
+
     }
 
     /**
@@ -115,41 +133,42 @@ class PeminjamanController extends Controller
     {
 
       if (Auth::user()->role == '1') {
-        return view('admin/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
-      }else {
+        // return view('admin/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
+        redirect()->route('admin/dashboard');
+      }elseif (Auth::user()->role == '0') {
 
         $pengaturan = Option::orderBy('id')->get();
         $id = Auth::user()->id;
 
         //Upload file
-        
+
         // SK
-        $imagesk = $request->sk;        
+        $imagesk = $request->sk;
         $images_new_namesk = time().$imagesk->getClientOriginalName();
         $imagesk->move('public/uploads/', $images_new_namesk);
 
         //KTP
-        $imagektp = $request->ktp;        
+        $imagektp = $request->ktp;
         $images_new_namektp = time().$imagektp->getClientOriginalName();
         $imagektp->move('public/uploads/', $images_new_namektp);
 
         //KK
-        $imagekk = $request->kk;        
+        $imagekk = $request->kk;
         $images_new_namekk = time().$imagekk->getClientOriginalName();
         $imagekk->move('public/uploads/', $images_new_namekk);
 
         //slip
-        $imageslip = $request->slip;        
+        $imageslip = $request->slip;
         $images_new_nameslip = time().$imageslip->getClientOriginalName();
         $imageslip->move('public/uploads/', $images_new_nameslip);
 
         // jaminan
-        $imagejaminan = $request->jaminan;        
+        $imagejaminan = $request->jaminan;
         $images_new_namejaminan = time().$imagejaminan->getClientOriginalName();
         $imagejaminan->move('public/uploads/', $images_new_namejaminan);
-        
+
         $admin = $pengaturan[1]->value;
         $margin = (float)$pengaturan[0]->value;
         $random = substr(str_shuffle('1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'),0,10);
@@ -179,8 +198,11 @@ class PeminjamanController extends Controller
 
 
       }
+      else {
+        redirect('login');
+      }
 
-        
+
 
     }
 
@@ -233,11 +255,12 @@ class PeminjamanController extends Controller
     {
       if (Auth::user()->role == '1') {
 
-        return view ('admin/dashboard', [
-          'sidebar' => 'dashboard',          
-        ]);
+        // return view ('admin/dashboard', [
+        //   'sidebar' => 'dashboard',
+        // ]);
+        redirect()->route('admin/dashboard');
 
-      }else {
+      }elseif (Auth::user()->role == '0') {
 
         $peminjaman = Peminjaman::where('kode',$kode)->first();
 
@@ -248,7 +271,7 @@ class PeminjamanController extends Controller
 
       }
 
-      
+
     }
 
     public function cancel($id)
@@ -260,7 +283,7 @@ class PeminjamanController extends Controller
 
     public function aprove($kode){
 
-    
+
 
     if (Auth::user()->role == '1') {
 
@@ -293,12 +316,12 @@ class PeminjamanController extends Controller
         Angsuran::create($data);
       }
 
-      
+
       $dataPeminjaman = DB::table('peminjamen')
         ->join('users', 'peminjamen.user_id', '=', 'users.id')
         ->where('kode', $kode)
         ->select('*')
-        ->first();        
+        ->first();
 
         $data = [
           'email' => $dataPeminjaman->email,
@@ -314,15 +337,16 @@ class PeminjamanController extends Controller
         });
 
         return redirect('admin/peminjaman/pengajuanPeminjaman');
-    }else {
+    }elseif (Auth::user()->role == '0') {
 
-      return view('pages/dashboard', [
-        'sidebar' => 'dashboard'
-      ]);
+    //   return view('pages/dashboard', [
+    //     'sidebar' => 'dashboard'
+    //   ]);
+    redirect()->route('dashboard');
 
     }
 
-    
+
     }
 
     public function disaprove($kode){
@@ -332,17 +356,20 @@ class PeminjamanController extends Controller
         $peminjaman->status = 2;
         $peminjaman->update();
         return redirect('admin/peminjaman/pengajuanPeminjaman');
+      }elseif (Auth::user()->role == '0') {
+        // return view('pages/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
+        redirect()->route('dashboard');
       }else {
-        return view('pages/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
+          redirect('login');
       }
 
-      
+
     }
 
     public function apipeminjaman($id)
-    {      
+    {
         $id =Auth::user()->id;
         $peminjaman = Peminjaman::where('user_id', $id)->orderBy('id', 'dsc');
 
@@ -351,7 +378,7 @@ class PeminjamanController extends Controller
           return '<a href="pengajuan/detail/'.$peminjaman->kode.'" class="btn btn-default btn-xs">Detail</a>' ;
         })
         ->addColumn('tanggal',function($peminjaman) {
-          return $peminjaman->created_at->toDateString(); 
+          return $peminjaman->created_at->toDateString();
         })->addColumn('status',function($peminjaman) {
             if($peminjaman->status == 0){
               return 'Waiting';
@@ -383,9 +410,9 @@ class PeminjamanController extends Controller
     }
 
     public function detailPengajuanAdmin($kode){
-    
+
       if (Auth::user()->role == '1') {
-        
+
         $pengajuan = DB::table('peminjamen')
         ->where('kode', '=', $kode)
         ->get();
@@ -395,14 +422,17 @@ class PeminjamanController extends Controller
           'pengajuan' => $pengajuan
         ]);
 
+      }elseif (Auth::user()->role == '0') {
+        // return view('pages/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
+        redirect()->route('dashboard');
       }else {
-        return view('pages/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
-      }
+        redirect('login');
+    }
 
-    
-    
+
+
     }
 
     public function apiangsuranadmin()

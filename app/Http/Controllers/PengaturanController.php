@@ -43,7 +43,7 @@ class PengaturanController extends Controller
         // }
 
 
-        
+
 
     if (Auth::user()->role == '1') {
 
@@ -53,10 +53,13 @@ class PengaturanController extends Controller
         ]);
 
     }
-    else {
-        return view('pages/dashboard', [
-            'sidebar' => 'dashboard'
-        ]);
+    elseif (Auth::user()->role == '0'){
+        // return view('pages/dashboard', [
+        //     'sidebar' => 'dashboard'
+        // ]);
+        redirect()->route('dashboard');
+    }else {
+        redirect()->route('dashboard');
     }
 
 }
@@ -113,7 +116,7 @@ class PengaturanController extends Controller
      */
     public function update(Request $request)
     {
-        
+
 
         if (Auth::user()->role == '1') {
 
@@ -125,14 +128,17 @@ class PengaturanController extends Controller
                 'value' => $admin
             ]);
             return redirect()->back();
-            
+
+        }elseif (Auth::user()->role == '0') {
+            // return view('pages/dashboard', [
+            // 'sidebar' => 'dashboard'
+            // ]);
+            redirect()->route('dashboard');
         }else {
-            return view('pages/dashboard', [
-            'sidebar' => 'dashboard'
-            ]);
+            redirect('login');
         }
 
-      
+
     }
 
     /**

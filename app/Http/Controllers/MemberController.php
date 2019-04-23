@@ -23,20 +23,23 @@ class MemberController extends Controller
      */
     public function index()
     {
-      if (Auth::user()->role == '1') {        
+      if (Auth::user()->role == '1') {
         return view('pages/member/index',[
           'sidebar'=>'indexMember'
         ]);
 
+      }elseif(Auth::user()->role == '0'){
+
+        // return view('pages/dashboard',[
+        //   'sidebar'=>'dashboard'
+        // ]);
+        redirect()->route('dashboard');
+
       }else {
+        redirect('login');
+    }
 
-        return view('pages/dashboard',[
-          'sidebar'=>'dashboard'
-        ]);
 
-      }
-
-      
     }
 
     /**
@@ -52,15 +55,18 @@ class MemberController extends Controller
         ]);
 
         // return view ('admin/dashboard', [
-        //   'sidebar' => 'dashboard',          
+        //   'sidebar' => 'dashboard',
         // ]);
+      }elseif(Auth::user()->role == '0') {
+        // return view('pages/dashboard',[
+        //   'sidebar'=>'dashboard'
+        // ]);
+        redirect()->route('dashboard');
       }else {
-        return view('pages/dashboard',[
-          'sidebar'=>'dashboard'
-        ]);
-      }
+        redirect('login');
+    }
 
-      
+
     }
 
     /**
@@ -70,7 +76,7 @@ class MemberController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function save(Request $request) {
-      
+
     }
     public function store(Request $request)
     {
@@ -121,15 +127,18 @@ class MemberController extends Controller
         $request->session()->flush();
         $request->session()->flash('success', 'Your register was success!');
 
-        
+
         return redirect('admin/member/create');
+      }elseif(Auth::user()->role == '0') {
+        // return view('pages/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
+        redirect()->route('dashboard');
       }else {
-        return view('pages/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
+          redirect('login');
       }
 
-        
+
     }
 
     /**
@@ -159,13 +168,16 @@ class MemberController extends Controller
           'user' => $user
         ]);
 
-        
+
+      }elseif(Auth::user()->role == '0') {
+
+        // return view ('admin/dashboard', [
+        //   'sidebar' => 'dashboard',
+        // ]);
+        redirect()->route('admin/dashboard');
+
       }else {
-
-        return view ('admin/dashboard', [
-          'sidebar' => 'dashboard',          
-        ]);
-
+          redirect('login');
       }
 
     }
@@ -202,14 +214,12 @@ class MemberController extends Controller
     {
       // return 1;
       if (Auth::user()->role == '1') {
-        return view ('admin/dashboard', [
-          'sidebar' => 'dashboard',          
-        ]);
-
-      }else {
-        
+        // return view ('admin/dashboard', [
+        //   'sidebar' => 'dashboard',
+        // ]);
+        redirect()->route('admin/dashboard');
+      }elseif(Auth::user()->role == '0') {
       $id = Auth::user()->id;
-
       if($r->hasfile('gambar')){
 
         // save image
@@ -224,9 +234,6 @@ class MemberController extends Controller
         ]);
       }
       else{
-
-        
-
         DB::table('users')->where('id', $id)->update([
           'name' => $r->nama,
           'email' => $r->email,
@@ -241,7 +248,7 @@ class MemberController extends Controller
           'nama_lembaga' => $r->nama_lembaga,
           'pegawaian' => $r->pegawaian,
           'no_lembaga' => $r->no_lembaga,
-          
+
         ]);
       }
 
@@ -262,22 +269,20 @@ class MemberController extends Controller
 
         $user = User::find($id);
         $user->deleted = 1;
-        $user->save();        
+        $user->save();
         return redirect()->back();
 
-      }else {
-        return view('pages/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
+      }elseif(Auth::user()->role == '0') {
+        // return view('pages/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
+        redirect()->route('dashboard');
       }
-
-        
-
     }
 
     public function profile(){
       $user = DB::table('users')->where('id', Auth::user()->id)->first();
-      
+
       return view('pages/profile/profile',[
         'sidebar'=>'',
         'user' => $user
@@ -286,10 +291,12 @@ class MemberController extends Controller
     public function detail(){
 
       if (Auth::user()->role == '1') {
-        return view ('admin/dashboard', [
-          'sidebar' => 'dashboard',          
-        ]);
-      }else {
+        // return view ('admin/dashboard', [
+        //   'sidebar' => 'dashboard',
+        // ]);
+
+        redirect()->route('admin/dashboard');
+      }elseif(Auth::user()->role == '0') {
 
         $id = Auth::user()->id;
         $user = User::find($id);
@@ -298,9 +305,11 @@ class MemberController extends Controller
           'sidebar'=>'',
           'user' => $user
         ]);
+      }else{
+          redirect('login');
       }
 
-      
+
     }
 
     public function apiMember()
@@ -315,6 +324,6 @@ class MemberController extends Controller
         })->escapeColumns([])->make(true);
     }
 
-    
+
 
 }
