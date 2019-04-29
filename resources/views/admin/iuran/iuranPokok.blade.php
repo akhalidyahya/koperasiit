@@ -42,8 +42,8 @@
     <div class="portlet light portlet-fit portlet-datatable bordered">
         <div class="portlet-title">
             <div class="caption">
-                <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Iuran pokok belum lunas</span>
+                <i class=" icon-layers font-blue"></i>
+                <span class="caption-subject font-blue sbold uppercase">Iuran pokok belum lunas</span>
             </div>
         </div>
         <div class="portlet-body">
@@ -78,8 +78,8 @@
           <div class="portlet light portlet-fit portlet-datatable bordered">
               <div class="portlet-title">
                   <div class="caption">
-                      <i class=" icon-layers font-green"></i>
-                      <span class="caption-subject font-green sbold uppercase">Iuran pokok sudah lunas</span>
+                      <i class=" icon-layers font-blue"></i>
+                      <span class="caption-subject font-blue sbold uppercase">Iuran pokok sudah lunas</span>
                   </div>
               </div>
               <div class="portlet-body">

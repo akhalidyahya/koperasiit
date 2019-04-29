@@ -30,8 +30,8 @@
     <div class="portlet light portlet-fit portlet-datatable bordered">
         <div class="portlet-title">
             <div class="caption">
-                <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Ajukan Pembiayaan</span>
+                <i class=" icon-layers font-blue"></i>
+                <span class="caption-subject font-blue sbold uppercase">Ajukan Pembiayaan</span>
             </div>
     </div>
 

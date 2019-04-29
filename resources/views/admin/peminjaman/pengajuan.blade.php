@@ -78,8 +78,8 @@
     <div class="portlet light portlet-fit portlet-datatable bordered">
         <div class="portlet-title">
             <div class="caption">
-                <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Pengajuan Pembiayaan</span><span style="margin-left:15px;"></span>
+                <i class=" icon-layers font-blue"></i>
+                <span class="caption-subject font-blue sbold uppercase">Pengajuan Pembiayaan</span><span style="margin-left:15px;"></span>
             </div>
             <!-- <div class="actions">
               <a class="btn btn-primary btn-flat" href="{{url('peminjaman/pengajuan/create')}}"><i class="fa fa-upload"></i> Ajukan Peminjaman</a>

@@ -47,8 +47,8 @@
     <div class="portlet light portlet-fit portlet-datatable bordered">
         <div class="portlet-title">
             <div class="caption">
-                <i class=" icon-users font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Daftar Anggota</span><span style="margin-left:15px;"></span>
+                <i class=" icon-users font-blue"></i>
+                <span class="caption-subject font-blue sbold uppercase">Daftar Anggota</span><span style="margin-left:15px;"></span>
             </div>
         </div>
         <div class="portlet-body">
