@@ -262,9 +262,7 @@ class AngsuranController extends Controller
       Mail::send('admin.email.mailPembayaranAngsuran', $data, function($message) use($data){
         $message->to('herlianto.adhi@gmail.com');
         $message->from('herlianto.adhi@gmail.com');
-        $message->subject('Pembayaran Angsuran');
-        
-
+        $message->subject('Pembayaran Angsuran');        
       });
       
       return redirect("peminjaman/angsuran/detail/$peminjaman->kode");
