@@ -17,7 +17,7 @@
 <div class="page-head">
     <!-- BEGIN PAGE TITLE -->
     <div class="page-title">
-        <h1>Member Koperasi Dashboard | Peminjaman
+        <h1>Member Koperasi Dashboard | Pembiayaan
             <small>statistics, charts and reports</small>
         </h1>
     </div>
@@ -31,7 +31,7 @@
       <i class="fa fa-circle"></i>
   </li>
   <li>
-      <a href="javascript:;">Peminjaman</a>
+      <a href="javascript:;">Pembiayaan</a>
       <i class="fa fa-circle"></i>
   </li>
   <li>
@@ -49,7 +49,7 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Daftar Peminjaman</span><span style="margin-left:15px;"></span>
+                <span class="caption-subject font-red sbold uppercase">Daftar Pembiayaan</span><span style="margin-left:15px;"></span>
                 <!-- <button class="btn btn-info" >Save as PDF</button>         -->
             </div>
             <div class="actions">
@@ -182,7 +182,7 @@ function pinjam(){
   $('input[name=_method]').val('POST');
   $('#myModal').modal('show');
   $('#myModal form')[0].reset();
-  $('.modal-title').text('Ajukan Peminjaman');
+  $('.modal-title').text('Ajukan Pembiayaan');
 }
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
@@ -191,7 +191,7 @@ var id = 3;
 var t = $('#myTable').DataTable({
   'processing'  : true,
   'serverSide'  : true,
-  'ajax'        : "{{ url('peminjaman/api/angsuran') }}"+"/"+id,
+  'ajax'        : "{{ url('pembiayaan/api/angsuran') }}"+"/"+id,
   'dataType'    : 'json',
   'paging'      : true,
   'lengthChange': true,

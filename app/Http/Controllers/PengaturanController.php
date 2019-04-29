@@ -43,7 +43,7 @@ class PengaturanController extends Controller
         // }
 
 
-        
+
 
     if (Auth::user()->role == '1') {
 
@@ -113,26 +113,34 @@ class PengaturanController extends Controller
      */
     public function update(Request $request)
     {
-        
-
         if (Auth::user()->role == '1') {
 
             $admin = str_replace(',','',$request->admin);
             DB::table('options')->where('name', 'margin')->update([
                 'value' => $request->margin
             ]);
+
             DB::table('options')->where('name', 'administrasi')->update([
                 'value' => $admin
             ]);
-            return redirect()->back();
-            
-        }else {
-            return view('pages/dashboard', [
-            'sidebar' => 'dashboard'
+
+            $pokok = str_replace(',','',$request->pokok);
+            DB::table('options')->where('name', 'pokok')->update([
+                'value' => $pokok
             ]);
+
+            $bulanan = str_replace(',','',$request->bulanan);
+            DB::table('options')->where('name', 'bulanan')->update([
+                'value' => $bulanan
+            ]);
+
+            return redirect()->back();
+
+        }else {
+            return redirect('dashboard');
         }
 
-      
+
     }
 
     /**

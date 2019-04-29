@@ -57,9 +57,9 @@ class DaftarController extends Controller
             'no_lembaga' => $request['no_lembaga']
           ];
           User::create($data);
-    
+
           $added_user = User::orderBy('id','desc')->first();
-    
+
           $data_iuran_pokok = [
             'kode' => 'iuran_pokok_'.$added_user->id,
             'jenis' => 'pokok',
@@ -68,7 +68,7 @@ class DaftarController extends Controller
             'status' => 0,
             'user_id' => $added_user->id
           ];
-    
+
           Iuran::create($data_iuran_pokok);
           for ($i=1; $i <= 12 ; $i++) {
             $data_iuran_bulanan = [
@@ -81,10 +81,10 @@ class DaftarController extends Controller
             ];
             Iuran::create($data_iuran_bulanan);
           }
-    
+
           $request->session()->flush();
           $request->session()->flash('success', 'Your register was success!');
-    
+
           return redirect('login');
     }
 

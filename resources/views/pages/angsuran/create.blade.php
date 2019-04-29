@@ -10,7 +10,7 @@
 <div class="page-head">
     <!-- BEGIN PAGE TITLE -->
     <div class="page-title">
-        <h1>Member Koperasi Dashboard | Peminjaman
+        <h1>Member Koperasi Dashboard | Pembiayaan
             <small>statistics, charts and reports</small>
         </h1>
     </div>
@@ -24,11 +24,11 @@
         <i class="fa fa-circle"></i>
     </li>
     <li>
-        <a href="{{url('peminjaman/pengajuan')}}">Peminjaman</a>
+        <a href="{{url('peminjaman/pengajuan')}}">Pembiayaan</a>
         <i class="fa fa-circle"></i>
     </li>
     <li>
-        <span class="active">Ajukan Peminjaman</span>
+        <span class="active">Ajukan Pembiayaan</span>
     </li>
 </ul>
 <!-- END PAGE BREADCRUMB -->
@@ -40,7 +40,7 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Ajukan Peminjaman</span>
+                <span class="caption-subject font-red sbold uppercase">Ajukan Pembiayaan</span>
             </div>
         </div>
         <div class="portlet-body">
@@ -126,7 +126,7 @@
               <h4 class="font-blue">Perhitungan</h4>
               <div class="form-group">
                 <div class="col-md-2">
-                  Jumlah Peminjaman
+                  Jumlah Pembiayaan
                 </div>
                 <div class="col-md-10">
                   <span id="jumlah_peminjaman"></span>
@@ -209,7 +209,7 @@ function pinjam(){
   $('input[name=_method]').val('POST');
   $('#myModal').modal('show');
   $('#myModal form')[0].reset();
-  $('.modal-title').text('Ajukan Peminjaman');
+  $('.modal-title').text('Ajukan Pembiayaan');
 }
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();

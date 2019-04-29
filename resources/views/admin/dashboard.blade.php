@@ -27,12 +27,21 @@
     <div class="col-md-3">
         <!-- BEGIN WIDGET THUMB -->
         <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered">
-            <h4 class="widget-thumb-heading">Current Balance</h4>
+            <h4 class="widget-thumb-heading">Jumlah Member</h4>
             <div class="widget-thumb-wrap">
                 <i class="widget-thumb-icon bg-green icon-bulb"></i>
                 <div class="widget-thumb-body">
-                    <span class="widget-thumb-subtitle">USD</span>
-                    <span class="widget-thumb-body-stat" data-counter="counterup" data-value="7,644">0</span>
+
+                    <span class="widget-thumb-body-stat" data-counter="counterup" data-value="<?php
+                        if (!is_null($jumlahMember)) {
+                            echo $jumlahMember;
+                        }
+                        else {
+                            echo 0;
+                        }
+                    ?>">0</span>
+
+                    <span class="widget-thumb-subtitle">Orang</span>
                 </div>
             </div>
         </div>
@@ -41,12 +50,21 @@
     <div class="col-md-3">
         <!-- BEGIN WIDGET THUMB -->
         <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered">
-            <h4 class="widget-thumb-heading">Weekly Sales</h4>
+            <h4 class="widget-thumb-heading">Jumlah pembiayaan</h4>
             <div class="widget-thumb-wrap">
                 <i class="widget-thumb-icon bg-red icon-layers"></i>
                 <div class="widget-thumb-body">
-                    <span class="widget-thumb-subtitle">USD</span>
-                    <span class="widget-thumb-body-stat" data-counter="counterup" data-value="1,293">0</span>
+
+                    <span class="widget-thumb-body-stat" data-counter="counterup" data-value="<?php
+                    if (!is_null($countPeminjaman)) {
+                        echo $countPeminjaman;
+                    }
+                    else {
+                        echo 0;
+                    }
+
+                    ?>">0</span>
+                    <span class="widget-thumb-subtitle">Pinjaman</span>
                 </div>
             </div>
         </div>
@@ -55,19 +73,61 @@
     <div class="col-md-3">
         <!-- BEGIN WIDGET THUMB -->
         <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered">
-            <h4 class="widget-thumb-heading">Biggest Purchase</h4>
+            <h4 class="widget-thumb-heading">Transaksi hari ini</h4>
             <div class="widget-thumb-wrap">
                 <i class="widget-thumb-icon bg-purple icon-screen-desktop"></i>
                 <div class="widget-thumb-body">
-                    <span class="widget-thumb-subtitle">USD</span>
-                    <span class="widget-thumb-body-stat" data-counter="counterup" data-value="815">0</span>
+                    <span class="widget-thumb-body-stat" data-counter="counterup" data-value="<?php
+                    if (!is_null($countTransaksi)) {
+                        echo $countTransaksi;
+                    }
+                    else {
+                        echo 0;
+                    }
+
+                    ?>">0</span>
+                    <span class="widget-thumb-subtitle">Transaksi</span>
                 </div>
             </div>
         </div>
         <!-- END WIDGET THUMB -->
     </div>
-    <div class="col-md-3">
-        <!-- BEGIN WIDGET THUMB -->
+    <div class="row">
+    <div class="portlet light bordered">
+    <div class="col-lg-8 col-xs-12 col-sm-12">
+    <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-cursor font-dark hide"></i>
+                    <span class="caption-subject font-dark bold uppercase">Transaksi Terakhir</span>
+                </div>
+                </div>
+            <div class="portlet-body">
+    <table class="table table-striped table-bordered table-hover table-checkable order-column" id="myTable">
+                <thead>
+                    <tr>
+                      <th>Nama</th>
+                      <th>Tanggal</th>
+                      <th>Jenis</th>
+                      <th>Jumlah</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (  $recentTransaksi as $r)
+                    <tr>
+                        <td>{{$r->name}}</td>
+                        <td>{{$r->created_at}}</td>
+                        <td>{{$r->jenis}}</td>
+                        <td>{{$r->jumlah}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+            </div>
+    </div>
+    </div>
+    </div>
+    <!-- div class="col-md-3">
+        BEGIN WIDGET THUMB
         <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered">
             <h4 class="widget-thumb-heading">Average Monthly</h4>
             <div class="widget-thumb-wrap">
@@ -78,7 +138,7 @@
                 </div>
             </div>
         </div>
-        <!-- END WIDGET THUMB -->
+        END WIDGET THUMB
     </div>
 </div>
 <div class="row">
@@ -251,9 +311,9 @@
                                 </ol>
                                 <span class="filling-line bg-red" aria-hidden="true" style="transform: scaleX(0.0763889);"></span>
                             </div>
-                            <!-- .events -->
+                            .events
                         </div>
-                        <!-- .events-wrapper -->
+                        .events-wrapper
                         <ul class="cd-timeline-navigation mt-ht-nav-icon">
                             <li>
                                 <a href="#0" class="prev inactive btn btn-outline red md-skip">
@@ -266,9 +326,9 @@
                                 </a>
                             </li>
                         </ul>
-                        <!-- .cd-timeline-navigation -->
+                        .cd-timeline-navigation
                     </div>
-                    <!-- .timeline -->
+                    .timeline
                     <div class="events-content">
                         <ol>
                             <li class="selected" data-date="16/01/2014">
@@ -560,12 +620,12 @@
                             </li>
                         </ol>
                     </div>
-                    <!-- .events-content -->
+                    .events-content
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- END PAGE BASE CONTENT -->
 
 @endsection

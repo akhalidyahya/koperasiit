@@ -19,7 +19,7 @@
 <div class="page-head">
     <!-- BEGIN PAGE TITLE -->
     <div class="page-title">
-        <h1>Member Koperasi Dashboard | Peminjaman
+        <h1>Member Koperasi Dashboard | Anggota
             <small>statistics, charts and reports</small>
         </h1>
     </div>
@@ -33,11 +33,8 @@
       <i class="fa fa-circle"></i>
   </li>
   <li>
-      <a href="javascript:;">Peminjaman</a>
-      <i class="fa fa-circle"></i>
-  </li>
-  <li>
-      <span class="active">Angsuran</span>
+      <a href="javascript:;">Anggota</a>
+      <!-- <i class="fa fa-circle"></i> -->
   </li>
 </ul>
 <!-- END PAGE BREADCRUMB -->
@@ -50,8 +47,8 @@
     <div class="portlet light portlet-fit portlet-datatable bordered">
         <div class="portlet-title">
             <div class="caption">
-                <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Daftar Peminjaman</span><span style="margin-left:15px;"></span>
+                <i class=" icon-users font-red"></i>
+                <span class="caption-subject font-red sbold uppercase">Daftar Anggota</span><span style="margin-left:15px;"></span>
             </div>
         </div>
         <div class="portlet-body">
@@ -59,12 +56,12 @@
                 <thead>
                     <tr>
                       <th>Nama</th>
-                      <th>Email</th>                      
-                      <th>TTL</th>                      
-                      <th>Identitas</th>                      
-                      <th>Alamat</th>                      
+                      <th>Email</th>
+                      <th>TTL</th>
+                      <th>Identitas</th>
                       <th>Pekerjaan</th>
-                      <th>Nama lembaga</th>                      
+                      <th>Lembaga</th>
+                      <th>Status</th>
                       <th>Action</th>
                     </tr>
                 </thead>
@@ -101,13 +98,13 @@ var t = $('#myTable').DataTable({
   'lengthChange': true,
   'columns'     : [
     {data:'name', name: 'name'},
-    {data:'email', name: 'email'},    
-    {data:'ttl', name: 'ttl'},    
+    {data:'email', name: 'email'},
+    {data:'ttl', name: 'ttl'},
     {data:'identitas', name: 'identitas'},
-    {data:'alamat', name: 'alamat'},    
     {data:'pekerjaan', name: 'pekerjaan'},
-    {data:'nama_lembaga', name: 'nama_lembaga'},    
-    {data:'action', name: 'action'},        
+    {data:'nama_lembaga', name: 'nama_lembaga'},
+    {data:'status', name: 'status'},
+    {data:'action', name: 'action'},
   ],
   'info'        : true,
   'autoWidth'   : false

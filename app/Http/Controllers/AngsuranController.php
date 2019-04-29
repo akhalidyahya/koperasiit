@@ -112,9 +112,10 @@ class AngsuranController extends Controller
             'bulan' => $bulan_form
           ]);
       }elseif (Auth::user()->role == '1') {
-        return view('admin/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
+        // return view('admin/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
+        redirect()->route('admin/dashboard');
       }else {
           return redirect('login');
       }
@@ -133,9 +134,10 @@ class AngsuranController extends Controller
           'pengajuan' => $pengajuan
         ]);
       }elseif (Auth::user()->role == '0') {
-        return view('pages/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
+        // return view('pages/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
+        redirect()->route('admin/dashboard');
       }else {
         return redirect('login');
       }
@@ -201,12 +203,12 @@ class AngsuranController extends Controller
       ->join('users', 'peminjamen.user_id', '=', 'users.id')
       ->where('peminjamen.id', $request->id)
       ->select('*')
-      ->first();        
-          
+      ->first();
+
 
       $data = [
         'email' => $byrdp->email,
-        'nama' => $byrdp->name,        
+        'nama' => $byrdp->name,
       ];
 
       Mail::send('admin.email.mailPembayaranDP', $data, function($message) use($data){
@@ -220,9 +222,9 @@ class AngsuranController extends Controller
 
     public function bayarangsuran(Request $request){
       $peminjaman = Peminjaman::where('id',$request->id)->first();
-      
-      
-      $images = $request->bukti;      
+
+
+      $images = $request->bukti;
       $images_new_name = time().$images->getClientOriginalName();
       $images->move('public/uploads/', $images_new_name);
 
@@ -251,8 +253,8 @@ class AngsuranController extends Controller
       ->join('angsurans', 'peminjamen.id', '=', 'angsurans.peminjaman_id')
       ->where('peminjamen.id', $request->id)
       ->select('*')
-      ->first();        
-          
+      ->first();
+
       $data = [
         'email' => $byrangsuran->email,
         'nama' => $byrangsuran->name,
@@ -262,9 +264,9 @@ class AngsuranController extends Controller
       Mail::send('admin.email.mailPembayaranAngsuran', $data, function($message) use($data){
         $message->to('herlianto.adhi@gmail.com');
         $message->from('herlianto.adhi@gmail.com');
-        $message->subject('Pembayaran Angsuran');        
+        $message->subject('Pembayaran Angsuran');
       });
-      
+
       return redirect("peminjaman/angsuran/detail/$peminjaman->kode");
     }
 
@@ -280,16 +282,16 @@ class AngsuranController extends Controller
       ->where('kode', '=', $kode)
       ->where('user_id',Auth::user()->id)
       ->first();
-      
-      
-      $angsuran = DB::table('angsurans')->where('peminjaman_id',$peminjaman->id)->orderBy('id','asc')->get();      
+
+
+      $angsuran = DB::table('angsurans')->where('peminjaman_id',$peminjaman->id)->orderBy('id','asc')->get();
       set_time_limit(300);
       $pdf = PDF::loadview('pages/angsuran/pengajuanPDF', [
         'peminjaman' => $peminjaman,
         'angsuran' => $angsuran
       ]);
-      return $pdf->stream('pages/angsuran/pengajuanPDF.pdf',array('Attachment'=>0));      
+      return $pdf->stream('pages/angsuran/pengajuanPDF.pdf',array('Attachment'=>0));
       // return $pdf->download('pages/angsuran/pengajuanPDF.pdf');
-            
+
     }
 }

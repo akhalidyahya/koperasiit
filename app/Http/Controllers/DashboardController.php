@@ -30,30 +30,30 @@ class DashboardController extends Controller
     {
         $isadmin = $this->dologin();
 
-        if($isadmin == 'user'){
+        if(Auth::user()->role == '0'){
             $peminjaman = DB::table('peminjamen')
                 ->where('user_id', '=', Auth::user()->id)
+                ->orderBy('status')
+                ->limit(3)
                 ->get();
 
-            return view('pages/dashboard',[            
+            return view('pages/dashboard',[
                 'sidebar'=>'dashboard',
                 'peminjaman'=>$peminjaman
               ]);
 
-        }elseif($isadmin == 'admin'){
-            return view('admin/dashboard',[            
-                'sidebar'=>'dashboard'
-              ]);
+        }elseif(Auth::user()->role == '1'){
+            return redirect('admin/dashboard');
         }else{
-            redirect('login');
+            return redirect('login');
         }
     }
 
     public function dologin(){
         $isadmin = Auth::user()->role;
-        if($isadmin == '0' ){
+        if($isadmin == 0 ){
             return 'user';
-        }elseif($isadmin == '1'){
+        }elseif($isadmin == 1){
             return 'admin';
         }else{
             redirect('login');

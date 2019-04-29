@@ -75,8 +75,8 @@
             <div class="page-header-inner ">
                 <!-- BEGIN LOGO -->
                 <div class="page-logo">
-                    <a href="index.html">
-                        <img src="{{asset('assets/layouts/layout4/img/logo-light.png')}}" alt="logo" class="logo-default" /> </a>
+                    <a href="login">
+                    <img src="{{asset('assets/pages/img/logo-big-white.png')}}" alt="logo" class="logo-default" width="25px"/>  </a>
                     <div class="menu-toggler sidebar-toggler">
                         <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
                     </div>
@@ -163,7 +163,7 @@
                         </li> -->
                         <li class="nav-item {{ (\Request::route()->getName() == 'member') ? 'active open' : ''}}">
                             <a href="javascript:;" class="nav-link nav-toggle">
-                                <i class="icon-briefcase"></i>
+                                <i class="icon-users"></i>
                                 <span class="title">Member</span>
                                 <span class="arrow"></span>
                             </a>
@@ -188,12 +188,12 @@
                         </li> --}}
                         <li class="nav-item {{ (\Request::route()->getName() == 'transaksi') ? 'active open' : ''}}">
                           <a href="javascript:;" class="nav-link nav-toggle">
-                            <i class="icon-briefcase"></i>
+                            <i class="icon-calculator"></i>
                             <span class="title">Transaksi</span>
                             <span class="arrow"></span>
                           </a>
                           <ul class="sub-menu">
-                          
+
                             <li class="nav-item {{ ($sidebar == 'transaksiIuran') ? 'active open' : ''}} ">
                               <a href="{{url('admin/transaksi/iuranbulanan')}}" class="nav-link ">
                                 <span class="title">Iuran Bulanan</span>
@@ -216,41 +216,46 @@
                                 <span class="title">DP</span>
                               </a>
                             </li>
+                            <li class="nav-item {{ ($sidebar == 'history') ? 'active open' : ''}} ">
+                              <a href="{{url('admin/transaksi/history')}}" class="nav-link ">
+                                <span class="title">History</span>
+                              </a>
+                            </li>
                           </ul>
                         </li>
-                        <li class="nav-item {{ (\Request::route()->getName() == 'peminjaman') ? 'active open' : ''}}">
+                        <li class="nav-item {{ (\Request::route()->getName() == 'pembiayaan') ? 'active open' : ''}}">
                             <a href="javascript:;" class="nav-link nav-toggle">
-                                <i class="icon-briefcase"></i>
-                                <span class="title">Peminjaman</span>
+                                <i class="icon-credit-card"></i>
+                                <span class="title">Pembiayaan</span>
                                 <span class="arrow"></span>
                             </a>
                             <ul class="sub-menu">
                                 <li class="nav-item {{ ($sidebar == 'pengajuan') ? 'active open' : ''}} ">
-                                    <a href="{{url('admin/peminjaman/pengajuanPeminjaman')}}" class="nav-link ">
+                                    <a href="{{url('admin/pembiayaan/pengajuan')}}" class="nav-link ">
                                          <span class="title">Pengajuan</span>
                                      </a>
                                 </li>
                                 <li class="nav-item {{ ($sidebar == 'angsuran') ? 'active open' : ''}} ">
-                                    <a href="{{url('admin/peminjaman/angsuranPeminjaman')}}" class="nav-link ">
+                                    <a href="{{url('admin/pembiayaan/angsuran')}}" class="nav-link ">
                                         <span class="title">Angsuran</span>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item {{ (\Request::route()->getName() == 'peminjaman') ? 'active open' : ''}}">
+                        <li class="nav-item {{ (\Request::route()->getName() == 'iuran') ? 'active open' : ''}}">
                                 <a href="javascript:;" class="nav-link nav-toggle">
-                                    <i class="icon-briefcase"></i>
+                                    <i class="icon-list"></i>
                                     <span class="title">Iuran</span>
                                     <span class="arrow"></span>
                                 </a>
                                 <ul class="sub-menu">
                                         <li class="nav-item {{ ($sidebar == 'iuranBulanan') ? 'active open' : ''}} ">
-                                                <a href="{{url('admin/iuran/iuranBulanan')}}" class="nav-link">
+                                                <a href="{{url('admin/iuran/bulanan')}}" class="nav-link">
                                                     <span class="title">Iuran bulanan</span>
                                                 </a>
                                             </li>
                                     <li class="nav-item {{ ($sidebar == 'iuranPokok') ? 'active open' : ''}} ">
-                                        <a href="{{url('admin/iuran/iuranPokok')}}" class="nav-link ">
+                                        <a href="{{url('admin/iuran/pokok')}}" class="nav-link ">
                                             <span class="title">Iuran pokok</span>
                                         </a>
                                     </li>

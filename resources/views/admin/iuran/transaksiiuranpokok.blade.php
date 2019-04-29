@@ -78,7 +78,7 @@ function pinjam(){
   $('input[name=_method]').val('POST');
   $('#myModal').modal('show');
   $('#myModal form')[0].reset();
-  $('.modal-title').text('Ajukan Peminjaman');
+  $('.modal-title').text('Ajukan Pembiayaan');
 }
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();

@@ -75,8 +75,9 @@
             <div class="page-header-inner ">
                 <!-- BEGIN LOGO -->
                 <div class="page-logo">
-                    <a href="index.html">
-                        <img src="{{asset('assets/layouts/layout4/img/logo-light.png')}}" alt="logo" class="logo-default" /> </a>
+                    <a href="login">
+                        <img src="{{asset('assets/pages/img/logo-big-white.png')}}" alt="logo" class="logo-default" width="25px"/>
+                        </a>
                     <div class="menu-toggler sidebar-toggler">
                         <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
                     </div>
@@ -174,20 +175,20 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item {{ (\Request::route()->getName() == 'peminjaman') ? 'active open' : ''}}">
+                        <li class="nav-item {{ (\Request::route()->getName() == 'pembiayaan') ? 'active open' : ''}}">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="icon-briefcase"></i>
-                                <span class="title">Peminjaman</span>
+                                <span class="title">Pembiayaan</span>
                                 <span class="arrow"></span>
                             </a>
                             <ul class="sub-menu">
                                 <li class="nav-item {{ ($sidebar == 'pengajuan') ? 'active open' : ''}} ">
-                                    <a href="{{url('peminjaman/pengajuan')}}" class="nav-link ">
+                                    <a href="{{url('pembiayaan/pengajuan')}}" class="nav-link ">
                                         <span class="title">Pengajuan</span>
                                     </a>
                                 </li>
                                 <li class="nav-item {{ ($sidebar == 'angsuran') ? 'active open' : ''}} ">
-                                    <a href="{{url('peminjaman/angsuran')}}" class="nav-link ">
+                                    <a href="{{url('pembiayaan/angsuran')}}" class="nav-link ">
                                         <span class="title">Angsuran</span>
                                     </a>
                                 </li>

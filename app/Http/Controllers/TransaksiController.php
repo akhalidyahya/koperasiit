@@ -29,10 +29,11 @@ class TransaksiController extends Controller
           return view('admin/iuran/transaksiIuran', [
             'sidebar'=>'transaksiIuran'
           ]);
-      }else{
-        return view('pages/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
+      }elseif(Auth::user()->role == '0'){
+        // return view('pages/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
+        redirect()->route('dashboard');
       }
 
 
@@ -45,10 +46,14 @@ class TransaksiController extends Controller
         return view('admin/iuran/transaksiiuranpokok', [
           'sidebar'=>'transaksiIuranPokok'
         ]);
-      }else{
-        return view('pages/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
+      }elseif(Auth::user()->role == '0'){
+        // return view('pages/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
+
+        redirect()->route('dashboard');
+      }else {
+          redirect('login');
       }
 
     }
@@ -59,10 +64,14 @@ class TransaksiController extends Controller
         return view('admin/peminjaman/pengajuan', [
           'sidebar'=>'daftarpeminjaman'
         ]);
-      }else{
-        return view('pages/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
+      }elseif(Auth::user()->role == '0'){
+        // return view('pages/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
+
+        redirect()->route('dashboard');
+      }else {
+          redirect('login');
       }
     }
 
@@ -73,10 +82,14 @@ class TransaksiController extends Controller
         return view('admin/transaksi/dp', [
           'sidebar'=>'transaksidp'
         ]);
-      }else{
-        return view('pages/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
+      }elseif(Auth::user()->role == '0'){
+        // return view('pages/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
+
+        redirect()->route('dashboard');
+      }else {
+          redirect('login');
       }
 
     }
@@ -88,10 +101,14 @@ class TransaksiController extends Controller
         return view('admin/peminjaman/transaksiPeminjaman', [
           'sidebar'=>'transaksiPeminjaman'
         ]);
-      }else{
-        return view('pages/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
+      }elseif(Auth::user()->role == '0'){
+        // return view('pages/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
+
+        redirect()->route('dashboard');
+      }else {
+          redirect('login');
       }
 
 
@@ -104,10 +121,14 @@ class TransaksiController extends Controller
         return view('admin/transaksi/angsuran', [
           'sidebar'=>'transaksiangsuran'
         ]);
-      }else{
-        return view('pages/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
+      }elseif(Auth::user()->role == '0'){
+        // return view('pages/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
+
+        redirect()->route('dashboard');
+      }else {
+          redirect('login');
       }
 
 
@@ -197,7 +218,7 @@ class TransaksiController extends Controller
       $transaksiIuran = DB::table('transaksis')
       ->join('users','users.id', '=', 'transaksis.user_id')
       ->where('jenis','iuran')
-      ->where('aproval',0)
+      ->where('transaksis.aproval',0)
       ->where('bulan','<>', 0)
       ->orderBy('transaksis.id','desc')->get();
 
@@ -217,7 +238,7 @@ class TransaksiController extends Controller
       // $id = 3;
       $transaksiIuran = DB::table('transaksis')
       ->join('users','users.id', '=', 'transaksis.user_id')
-      ->where('aproval',0)
+      ->where('transaksis.aproval',0)
       ->where('bulan', 0)
       ->orderBy('transaksis.id','desc')->get();
 
@@ -241,7 +262,7 @@ class TransaksiController extends Controller
       $data = DB::table('transaksis')
       ->join('users', 'transaksis.user_id', '=', 'users.id')
       ->select('users.name', 'transaksis.kode', 'transaksis.jumlah', 'transaksis.created_at' )
-      ->where('aproval', 0)
+      ->where('transaksis.aproval', 0)
       ->where('jenis', 'dp')
       ->orderBy('transaksis.id', 'desc')
       ->get();
@@ -307,13 +328,15 @@ class TransaksiController extends Controller
           return redirect('admin/peminjaman/pengajuanPeminjaman');
 
         }
-        else{
+        elseif(Auth::user()->role == '0'){
+            // return view('pages/dashboard', [
+            //   'sidebar' => 'dashboard'
+            // ]);
 
-          return view('pages/dashboard', [
-            'sidebar' => 'dashboard'
-          ]);
-
-        }
+            redirect()->route('dashboard');
+          }else {
+              redirect('login');
+          }
 
 
 
@@ -332,11 +355,14 @@ class TransaksiController extends Controller
         return redirect('admin/peminjaman/pengajuanPeminjaman');
 
       }
-      else {
-        return view('pages/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
+      elseif(Auth::user()->role == '0'){
+        // return view('pages/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
 
+        redirect()->route('dashboard');
+      }else {
+          redirect('login');
       }
 
 
@@ -378,12 +404,14 @@ class TransaksiController extends Controller
         return redirect()->back();
 
       }
-      else {
+      elseif(Auth::user()->role == '0'){
+        // return view('pages/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
 
-        return view('pages/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
-
+        redirect()->route('dashboard');
+      }else {
+          redirect('login');
       }
     }
 
@@ -399,10 +427,14 @@ class TransaksiController extends Controller
         ]);
         return redirect()->back();
 
+      }elseif(Auth::user()->role == '0'){
+        // return view('pages/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
+
+        redirect()->route('dashboard');
       }else {
-        return view('pages/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
+          redirect('login');
       }
 
 
@@ -446,10 +478,14 @@ class TransaksiController extends Controller
         // Session::flash()
         return redirect()->back();
 
+      }elseif(Auth::user()->role == '0'){
+        // return view('pages/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
+
+        redirect()->route('dashboard');
       }else {
-        return view('pages/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
+          redirect('login');
       }
 
 
@@ -467,10 +503,14 @@ class TransaksiController extends Controller
         ]);
         return redirect()->back();
 
+      }elseif(Auth::user()->role == '0'){
+        // return view('pages/dashboard', [
+        //   'sidebar' => 'dashboard'
+        // ]);
+
+        redirect()->route('dashboard');
       }else {
-        return view('pages/dashboard', [
-          'sidebar' => 'dashboard'
-        ]);
+          redirect('login');
       }
     }
 

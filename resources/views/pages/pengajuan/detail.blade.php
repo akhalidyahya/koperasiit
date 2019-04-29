@@ -17,7 +17,7 @@
 <div class="page-head">
     <!-- BEGIN PAGE TITLE -->
     <div class="page-title">
-        <h1>Member Koperasi Dashboard | Peminjaman
+        <h1>Member Koperasi Dashboard | Pembiayaan
             <small>statistics, charts and reports</small>
         </h1>
     </div>
@@ -31,7 +31,7 @@
       <i class="fa fa-circle"></i>
   </li>
   <li>
-      <a href="javascript:;">Peminjaman</a>
+      <a href="javascript:;">Pembiayaan</a>
       <i class="fa fa-circle"></i>
   </li>
   <li>
@@ -130,7 +130,7 @@ function numberWithCommas(x) {
 }
 
 function batalkan(id){
-  var popup = confirm("Apakah yakin ingin membatalkan pengajuan peminjaman?");
+  var popup = confirm("Apakah yakin ingin membatalkan pengajuan pembiayaan?");
   if (popup == true) {
     $('input[name=_method]').val('PATCH');
     $.ajax({

@@ -10,7 +10,7 @@
 <div class="page-head">
     <!-- BEGIN PAGE TITLE -->
     <div class="page-title">
-        <h1>Member Koperasi Dashboard | Peminjaman
+        <h1>Member Koperasi Dashboard | Pembiayaan
             <small>statistics, charts and reports</small>
         </h1>
     </div>
@@ -24,7 +24,7 @@
         <i class="fa fa-circle"></i>
     </li>
     <li>
-        <a href="javascript:;">Peminjaman</a>
+        <a href="javascript:;">Pembiayaan</a>
         <i class="fa fa-circle"></i>
     </li>
     <li>
@@ -32,7 +32,7 @@
         <i class="fa fa-circle"></i>
     </li>
     <li>
-        <span class="active">Ajukan Peminjaman</span>
+        <span class="active">Ajukan Pembiayaan</span>
     </li>
 </ul>
 <!-- END PAGE BREADCRUMB -->
@@ -44,7 +44,7 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Ajukan Peminjaman</span>
+                <span class="caption-subject font-red sbold uppercase">Ajukan Pembiayaan</span>
             </div>
         </div>
         <div class="portlet-body">
@@ -63,11 +63,14 @@
               <div class="form-group form-md-line-input">
                 <label class="col-md-2 control-label" for="angsuran">Angsuran</label>
                   <div class="col-md-10">
-                      <select class="form-control" id="angsuran" name="angsuran">
-                        <option value=""></option>
-                        <option value="12">12 kali</option>
-                        <option value="24">24 kali</option>
-                      </select>
+                    <input list="angsuran" name="angsuran" type="text" class="form-control" placeholder=" Masukan berapa kali angsuran. contoh: 6">
+                    <datalist id="angsuran">
+                      <option value="3" />
+                      <option value="6" />
+                      <option value="12" />
+                      <option value="24" />
+                    </datalist>
+                    <div class="form-control-focus"> </div>
                   </div>
               </div>
               <div class="form-group form-md-line-input">
@@ -130,7 +133,7 @@
               <h4 class="font-blue">Perhitungan</h4>
               <div class="form-group">
                 <div class="col-md-2">
-                  Jumlah Peminjaman
+                  Jumlah Pembiayaan
                 </div>
                 <div class="col-md-10">
                   <span id="jumlah_peminjaman"></span>
@@ -213,18 +216,18 @@ function pinjam(){
   $('input[name=_method]').val('POST');
   $('#myModal').modal('show');
   $('#myModal form')[0].reset();
-  $('.modal-title').text('Ajukan Peminjaman');
+  $('.modal-title').text('Ajukan Pembiayaan');
 }
 $(document).ready(function(){
 
   $('[data-toggle="tooltip"]').tooltip();
 
-  $('#jumlah,#dp,#angsuran').change(function(){
-    
+  $('#jumlah,#dp,#angsuran,input[name=angsuran]').focus(function(){
+
     var jml_pmnjmn = $('#jumlah').val();
     var jml_dp = $('#dp').val();
-    var p_angsuran = $('#angsuran').val();
-    var after_margin = jml_pmnjmn * {{$pengaturan[0]->value}};
+    var p_angsuran = Number($('input[name=angsuran]').val());
+    var after_margin = jml_pmnjmn * (({{$pengaturan[0]->value}}/12) * Number(p_angsuran) );
     var total = Number(jml_pmnjmn) + Number(after_margin) + Number({{$pengaturan[1]->value}});
     var total_pokok = Number(total) - Number(jml_dp);
     var angsuran_per_bulan = Math.round(Number(total_pokok) / Number(p_angsuran));

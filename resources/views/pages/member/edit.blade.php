@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    
+
             <!-- BEGIN PAGE HEAD-->
 <div class="page-head">
     <!-- BEGIN PAGE TITLE -->
@@ -37,7 +37,7 @@
 
     <div class="portlet-body">
     <form class="register-form" action="{{route('member.update', $user->id)}}" method="post">
-              {{csrf_field()}} 
+              {{csrf_field()}}
                 <h3 class="font-green">Form Isian Calon Anggota Koperasi Berkah Usaha Terbadu</h3>
                 <hr>
                 <h4 class=""> A. Data Individu </h4>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label hint">Password Akun</label>
-                    <input class="form-control placeholder-no-fix"  placeholder="Password Akun" name="password" value="{{$user->password}}"/>
+                    <input class="form-control placeholder-no-fix"  placeholder="Kosongkan bila tidak ingin ganti" name="password" value=""/>
                 </div>
                 <hr>
                 <h4 class=""> B. Data Lembaga </h4>
@@ -121,13 +121,13 @@
                     <div id="register_tnc_error"> </div>
                 </div> -->
                 <div class="form-actions">
-                    <button type="button" id="register-back-btn" class="btn green btn-outline">Back</button>
+                    <a href="{{url('admin/member')}}" type="button" id="register-back-btn" class="btn green btn-outline">Back</a>
                     <button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right">Submit</button>
                 </div>
-            </form>    
+            </form>
     </div>
-    
-    
+
+
     </div>
 </div>
 @endsection

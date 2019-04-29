@@ -17,7 +17,7 @@
 <div class="page-head">
     <!-- BEGIN PAGE TITLE -->
     <div class="page-title">
-        <h1>Member Koperasi Dashboard | Peminjaman
+        <h1>Member Koperasi Dashboard | Pembiayaan
             <small>statistics, charts and reports</small>
         </h1>
     </div>
@@ -31,7 +31,7 @@
       <i class="fa fa-circle"></i>
   </li>
   <li>
-      <a href="javascript:;">Peminjaman</a>
+      <a href="javascript:;">Pembiayaan</a>
       <i class="fa fa-circle"></i>
   </li>
   <li>
@@ -72,14 +72,14 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <a class="btn btn-primary btn-flat" href="{{url('peminjaman/pengajuan/create')}}"><i class="fa fa-upload"></i> Ajukan Peminjaman</a>
+    <a class="btn btn-primary btn-flat" href="{{url('pembiayaan/pengajuan/create')}}"><i class="fa fa-upload"></i> Ajukan Pembiayaan</a>
     <p></p>
     <!-- BEGIN EXAMPLE TABLE PORTLET-->
     <div class="portlet light portlet-fit portlet-datatable bordered">
         <div class="portlet-title">
             <div class="caption">
                 <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Pengajuan Peminjaman</span><span style="margin-left:15px;"></span>
+                <span class="caption-subject font-red sbold uppercase">Pengajuan Pembiayaan</span><span style="margin-left:15px;"></span>
             </div>
             <div class="actions">
               <div class="actions">
@@ -203,7 +203,7 @@
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
-</div> -->
+</div>
 <!-- /.modal -->
 <!-- END PAGE BASE CONTENT -->
 <script type="text/javascript">
@@ -212,16 +212,16 @@ function pinjam(){
   $('input[name=_method]').val('POST');
   $('#myModal').modal('show');
   $('#myModal form')[0].reset();
-  $('.modal-title').text('Ajukan Peminjaman');
+  $('.modal-title').text('Ajukan Pembiayaan');
 }
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
 });
-var id = 3;
+var id = {{Auth::user()->id}};
 var t = $('#myTable').DataTable({
   'processing'  : true,
   'serverSide'  : true,
-  'ajax'        : "{{ url('peminjaman/api/pengajuan') }}"+"/"+id,
+  'ajax'        : "{{ url('pembiayaan/api/pengajuan') }}"+"/"+id,
   'dataType'    : 'json',
   'paging'      : true,
   'lengthChange': true,

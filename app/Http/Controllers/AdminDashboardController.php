@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use DB;
 
 class AdminDashboardController extends Controller
 {
@@ -18,17 +19,42 @@ class AdminDashboardController extends Controller
      */
     public function index()
     {
-      $role = app('App\Http\Controllers\DashboardController')->getRole();
-        if($role == 'user'){
-            return view('pages/dashboard',[
-                'sidebar'=>'dashboard',
-            ]
-              );
+      $role = Auth::user()->role;
+        if($role == 0){
 
-        }elseif($role == 'admin'){
+            redirect('dashboard');
+
+        }elseif($role == 1){
+            $countMember = DB::table('users')
+                ->where('role', '=', 0  )
+                ->count();
+
+            $countPeminjaman = DB::table('peminjamen')
+                ->count();
+
+            $countTransaksi = DB::table('transaksis')
+                // ->where(DB::raw("to_char(created_at, 'yyyy-mm-dd') = to_char(CURRENT_DATE, 'yyyy-mm-dd'"))
+                // ->where(DB::raw("to_char(created_at, 'yyyy-mm-dd') = ".date("Y-m-d")))
+                // ->select(DB::raw("count(*) as aggregate"))
+                ->count();
+                // ->get();
+
+            $recentTransaksi = DB::table('transaksis')
+                ->join('users', 'users.id', '=', 'transaksis.user_id')
+                ->orderBy('transaksis.created_at', 'DSC')
+                ->limit(5)
+                ->select('users.name', 'transaksis.created_at', 'transaksis.jenis', 'transaksis.jumlah')
+                ->get();
+
             return view('admin/dashboard',[
-                'sidebar'=>'dashboard'
+                'sidebar'=>'dashboard',
+                'jumlahMember' => $countMember,
+                'countPeminjaman' => $countPeminjaman,
+                'countTransaksi' => $countTransaksi,
+                'recentTransaksi' => $recentTransaksi
               ]);
+            // return $recentTransaksi;
+            // return $countMember;
         }else{
             redirect('login');
         }
