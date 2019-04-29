@@ -368,7 +368,7 @@ class PeminjamanController extends Controller
 
     }
 
-    public function apipeminjaman($id)
+    public function apipembiayaan($id)
     {
         $id =Auth::user()->id;
         $peminjaman = Peminjaman::where('user_id', $id)->orderBy('id', 'dsc');

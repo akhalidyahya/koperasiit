@@ -175,7 +175,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item {{ (\Request::route()->getName() == 'peminjaman') ? 'active open' : ''}}">
+                        <li class="nav-item {{ (\Request::route()->getName() == 'pembiayaan') ? 'active open' : ''}}">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="icon-briefcase"></i>
                                 <span class="title">Pembiayaan</span>
@@ -183,12 +183,12 @@
                             </a>
                             <ul class="sub-menu">
                                 <li class="nav-item {{ ($sidebar == 'pengajuan') ? 'active open' : ''}} ">
-                                    <a href="{{url('peminjaman/pengajuan')}}" class="nav-link ">
+                                    <a href="{{url('pembiayaan/pengajuan')}}" class="nav-link ">
                                         <span class="title">Pengajuan</span>
                                     </a>
                                 </li>
                                 <li class="nav-item {{ ($sidebar == 'angsuran') ? 'active open' : ''}} ">
-                                    <a href="{{url('peminjaman/angsuran')}}" class="nav-link ">
+                                    <a href="{{url('pembiayaan/angsuran')}}" class="nav-link ">
                                         <span class="title">Angsuran</span>
                                     </a>
                                 </li>

@@ -43,17 +43,17 @@ class DashboardController extends Controller
               ]);
 
         }elseif(Auth::user()->role == '1'){
-            redirect('admin/dashboard');
+            return redirect('admin/dashboard');
         }else{
-            redirect('login');
+            return redirect('login');
         }
     }
 
     public function dologin(){
         $isadmin = Auth::user()->role;
-        if($isadmin == '0' ){
+        if($isadmin == 0 ){
             return 'user';
-        }elseif($isadmin == '1'){
+        }elseif($isadmin == 1){
             return 'admin';
         }else{
             redirect('login');

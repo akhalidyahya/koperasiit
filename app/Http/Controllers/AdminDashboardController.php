@@ -19,16 +19,12 @@ class AdminDashboardController extends Controller
      */
     public function index()
     {
-      $role = app('App\Http\Controllers\DashboardController')->getRole();
-        if($role == 'user'){
-            // return view('pages/dashboard',[
-            //     'sidebar'=>'dashboard',
-            // ]
-            //   );
+      $role = Auth::user()->role;
+        if($role == 0){
 
             redirect('dashboard');
 
-        }elseif($role == 'admin'){
+        }elseif($role == 1){
             $countMember = DB::table('users')
                 ->where('role', '=', 0  )
                 ->count();

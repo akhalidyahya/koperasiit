@@ -72,7 +72,7 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <a class="btn btn-primary btn-flat" href="{{url('peminjaman/pengajuan/create')}}"><i class="fa fa-upload"></i> Ajukan Pembiayaan</a>
+    <a class="btn btn-primary btn-flat" href="{{url('pembiayaan/pengajuan/create')}}"><i class="fa fa-upload"></i> Ajukan Pembiayaan</a>
     <p></p>
     <!-- BEGIN EXAMPLE TABLE PORTLET-->
     <div class="portlet light portlet-fit portlet-datatable bordered">
@@ -203,7 +203,7 @@
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
-</div> -->
+</div>
 <!-- /.modal -->
 <!-- END PAGE BASE CONTENT -->
 <script type="text/javascript">
@@ -217,11 +217,11 @@ function pinjam(){
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
 });
-var id = 3;
+var id = {{Auth::user()->id}};
 var t = $('#myTable').DataTable({
   'processing'  : true,
   'serverSide'  : true,
-  'ajax'        : "{{ url('peminjaman/api/pengajuan') }}"+"/"+id,
+  'ajax'        : "{{ url('pembiayaan/api/pengajuan') }}"+"/"+id,
   'dataType'    : 'json',
   'paging'      : true,
   'lengthChange': true,

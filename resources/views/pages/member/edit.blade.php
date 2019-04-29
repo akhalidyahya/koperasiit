@@ -31,7 +31,7 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Ajukan Pembiayaan</span>
+                <span class="caption-subject font-red sbold uppercase">Ajukan Peminjaman</span>
             </div>
     </div>
 
@@ -91,7 +91,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label hint">Password Akun</label>
-                    <input class="form-control placeholder-no-fix"  placeholder="Password Akun" name="password" value="{{$user->password}}"/>
+                    <input class="form-control placeholder-no-fix"  placeholder="Kosongkan bila tidak ingin ganti" name="password" value=""/>
                 </div>
                 <hr>
                 <h4 class=""> B. Data Lembaga </h4>
@@ -121,7 +121,7 @@
                     <div id="register_tnc_error"> </div>
                 </div> -->
                 <div class="form-actions">
-                    <button type="button" id="register-back-btn" class="btn green btn-outline">Back</button>
+                    <a href="{{url('admin/member')}}" type="button" id="register-back-btn" class="btn green btn-outline">Back</a>
                     <button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right">Submit</button>
                 </div>
             </form>

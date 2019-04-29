@@ -218,7 +218,7 @@ class TransaksiController extends Controller
       $transaksiIuran = DB::table('transaksis')
       ->join('users','users.id', '=', 'transaksis.user_id')
       ->where('jenis','iuran')
-      ->where('aproval',0)
+      ->where('transaksis.aproval',0)
       ->where('bulan','<>', 0)
       ->orderBy('transaksis.id','desc')->get();
 
@@ -238,7 +238,7 @@ class TransaksiController extends Controller
       // $id = 3;
       $transaksiIuran = DB::table('transaksis')
       ->join('users','users.id', '=', 'transaksis.user_id')
-      ->where('aproval',0)
+      ->where('transaksis.aproval',0)
       ->where('bulan', 0)
       ->orderBy('transaksis.id','desc')->get();
 
@@ -262,7 +262,7 @@ class TransaksiController extends Controller
       $data = DB::table('transaksis')
       ->join('users', 'transaksis.user_id', '=', 'users.id')
       ->select('users.name', 'transaksis.kode', 'transaksis.jumlah', 'transaksis.created_at' )
-      ->where('aproval', 0)
+      ->where('transaksis.aproval', 0)
       ->where('jenis', 'dp')
       ->orderBy('transaksis.id', 'desc')
       ->get();

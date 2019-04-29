@@ -63,11 +63,14 @@
               <div class="form-group form-md-line-input">
                 <label class="col-md-2 control-label" for="angsuran">Angsuran</label>
                   <div class="col-md-10">
-                      <select class="form-control" id="angsuran" name="angsuran">
-                        <option value=""></option>
-                        <option value="12">12 kali</option>
-                        <option value="24">24 kali</option>
-                      </select>
+                    <input list="angsuran" name="angsuran" type="text" class="form-control" placeholder=" Masukan berapa kali angsuran. contoh: 6">
+                    <datalist id="angsuran">
+                      <option value="3" />
+                      <option value="6" />
+                      <option value="12" />
+                      <option value="24" />
+                    </datalist>
+                    <div class="form-control-focus"> </div>
                   </div>
               </div>
               <div class="form-group form-md-line-input">
@@ -219,12 +222,12 @@ $(document).ready(function(){
 
   $('[data-toggle="tooltip"]').tooltip();
 
-  $('#jumlah,#dp,#angsuran').change(function(){
+  $('#jumlah,#dp,#angsuran,input[name=angsuran]').focus(function(){
 
     var jml_pmnjmn = $('#jumlah').val();
     var jml_dp = $('#dp').val();
-    var p_angsuran = $('#angsuran').val();
-    var after_margin = jml_pmnjmn * {{$pengaturan[0]->value}};
+    var p_angsuran = Number($('input[name=angsuran]').val());
+    var after_margin = jml_pmnjmn * (({{$pengaturan[0]->value}}/12) * Number(p_angsuran) );
     var total = Number(jml_pmnjmn) + Number(after_margin) + Number({{$pengaturan[1]->value}});
     var total_pokok = Number(total) - Number(jml_dp);
     var angsuran_per_bulan = Math.round(Number(total_pokok) / Number(p_angsuran));

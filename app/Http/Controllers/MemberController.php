@@ -27,19 +27,9 @@ class MemberController extends Controller
         return view('pages/member/index',[
           'sidebar'=>'indexMember'
         ]);
-
-      }elseif(Auth::user()->role == '0'){
-
-        // return view('pages/dashboard',[
-        //   'sidebar'=>'dashboard'
-        // ]);
-        redirect()->route('dashboard');
-
       }else {
-        redirect('login');
-    }
-
-
+        return redirect('dashboard');
+      }
     }
 
     /**
@@ -57,14 +47,11 @@ class MemberController extends Controller
         // return view ('admin/dashboard', [
         //   'sidebar' => 'dashboard',
         // ]);
-      }elseif(Auth::user()->role == '0') {
-        // return view('pages/dashboard',[
-        //   'sidebar'=>'dashboard'
-        // ]);
-        redirect()->route('dashboard');
       }else {
-        redirect('login');
-    }
+        return view('pages/dashboard',[
+          'sidebar'=>'dashboard'
+        ]);
+      }
 
 
     }
@@ -129,13 +116,10 @@ class MemberController extends Controller
 
 
         return redirect('admin/member/create');
-      }elseif(Auth::user()->role == '0') {
-        // return view('pages/dashboard', [
-        //   'sidebar' => 'dashboard'
-        // ]);
-        redirect()->route('dashboard');
       }else {
-          redirect('login');
+        return view('pages/dashboard', [
+          'sidebar' => 'dashboard'
+        ]);
       }
 
 
@@ -168,16 +152,8 @@ class MemberController extends Controller
           'user' => $user
         ]);
 
-
-      }elseif(Auth::user()->role == '0') {
-
-        // return view ('admin/dashboard', [
-        //   'sidebar' => 'dashboard',
-        // ]);
-        redirect()->route('admin/dashboard');
-
       }else {
-          redirect('login');
+        return redirect('admin/dashboard');
       }
 
     }
@@ -191,10 +167,9 @@ class MemberController extends Controller
      */
     public function update(Request $r, $id)
     {
-      DB::table('users')->where('id', $id)->update([
+      $data = [
         'name' => $r->nama,
         'email' => $r->email,
-        'password' => $r->password,
         'ttl' => $r->ttl,
         'jk' => $r->jk,
         'identitas' => $r->identitas,
@@ -205,21 +180,26 @@ class MemberController extends Controller
         'nama_lembaga' => $r->nama_lembaga,
         'pegawaian' => $r->pegawaian,
         'no_lembaga' => $r->no_lembaga,
-      ]);
+      ];
+      DB::table('users')->where('id', $id)->update($data);
+      if($r->password !== '') {
+        DB::table('users')->where('id', $id)->update('password',bcrypt($r->password));
+      }
       return redirect('admin/member');
     }
-
 
     public function updateProfile(Request $r)
     {
       // return 1;
       if (Auth::user()->role == '1') {
-        // return view ('admin/dashboard', [
-        //   'sidebar' => 'dashboard',
-        // ]);
-        redirect()->route('admin/dashboard');
-      }elseif(Auth::user()->role == '0') {
+        return view ('admin/dashboard', [
+          'sidebar' => 'dashboard',
+        ]);
+
+      }else {
+
       $id = Auth::user()->id;
+
       if($r->hasfile('gambar')){
 
         // save image
@@ -227,7 +207,6 @@ class MemberController extends Controller
         // pemberian nama dengan bantuan time
         $images_new_name = time().$images->getClientOriginalName();
         $images->move('public/uploads/', $images_new_name);
-
 
        DB::table('users')->where('id',$id)->update([
         'gambar' => 'public/uploads/'.$images_new_name
@@ -272,11 +251,36 @@ class MemberController extends Controller
         $user->save();
         return redirect()->back();
 
-      }elseif(Auth::user()->role == '0') {
-        // return view('pages/dashboard', [
-        //   'sidebar' => 'dashboard'
-        // ]);
-        redirect()->route('dashboard');
+      }else {
+        return redirect('admin/dashboard');
+      }
+    }
+
+    public function aprove($id)
+    {
+      if (Auth::user()->role == '1') {
+
+        $user = User::find($id);
+        $user->aproval = 1;
+        $user->save();
+        return redirect()->back();
+
+      }else {
+        return redirect('admin/dashboard');
+      }
+    }
+
+    public function disaprove($id)
+    {
+      if (Auth::user()->role == '1') {
+
+        $user = User::find($id);
+        $user->aproval = 2;
+        $user->save();
+        return redirect()->back();
+
+      }else {
+        return redirect('admin/dashboard');
       }
     }
 
@@ -288,15 +292,14 @@ class MemberController extends Controller
         'user' => $user
       ]);
     }
+
     public function detail(){
 
       if (Auth::user()->role == '1') {
-        // return view ('admin/dashboard', [
-        //   'sidebar' => 'dashboard',
-        // ]);
-
-        redirect()->route('admin/dashboard');
-      }elseif(Auth::user()->role == '0') {
+        return view ('admin/dashboard', [
+          'sidebar' => 'dashboard',
+        ]);
+      }else {
 
         $id = Auth::user()->id;
         $user = User::find($id);
@@ -305,25 +308,61 @@ class MemberController extends Controller
           'sidebar'=>'',
           'user' => $user
         ]);
-      }else{
-          redirect('login');
       }
-
 
     }
 
     public function apiMember()
     {
-
-      $user = User::where('deleted',0);
+      //$user = User::where('deleted',0);
+      $user = DB::table('users')->where('deleted',0)->where('role','<>',1)->orderBy('created_at','desc');
 
       return DataTables::of($user)
         ->addColumn('action',function($user) {
-          return '<a href=" member/'.$user->id.'/edit" class="btn btn-default btn-xs"> Edit </a>'.
-           '<a href=" member/'.$user->id.'/delete" class="btn btn-danger btn-xs" > Delete </a>';
+          return '
+          <div class="btn-group">
+            <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
+              <i class="fa fa-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a href="member/'.$user->id.'/aprove">
+                  <i class="icon-check"></i> Terima
+                </a>
+              </li>
+              <li>
+                <a href="member/'.$user->id.'/disaprove">
+                  <i class="icon-close"></i> Tolak
+                </a>
+              </li>
+              <li>
+                <a href="member/'.$user->id.'/edit">
+                  <i class="icon-wrench"></i> Edit
+                </a>
+              </li>
+              <li>
+                <a href="member/'.$user->id.'/delete">
+                  <i class="icon-trash"></i> Delete
+                </a>
+              </li>
+            </ul>
+          </div>
+          ';
+        })->addColumn('status',function($user){
+          switch ($user->aproval) {
+            case 1:
+              return '<i class="font-green">Diterima</i>';
+              break;
+
+            case 2:
+              return '<i class="font-red">Ditolak</i>';
+              break;
+
+            default:
+              return 'Menunggu';
+              break;
+          }
         })->escapeColumns([])->make(true);
     }
-
-
 
 }

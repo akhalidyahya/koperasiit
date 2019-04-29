@@ -56,9 +56,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($belumBayar as $data) {?>
+                    <?php foreach ($belumBayar as $data) { $no = 1;?>
                       <tr>
-                        <td><?php echo $data->user_id ?></td>
+                        <td><?php echo $no ?></td>
                         <td><?php echo $data->name ?></td>
                         <td><a href="{{url('admin/member').'/'.$data->user_id}}/edit">Detail</a></td>
                       </tr>
@@ -78,8 +78,8 @@
           <div class="portlet light portlet-fit portlet-datatable bordered">
               <div class="portlet-title">
                   <div class="caption">
-                      <i class=" icon-layers font-red"></i>
-                      <span class="caption-subject font-red sbold uppercase">Iuran pokok sudah lunas</span>
+                      <i class=" icon-layers font-green"></i>
+                      <span class="caption-subject font-green sbold uppercase">Iuran pokok sudah lunas</span>
                   </div>
               </div>
               <div class="portlet-body">
@@ -92,9 +92,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($sudahBayar as $data) {?>
+                        <?php foreach ($sudahBayar as $data) { $no = 1;?>
                           <tr>
-                            <td><?php echo $data->user_id ?></td>
+                            <td><?php echo $no ?></td>
                             <td><?php echo $data->name ?></td>
                             <td><a href="{{url('admin/member').'/'.$data->user_id}}/edit">Detail</a></td>
                           </tr>

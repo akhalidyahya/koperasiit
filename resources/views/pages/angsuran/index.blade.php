@@ -191,7 +191,7 @@ var id = 3;
 var t = $('#myTable').DataTable({
   'processing'  : true,
   'serverSide'  : true,
-  'ajax'        : "{{ url('peminjaman/api/angsuran') }}"+"/"+id,
+  'ajax'        : "{{ url('pembiayaan/api/angsuran') }}"+"/"+id,
   'dataType'    : 'json',
   'paging'      : true,
   'lengthChange': true,

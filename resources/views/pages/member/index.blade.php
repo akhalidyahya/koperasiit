@@ -19,7 +19,7 @@
 <div class="page-head">
     <!-- BEGIN PAGE TITLE -->
     <div class="page-title">
-        <h1>Member Koperasi Dashboard | Pembiayaan
+        <h1>Member Koperasi Dashboard | Anggota
             <small>statistics, charts and reports</small>
         </h1>
     </div>
@@ -33,11 +33,8 @@
       <i class="fa fa-circle"></i>
   </li>
   <li>
-      <a href="javascript:;">Pembiayaan</a>
-      <i class="fa fa-circle"></i>
-  </li>
-  <li>
-      <span class="active">Angsuran</span>
+      <a href="javascript:;">Anggota</a>
+      <!-- <i class="fa fa-circle"></i> -->
   </li>
 </ul>
 <!-- END PAGE BREADCRUMB -->
@@ -50,8 +47,8 @@
     <div class="portlet light portlet-fit portlet-datatable bordered">
         <div class="portlet-title">
             <div class="caption">
-                <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red sbold uppercase">Daftar Pembiayaan</span><span style="margin-left:15px;"></span>
+                <i class=" icon-users font-red"></i>
+                <span class="caption-subject font-red sbold uppercase">Daftar Anggota</span><span style="margin-left:15px;"></span>
             </div>
         </div>
         <div class="portlet-body">
@@ -62,9 +59,9 @@
                       <th>Email</th>
                       <th>TTL</th>
                       <th>Identitas</th>
-                      <th>Alamat</th>
                       <th>Pekerjaan</th>
-                      <th>Nama lembaga</th>
+                      <th>Lembaga</th>
+                      <th>Status</th>
                       <th>Action</th>
                     </tr>
                 </thead>
@@ -86,7 +83,7 @@ function pinjam(){
   $('input[name=_method]').val('POST');
   $('#myModal').modal('show');
   $('#myModal form')[0].reset();
-  $('.modal-title').text('Ajukan Pembiayaan');
+  $('.modal-title').text('Ajukan Peminjaman');
 }
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
@@ -104,9 +101,9 @@ var t = $('#myTable').DataTable({
     {data:'email', name: 'email'},
     {data:'ttl', name: 'ttl'},
     {data:'identitas', name: 'identitas'},
-    {data:'alamat', name: 'alamat'},
     {data:'pekerjaan', name: 'pekerjaan'},
     {data:'nama_lembaga', name: 'nama_lembaga'},
+    {data:'status', name: 'status'},
     {data:'action', name: 'action'},
   ],
   'info'        : true,
